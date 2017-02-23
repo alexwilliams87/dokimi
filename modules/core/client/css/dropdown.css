@@ -1,0 +1,31 @@
+/* Structure */
+dropdown {
+  position: relative;
+  display: inline-block;
+  z-index:20;
+}
+dropdown.left dropdown-content {
+  transform-origin:top left;
+}
+dropdown.right dropdown-content {
+  transform-origin:top right;
+}
+dropdown-content {
+  transform-origin:top left;
+  transform:scale(0);
+  transition: transform 0.1s ease-in-out;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 200px;
+  box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.2);
+}
+dropdown-content a {
+  display: block;
+  padding: 12px 16px;
+  text-decoration: none;
+}
+
+/* Evenement hover */
+dropdown.active dropdown-content, dropdown[mode="hover"]:hover dropdown-content {
+  transform: scale(1);
+}

@@ -1,0 +1,26 @@
+﻿<section>
+  <div class="page-header">
+    <h1>
+      Forms
+      <a class="btn btn-primary pull-right" data-ui-sref="admin.forms.create">
+        <i class="glyphicon glyphicon-plus"></i>
+      </a>
+    </h1>
+  </div>
+  <div class="list-group">
+    <a data-ng-repeat="form in vm.forms" data-ui-sref="admin.forms.edit({formId: form._id})" class="list-group-item">
+      <small class="list-group-item-text">
+        Posted on
+        <span data-ng-bind="form.created | date:'mediumDate'"></span>
+        by
+        <span ng-if="form.user" ng-bind="form.user.displayName"></span>
+        <span ng-if="!form.user">Deleted User</span>
+      </small>
+      <h4 class="list-group-item-heading" data-ng-bind="form.title"></h4>
+      <p class="list-group-item-text" data-ng-bind="form.content"></p>
+    </a>
+  </div>
+  <div class="alert alert-warning text-center" data-ng-if="forms.$resolved && !forms.length">
+    No forms yet, why don't you <a data-ui-sref="admin.forms.create">create one</a>?
+  </div>
+</section>
