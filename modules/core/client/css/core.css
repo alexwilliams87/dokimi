@@ -70,6 +70,11 @@ a:hover .header-profile-image {
   background-color: rgb(103, 58, 183);
   height: 68px;
 }
+
+.layout-row > .flex {
+  min-width:auto;
+}
+
 .topbar .nav {
   margin:0;
   padding:0;
@@ -82,7 +87,7 @@ a:hover .header-profile-image {
 .topbar .md-button .md-ripple-container {
   border-radius:0;
 }
-.topbar .md-button {
+.topbar .nav .md-button {
   color:#fff;
   min-height:68px;
   margin:0;
@@ -96,6 +101,7 @@ a:hover .header-profile-image {
 
 .topbar dropdown-content {
   top:68px;
+  left:0;
   background-color: rgb(103, 58, 183);
   box-shadow: 2px 4px 4px 0px rgba(0,0,0,0.2);
 }
@@ -114,6 +120,8 @@ a:hover .header-profile-image {
   font-weight:500;
   text-transform:none;
   font-size:initial;
+  min-height:68px;
+  margin:0;
 }
 .topbar .user-nav dropdown-content {
   right:0;
@@ -203,4 +211,27 @@ a:hover .header-profile-image {
 }
 .topbar-mobile-menu dropdown.active dropdown-content {
   display:block;
+}
+
+/*
+ * sign buttons
+**/
+
+.sign-button {
+  display:flex;
+  align-items: center;
+  width:100%;
+  justify-content: center;
+  max-height:48px;
+  align-content: center;
+}
+
+md-input-container {
+  width:100%;
+}
+
+.form-group, .forgot-password {
+  display:flex;
+  justify-content: center;
+  align-items: center;
 }

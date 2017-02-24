@@ -54,7 +54,6 @@
 
       if (attrs.mode === 'click') {
         body.bind('click', function() {
-          console.log('bind');
           angular.forEach(_dropdowns, function(el) {
             el.removeClass('active');
           });

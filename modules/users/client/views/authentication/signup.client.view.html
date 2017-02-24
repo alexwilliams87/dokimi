@@ -1,5 +1,72 @@
 <div>
-  <h3 class="col-xs-12 text-center">Or sign up using your email</h3>
+
+  <md-content layout-padding>
+    <form name="vm.userForm" ng-submit="vm.signup(vm.userForm.$valid)" class="signin" novalidate autocomplete="off">
+      <fieldset>
+        <div class="form-group" show-errors>
+          <md-input-container>
+            <label for="firstName">Prénom</label>
+            <input type="text" id="firstName" name="firstName" class="form-control" ng-model="vm.credentials.firstName" placeholder="Prénom" required autofocus>
+            <div ng-messages="vm.userForm.firstName.$error" role="alert">
+              <p class="help-block error-text" ng-message="required">Prénom requis.</p>
+            </div>
+          </md-input-container>
+        </div>
+        <div class="form-group" show-errors>
+          <md-input-container>
+            <label for="lastName">Nom de famille</label>
+            <input type="text" id="lastName" name="lastName" class="form-control" ng-model="vm.credentials.lastName" placeholder="Nom de famille" required>
+            <div ng-messages="vm.userForm.lastName.$error" role="alert">
+              <p class="help-block error-text" ng-message="required">Nom de famille requis.</p>
+            </div>
+          </md-input-container>
+        </div>
+        <div class="form-group" show-errors>
+          <md-input-container>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" class="form-control" ng-model="vm.credentials.email" placeholder="adresse@domaine.fr" lowercase required>
+            <div ng-messages="vm.userForm.email.$error" role="alert">
+              <p class="help-block error-text" ng-message="required">Email address requise.</p>
+              <p class="help-block error-text" ng-message="email">Email address invalide.</p>
+            </div>
+          </md-input-container>
+        </div>
+        <div class="form-group" show-errors>
+          <md-input-container>
+            <label for="username">Nom d'utilisateur</label>
+            <input type="text" id="username" name="username" class="form-control" ng-model="vm.credentials.username" ng-pattern="vm.usernameRegex" placeholder="Nom d'utilisateur" lowercase required>
+            <div ng-messages="vm.userForm.username.$error" role="alert">
+              <p class="help-block error-text" ng-message="required">Username requis.</p>
+              <p class="help-block error-text" ng-message="pattern">Entrez un nom d'utilisateur valide : plus de 3 caractères, mot non restraint, les caractères "_-." sont présents, pas de points consécutifs, ne doit pas commencer ou finir par un point, lettres de a à z et chiffres de 0 à 9.</p>
+            </div>
+          </md-input-container>
+        </div>
+        <div class="form-group" show-errors>
+          <md-input-container>
+            <label for="password">Mot de passe</label>
+              <input type="password" id="password" name="password" class="form-control" ng-model="vm.credentials.password" placeholder="Mot de passe" uib-popover="{{vm.getPopoverMsg()}}" popover-trigger="outsideClick" password-validator required>
+            <div ng-messages="vm.userForm.password.$error" role="alert">
+              <p class="help-block error-text" ng-message="required">Mot de passe requis.</p>
+              <div ng-repeat="passwordError in passwordErrors">
+                <p class="help-block error-text" ng-show="vm.userForm.password.$error.requirements">{{passwordError}}</p>
+              </div>
+            </div>
+          </md-input-container>
+        </div>
+        <!-- <div class="form-group" ng-show="!vm.userForm.password.$error.required">
+          <label>Password Requirements</label>
+          <uib-progressbar value="requirementsProgress" type="{{requirementsColor}}"><span style="color:white; white-space:nowrap;">{{requirementsProgress}}%</span></uib-progressbar>
+        </div> -->
+        <div class="text-center form-group">
+          <md-button type="submit" class="btn btn-primary">Inscription</md-button>
+        </div>
+      </fieldset>
+    </form>
+  </md-content>
+
+
+
+  <!-- <h3 class="col-xs-12 text-center">Or sign up using your email</h3>
   <div class="col-xs-offset-2 col-xs-8 col-md-offset-4 col-md-4">
     <form name="vm.userForm" ng-submit="vm.signup(vm.userForm.$valid)" class="signin" novalidate autocomplete="off">
       <fieldset>
@@ -54,5 +121,5 @@
         </div>
       </fieldset>
     </form>
-  </div>
+  </div> -->
 </div>

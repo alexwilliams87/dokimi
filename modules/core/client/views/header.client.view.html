@@ -5,7 +5,7 @@
     <div class="container">
       <div layout="row">
         <div class="topbar-brand" flex="10">
-          <img src="modules/core/client/img/brand/logo.svg" alt="brand">
+          <img src="/modules/core/client/img/brand/logo.svg" alt="brand">
         </div>
         <nav flex="70" layout-align="start">
           <ul class="nav" ng-if="vm.menu.shouldRender(vm.authentication.user);">
@@ -20,9 +20,9 @@
             </li>
           </ul>
         </nav>
-        <nav flex layout="row" layout-align="end" ng-hide="vm.authentication.user">
-          <md-button ui-sref="authentication.signup" class="md-raised md-primary">Sign Up</md-button>
-          <md-button ui-sref="authentication.signin" class="md-raised">Sign In</md-button>
+        <nav flex="30" layout="row" layout-align="end center" ng-hide="vm.authentication.user">
+          <md-button ui-sref="authentication.signup" class="sign-button md-raised md-primary">Inscription</md-button>
+          <md-button ui-sref="authentication.signin" class="sign-button md-raised md-primary">Connexion</md-button>
         </nav>
         <nav class="user-nav" flex="30" layout="row" layout-align="end center" ng-show="vm.authentication.user">
           <span class="user-nav-state">Connecté sous </span>
@@ -30,7 +30,7 @@
             <md-button class="user-nav-name" ng-bind="vm.authentication.user.displayName"></md-button>
             <dropdown-content>
               <a ng-repeat="item in vm.accountMenu.items" ui-sref="{{item.state}}" ng-bind="item.title"></a>
-              <a href="/api/auth/signout" target="_self">Signout</a>
+              <a href="/api/auth/signout" target="_self">Déconnexion</a>
             </dropdown-content>
           </dropdown>
         </nav>
@@ -55,8 +55,8 @@
         </nav>
 
         <nav flex layout="row" layout-align="end" ng-hide="vm.authentication.user">
-          <md-button ui-sref="authentication.signup" class="md-raised md-primary">Sign Up</md-button>
-          <md-button ui-sref="authentication.signin" class="md-raised">Sign In</md-button>
+          <md-button ui-sref="authentication.signup" class="md-raised md-primary">Inscription</md-button>
+          <md-button ui-sref="authentication.signin" class="md-raised">Connexion</md-button>
         </nav>
       </div>
     </div>

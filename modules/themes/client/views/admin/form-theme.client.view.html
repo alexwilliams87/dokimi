@@ -1,0 +1,44 @@
+<md-toolbar class="md-table-toolbar" flex>
+  <div class="sub-head-container" layout="row"  layout-align="start center">
+    <div class="md-toolbar-tools">
+      <span>{{vm.theme._id ? 'Editer un thème existant' : 'Créer un thème'}}</span>
+    </div>
+  </div>
+</md-toolbar>
+
+  <div class="list-group">
+    <form name="vm.form.themeForm" class="form-horizontal" ng-submit="vm.save(vm.form.themeForm.$valid)" novalidate>
+      <fieldset layout="column">
+
+      <md-input-container>
+        <label class="control-label" for="domain">Domaine</label>
+        <md-select ng-model="vm.domain" ng-model-options="{trackBy: '$value._id'}" id="domain" class="form-control" required>
+  
+          <md-option ng-value="domain" ng-repeat="domain in vm.domains | orderBy:'name'">{{ domain.name }}</md-option>
+
+        </md-select>
+
+        <!-- {{ vm.car }} -->
+        <div ng-messages="vm.form.themeForm.domain.$error" role="alert">
+          <p class="help-block error-text" ng-message="required">Domaine requis.</p>
+        </div>
+      </md-input-container>
+
+      <md-input-container>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="theme">Thème</label>
+          <input name="name" type="text" ng-model="vm.theme.name" id="name" class="form-control" placeholder="Thème" required autofocus>
+          <div ng-messages="vm.form.themeForm.name.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Nom de thème requis.</p>
+          </div>
+        </div>
+      </md-input-container>
+
+      <md-input-container>
+        <div class="form-group">
+          <md-button type="submit" class="md-raised md-primary">{{vm.theme._id ? 'Editer' : 'Créer'}}</md-button>
+        </div>
+      </md-input-container>
+      </fieldset>
+    </form>
+  </div>

@@ -1,0 +1,35 @@
+﻿<md-toolbar class="md-table-toolbar" flex>
+  <div class="sub-head-container" layout="row"  layout-align="start center">
+    <div class="md-toolbar-tools">
+      <span>
+        Domaines
+      </span>
+    </div>
+    <div class="white-icon">
+      <a data-ui-sref="admin.domains.create">
+          <i class="material-icons">add_box</i>
+        </a>
+    </div>
+  </div>
+</md-toolbar>
+
+<div class="list-group">
+  <md-table-container>
+  <table md-table>
+    <thead md-head md-order="vm.orderBy">
+       <tr md-row>
+         <th md-column md-order-by="name">Names</th>
+      </tr>
+    </thead>
+    <tbody md-body>
+      <tr md-row ng-repeat="domain in vm.domains | orderBy:vm.orderBy">
+        <td md-cell>{{ domain.name }}</td>
+        <td md-cell><a class="dark-icon" data-ui-sref="admin.domains.edit({domainId: domain._id})"><i class="material-icons">mode_edit</i></a></td>
+        <td md-cell><a class="dark-icon" ng-click="vm.remove(domain, $event)"><i class="material-icons">delete</i></a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="alert alert-warning text-center" data-ng-if="domains.$resolved && !domains.length">
+  No domains yet, why don't you <a data-ui-sref="admin.domains.create">create one</a>?
+</div>
