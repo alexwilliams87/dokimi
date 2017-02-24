@@ -125,6 +125,7 @@ a:hover .header-profile-image {
 }
 .topbar .user-nav dropdown-content {
   right:0;
+  left: initial;
 }
 .topbar .user-nav-state {
   margin-right:10px;
@@ -226,12 +227,99 @@ a:hover .header-profile-image {
   align-content: center;
 }
 
-md-input-container {
-  width:100%;
-}
-
 .form-group, .forgot-password {
   display:flex;
   justify-content: center;
   align-items: center;
 }
+
+
+/*
+ * forms (Questionnaires)
+**/
+.form-editor {
+  background-color: #fff;
+  border: 1px solid #d7d7d7;
+}
+.form-editor-content {
+  padding:15px;
+}
+.form-content-title {
+  margin-bottom:0;
+}
+.form-field-subject md-input-container {
+  margin-top:3px;
+}
+.form-editor-menu {
+  border-left: 1px solid #d7d7d7;
+}
+.form-editor-menu md-list {
+  padding:0;
+}
+.form-editor-menu md-list-item {
+  padding:5px;
+}
+
+.form-editor-fields {
+  border-top: 2px dotted #673ab7;
+  padding-top:30px;
+}
+.form-field-body {
+  padding:10px;
+  background-color:#f8f8f8;
+}
+.form-field-content{
+  padding-right:10px;
+}
+.form-field-props {
+  padding-left:10px;
+}
+
+
+.form-field-footer {
+  background-color: #ececec;
+  padding: 20px;
+}
+
+.form-prop-btn {
+  margin:0;
+  margin-bottom:10px;
+  background-color: #ececec;
+  display:flex;
+  text-transform:none;
+  font-weight:bold;
+}
+.form-prop-btn i {
+  text-align: right;
+}
+
+
+.form-field-question md-input-container {
+  font-size:14px;
+  margin-bottom:0;
+  margin-top:0;
+}
+.form-field-question md-input-container md-icon {
+  color: #818181;
+}
+
+.form-formissing {
+  cursor:default;
+}
+.form-input-formissing {
+  padding: 0 5px;
+  height: 34px;
+}
+.form-input-formissing input {
+  border:0;
+  font-size: 16px;
+  color: #0bbecf;
+  max-width: 45px; /* par exemple */
+}
+
+
+.form-field-footer {
+  display:flex;
+  justify-content:space-between;
+}
+/* template insertion */

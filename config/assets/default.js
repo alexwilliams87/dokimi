@@ -8,7 +8,8 @@ module.exports = {
       css: [
         // bower:css
         'public/lib/angular-material/angular-material.css',
-        'public/lib/angular-ui-notification/dist/angular-ui-notification.css'
+        'public/lib/angular-ui-notification/dist/angular-ui-notification.css',
+        'public/lib/material-design-icons/iconfont/material-icons.css'
         // endbower
       ],
       js: [

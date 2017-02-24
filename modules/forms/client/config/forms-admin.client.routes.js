@@ -25,7 +25,7 @@
       })
       .state('admin.forms.create', {
         url: '/create',
-        templateUrl: '/modules/forms/client/views/admin/form-form.client.view.html',
+        templateUrl: '/modules/forms/client/views/admin/new-form.client.view.html',
         controller: 'FormsAdminController',
         controllerAs: 'vm',
         data: {
