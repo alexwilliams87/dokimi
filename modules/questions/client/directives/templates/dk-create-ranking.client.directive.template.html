@@ -1,0 +1,29 @@
+<div layout="row">
+  <div ng-repeat="list in lists" flex>
+    <ul dnd-list="list.items" dnd-allowed-types="list.allowedTypes">
+
+      <li ng-repeat="item in list.items" layout="row" layout-align="center center" dnd-draggable="item" dnd-type="item.type" dnd-disable-if="item.type == 'unknown'" dnd-moved="list.items.splice($index, 1)" class="background-{{item.type}}">
+        <dnd-nodrag class="inner" layout="row" layout-align="space-between center">
+          <div flex="nogrow" dnd-handle class="handle"><md-icon class="material-icons">drag_handle</md-icon></div>
+          <div flex="80" class="body">
+            <div ng-if="item.media === 'text'">
+              <md-input-container md-no-float class="md-block">
+                <input ng-model="item.value" type="text" placeholder="Ajouter un texte" aria-label="Ajout d'un texte sur l'etiquette">
+              </md-input-container>
+            </div>
+            <div ng-if="item.media === 'image'">
+              <img class="image" ngf-src="item.value ? item.value : '/modules/core/client/img/placeholder.png'">
+            </div>
+          </div>
+          <div flex class="toolbar">
+            <md-icon ng-click="switchText(item)" class="material-icons media-toggle">text_fields</md-icon>
+            <md-icon ngf-select="switchImage(item)" ng-model="item.value" accept="image/*" aria-label="Ajout d'une image sur l'etiquette" class="material-icons media-toggle">add_a_photo</md-icon>
+          </div>
+        </dnd-nodrag>
+      </li>
+
+    </ul>
+  </div>
+</div>
+
+{{ lists }}

@@ -215,16 +215,13 @@ a:hover .header-profile-image {
 }
 
 /*
- * sign buttons
+ * topbar sign buttons
 **/
-
-.sign-button {
-  display:flex;
-  align-items: center;
-  width:100%;
-  justify-content: center;
+.topbar .sign-nav .signin-button,
+.topbar .sign-nav .signup-button {
+  flex:1;
   max-height:48px;
-  align-content: center;
+  background-color: rgb(103, 58, 183);
 }
 
 .form-group, .forgot-password {
@@ -290,7 +287,10 @@ a:hover .header-profile-image {
   font-weight:bold;
 }
 .form-prop-btn i {
-  text-align: right;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 

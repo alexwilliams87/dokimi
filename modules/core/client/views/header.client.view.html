@@ -20,9 +20,9 @@
             </li>
           </ul>
         </nav>
-        <nav flex="30" layout="row" layout-align="end center" ng-hide="vm.authentication.user">
-          <md-button ui-sref="authentication.signup" class="sign-button md-raised md-primary">Inscription</md-button>
-          <md-button ui-sref="authentication.signin" class="sign-button md-raised md-primary">Connexion</md-button>
+        <nav class="sign-nav" flex="30" layout="row" layout-align="end center" ng-hide="vm.authentication.user">
+          <md-button ui-sref="authentication.signup" class="signup-button md-raised md-primary">Inscription</md-button>
+          <md-button ui-sref="authentication.signin" class="signin-button md-raised md-primary">Connexion</md-button>
         </nav>
         <nav class="user-nav" flex="30" layout="row" layout-align="end center" ng-show="vm.authentication.user">
           <span class="user-nav-state">Connecté sous </span>

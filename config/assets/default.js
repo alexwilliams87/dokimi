@@ -25,6 +25,7 @@ module.exports = {
         'public/lib/angular-material/angular-material.js',
         'public/lib/angular-aria/angular-aria.js',
         'public/lib/owasp-password-strength-test/owasp-password-strength-test.js',
+        'public/lib/angular-drag-and-drop-lists/angular-drag-and-drop-lists.min.js'
         // endbower
       ],
       tests: ['public/lib/angular-mocks/angular-mocks.js']

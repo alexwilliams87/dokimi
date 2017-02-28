@@ -16,6 +16,24 @@
     vm.remove = remove;
     vm.save = save;
 
+    vm.resmiss = {
+      content: '',
+      values: []
+    };
+
+    vm.select = [
+      {
+        value:   'Option 1',
+        checked: true,
+        readonly: true
+      },
+      {
+        value:   'Option 2',
+        checked: false,
+        readonly: true
+      }
+    ];
+
     // Remove existing Form
     function remove() {
       if ($window.confirm('Are you sure you want to delete?')) {
