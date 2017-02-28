@@ -35,7 +35,7 @@
       vm.domain.createOrUpdate()
         .then(successCallback)
         .catch(errorCallback);
-      }
+    }
 
 
       // Create a new domain, or update the current instance

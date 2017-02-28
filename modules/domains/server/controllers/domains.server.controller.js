@@ -73,8 +73,8 @@ exports.delete = function (req, res) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)
       });
-     } else {
-        res.json(domain);
+    } else {
+      res.json(domain);
     }
   });
 };

@@ -16,6 +16,7 @@ var path = require('path'),
  * Create a theme
  */
 exports.create = function (req, res) {
+  console.log(req.body);
   var theme = new Theme(req.body);
   theme.user = req.user;
 
@@ -51,6 +52,7 @@ exports.update = function (req, res) {
   var theme = req.theme;
 
   theme.name = req.body.name;
+  console.log(req.body);
   theme.domain = req.body.domain;
 
   theme.save(function (err) {
@@ -85,7 +87,7 @@ exports.delete = function (req, res) {
  * List of Themes
  */
 exports.list = function (req, res) {
-  Theme.find().sort('-created').populate('user', 'displayName').exec(function (err, themes) {
+  Theme.find().sort('-created').populate('user', 'displayName').populate('domain', 'name').exec(function (err, themes) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)

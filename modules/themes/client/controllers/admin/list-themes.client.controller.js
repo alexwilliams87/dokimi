@@ -5,12 +5,13 @@
   .module('themes.admin')
   .controller('ThemesAdminListController', ThemesAdminListController);
 
-  ThemesAdminListController.$inject = ['ThemesService', '$window', 'Notification', '$mdDialog'];
+  ThemesAdminListController.$inject = ['ThemesService', '$window', 'Notification', '$mdDialog', 'DomainsService'];
 
-  function ThemesAdminListController(ThemesService, $window, Notification, $mdDialog) {
+  function ThemesAdminListController(ThemesService, $window, Notification, $mdDialog, DomainsService) {
     var vm 		= this;
     vm.remove 	= remove;
     vm.themes 	= ThemesService.query();
+    vm.domains = DomainsService.query();
 
     function remove(theme, ev) {
 
