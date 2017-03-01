@@ -4,6 +4,7 @@
  * Module dependencies
  */
 var mongoose = require('mongoose'),
+var _ = require('lodash'),
   Schema = mongoose.Schema;
 
   var custom = [validator, 'Uh oh, {PATH} does not equal "something".'];
@@ -17,7 +18,7 @@ var mongoose = require('mongoose'),
         if (!Array.isArray(data.response) && data.response.length < 0) return false;
 
         for (let i = 0; i < data.response.length; i++) {
-          if (!data.response[i].value || !data.response[i].checked) return false;
+          if (!data.response[i].value) return false;
           if (data.response[i].checked === true) checked = true;
           if (data.response[i].value.length <= 0) return false;
         }
