@@ -6,7 +6,7 @@
 var should = require('should'),
   mongoose = require('mongoose'),
   User = mongoose.model('User'),
-  Article = mongoose.model('Article');
+  Question = mongoose.model('Question');
 
 /**
  * Globals
@@ -17,7 +17,7 @@ var user,
 /**
  * Unit tests
  */
-describe('Article Model Unit Tests:', function () {
+describe('Question Model Unit Tests:', function () {
 
   beforeEach(function (done) {
     user = new User({
@@ -30,9 +30,9 @@ describe('Article Model Unit Tests:', function () {
     });
 
     user.save(function () {
-      question = new Article({
-        title: 'Article Title',
-        content: 'Article Content',
+      question = new Question({
+        title: 'Question Title',
+        content: 'Question Content',
         user: user
       });
 
@@ -60,7 +60,7 @@ describe('Article Model Unit Tests:', function () {
   });
 
   afterEach(function (done) {
-    Article.remove().exec(function () {
+    Question.remove().exec(function () {
       User.remove().exec(done);
     });
   });

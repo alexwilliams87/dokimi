@@ -1,47 +1,50 @@
-﻿(function () {
+(function () {
   'use strict';
 
   angular
-    .module('questions.admin.routes')
+    .module('questions.staff.routes')
     .config(routeConfig);
 
   routeConfig.$inject = ['$stateProvider'];
 
   function routeConfig($stateProvider) {
     $stateProvider
-      .state('admin.questions', {
+      .state('staff.questions', {
         abstract: true,
         url: '/questions',
         template: '<ui-view/>'
       })
-      .state('admin.questions.list', {
+      .state('staff.questions.list', {
         url: '',
-        templateUrl: '/modules/questions/client/views/admin/list-questions.client.view.html',
-        controller: 'QuestionsAdminListController',
+        templateUrl: '/modules/questions/client/views/staff/list-questions.client.view.html',
+        controller: 'QuestionsListController',
         controllerAs: 'vm',
         data: {
-          roles: ['admin']
+          roles: ['staff'],
+          pageTitle: 'Liste des questions'
         }
       })
-      .state('admin.questions.create', {
+      .state('staff.questions.create', {
         url: '/create',
-        templateUrl: '/modules/questions/client/views/admin/form-question.client.view.html',
-        controller: 'QuestionsAdminController',
+        templateUrl: '/modules/questions/client/views/staff/create-question.client.view.html',
+        controller: 'QuestionsStaffController',
         controllerAs: 'vm',
         data: {
-          roles: ['admin']
+          roles: ['staff'],
+          pageTitle: 'Créer une question'
         },
         resolve: {
           questionResolve: newQuestion
         }
       })
-      .state('admin.questions.edit', {
+      .state('staff.questions.edit', {
         url: '/:questionId/edit',
-        templateUrl: '/modules/questions/client/views/admin/form-question.client.view.html',
-        controller: 'QuestionsAdminController',
+        templateUrl: '/modules/questions/client/views/staff/create-question.client.view.html',
+        controller: 'QuestionsStaffController',
         controllerAs: 'vm',
         data: {
-          roles: ['admin']
+          roles: ['staff'],
+          pageTitle: 'Editer une question'
         },
         resolve: {
           questionResolve: getQuestion
@@ -62,4 +65,5 @@
   function newQuestion(QuestionsService) {
     return new QuestionsService();
   }
+
 }());

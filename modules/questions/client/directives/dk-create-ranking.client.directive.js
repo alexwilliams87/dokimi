@@ -5,10 +5,18 @@
  * Permets de générer un texte à champs manquants
  *
  * @param {Object=} io l'objet généré qui définit le texte et ses champs
- *     resmiss = {
- *       content: 'Quel est son nom ? %s',
- *       values: ['/Julien|Sophie/i']
- *     };
+ scope.lists = [
+   {
+     name: 'x',
+     allowedTypes: ['x'],
+     items: []
+   },
+   {
+     name: 'y',
+     allowedTypes: ['y'],
+     items: []
+   }
+ ];
  */
 
 (function () {
@@ -32,26 +40,22 @@
     return directive;
 
     function link(scope, element, attrs) {
-      scope.lists = [
-        {
-          label: 'Valeur x',
-          allowedTypes: ['x'],
-          items: [
-            {value: 'Bob', type: 'x', media: 'text'},
-            {value: 'Charlie', type: 'x', media: 'text'},
-            {value: 'Dave', type: 'x', media: 'text'}
-          ]
-        },
-        {
-          label: 'Valeur y',
-          allowedTypes: ['y'],
-          items: [
-            {value: 'Alice', type: 'y', media: 'text'},
-            {value: 'Eve', type: 'y', media: 'text'},
-            {value: 'Peggy', type: 'y', media: 'text'}
-          ]
-        }
-      ];
+      if (!scope.io) {
+        scope.io = [
+          {
+            name: 'x',
+            allowedTypes: ['x'],
+            items: []
+          },
+          {
+            name: 'y',
+            allowedTypes: ['y'],
+            items: []
+          }
+        ];
+      };
+
+      scope.filesItems = {};
 
       scope.switchText = function(item) {
         item.value = null;
@@ -59,7 +63,24 @@
       }
 
       scope.switchImage = function(item) {
+        item.value = null;
         item.media = 'image';
+      }
+
+      scope.add = function(list) {
+        list.items.push(
+          {
+            id: list.name + Date.now(),
+            value: '',
+            type: list.name,
+            media: 'text'
+          }
+        );
+      }
+
+      scope.delete = function(list, item) {
+        list.splice(list.indexOf(item), 1);
+        if (scope.filesItems[item.id]) delete scope.filesItems[item.id];
       }
     }
   }

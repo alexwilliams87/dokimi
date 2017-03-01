@@ -1,9 +1,12 @@
 <div layout="row">
-  <div ng-repeat="list in lists" flex>
+  <div ng-repeat="list in io" flex>
     <ul dnd-list="list.items" dnd-allowed-types="list.allowedTypes">
 
       <li ng-repeat="item in list.items" layout="row" layout-align="center center" dnd-draggable="item" dnd-type="item.type" dnd-disable-if="item.type == 'unknown'" dnd-moved="list.items.splice($index, 1)" class="background-{{item.type}}">
         <dnd-nodrag class="inner" layout="row" layout-align="space-between center">
+          <div class="close" ng-click="delete(list.items, item)">
+            <md-icon class="material-icons">clear</md-icon>
+          </div>
           <div flex="nogrow" dnd-handle class="handle"><md-icon class="material-icons">drag_handle</md-icon></div>
           <div flex="80" class="body">
             <div ng-if="item.media === 'text'">
@@ -12,18 +15,22 @@
               </md-input-container>
             </div>
             <div ng-if="item.media === 'image'">
-              <img class="image" ngf-src="item.value ? item.value : '/modules/core/client/img/placeholder.png'">
+              <img class="image" ngf-src="filesItems[item.id].value ? filesItems[item.id].value : '/modules/core/client/img/placeholder.png'">
             </div>
           </div>
           <div flex class="toolbar">
             <md-icon ng-click="switchText(item)" class="material-icons media-toggle">text_fields</md-icon>
-            <md-icon ngf-select="switchImage(item)" ng-model="item.value" accept="image/*" aria-label="Ajout d'une image sur l'etiquette" class="material-icons media-toggle">add_a_photo</md-icon>
+            <md-icon ngf-select="switchImage(item)" ng-model="filesItems[item.id].value" accept="image/*" aria-label="Ajout d'une image sur l'etiquette" class="material-icons media-toggle">add_a_photo</md-icon>
           </div>
         </dnd-nodrag>
       </li>
 
+      <div layout="row" layout-align="center center">
+        <md-button ng-click="add(list)" class="md-fab md-mini" aria-label="Ajout d'une case">
+          <md-icon flex class="material-icons">add</md-icon>
+        </md-button>
+      </div>
+
     </ul>
   </div>
 </div>
-
-{{ lists }}

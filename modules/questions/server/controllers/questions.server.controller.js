@@ -5,14 +5,14 @@
  */
 var path = require('path'),
   mongoose = require('mongoose'),
-  Article = mongoose.model('Article'),
+  Question = mongoose.model('Question'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 /**
  * Create an question
  */
 exports.create = function (req, res) {
-  var question = new Article(req.body);
+  var question = new Question(req.body);
   question.user = req.user;
 
   question.save(function (err) {
@@ -33,8 +33,8 @@ exports.read = function (req, res) {
   // convert mongoose document to JSON
   var question = req.question ? req.question.toJSON() : {};
 
-  // Add a custom field to the Article, for determining if the current User is the "owner".
-  // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
+  // Add a custom field to the Question, for determining if the current User is the "owner".
+  // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Question model.
   question.isCurrentUserOwner = !!(req.user && question.user && question.user._id.toString() === req.user._id.toString());
 
   res.json(question);
@@ -81,7 +81,7 @@ exports.delete = function (req, res) {
  * List of Questions
  */
 exports.list = function (req, res) {
-  Article.find().sort('-created').populate('user', 'displayName').exec(function (err, questions) {
+  Question.find().sort('-created').populate('user', 'displayName').exec(function (err, questions) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)
@@ -93,17 +93,17 @@ exports.list = function (req, res) {
 };
 
 /**
- * Article middleware
+ * Question middleware
  */
 exports.questionByID = function (req, res, next, id) {
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
-      message: 'Article is invalid'
+      message: 'Question is invalid'
     });
   }
 
-  Article.findById(id).populate('user', 'displayName').exec(function (err, question) {
+  Question.findById(id).populate('user', 'displayName').exec(function (err, question) {
     if (err) {
       return next(err);
     } else if (!question) {

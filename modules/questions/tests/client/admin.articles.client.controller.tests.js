@@ -9,7 +9,7 @@
       $state,
       Authentication,
       QuestionsService,
-      mockArticle,
+      mockQuestion,
       Notification;
 
     // The $resource service augments the response object with methods for updating and deleting the resource.
@@ -52,9 +52,9 @@
       $httpBackend.whenGET('/modules/core/client/views/home.client.view.html').respond(200, '');
 
       // create mock question
-      mockArticle = new QuestionsService({
+      mockQuestion = new QuestionsService({
         _id: '525a8422f6d0f87f0e407a33',
-        title: 'An Article about MEAN',
+        title: 'An Question about MEAN',
         content: 'MEAN rocks!'
       });
 
@@ -76,49 +76,49 @@
     }));
 
     describe('vm.save() as create', function () {
-      var sampleArticlePostData;
+      var sampleQuestionPostData;
 
       beforeEach(function () {
         // Create a sample question object
-        sampleArticlePostData = new QuestionsService({
-          title: 'An Article about MEAN',
+        sampleQuestionPostData = new QuestionsService({
+          title: 'An Question about MEAN',
           content: 'MEAN rocks!'
         });
 
-        $scope.vm.question = sampleArticlePostData;
+        $scope.vm.question = sampleQuestionPostData;
       });
 
       it('should send a POST request with the form input values and then locate to new object URL', inject(function (QuestionsService) {
         // Set POST response
-        $httpBackend.expectPOST('/api/questions', sampleArticlePostData).respond(mockArticle);
+        $httpBackend.expectPOST('/api/questions', sampleQuestionPostData).respond(mockQuestion);
 
         // Run controller functionality
         $scope.vm.save(true);
         $httpBackend.flush();
 
         // Test Notification success was called
-        expect(Notification.success).toHaveBeenCalledWith({ message: '<i class="glyphicon glyphicon-ok"></i> Article saved successfully!' });
+        expect(Notification.success).toHaveBeenCalledWith({ message: '<i class="glyphicon glyphicon-ok"></i> Question saved successfully!' });
         // Test URL redirection after the question was created
         expect($state.go).toHaveBeenCalledWith('admin.questions.list');
       }));
 
       it('should call Notification.error if error', function () {
         var errorMessage = 'this is an error message';
-        $httpBackend.expectPOST('/api/questions', sampleArticlePostData).respond(400, {
+        $httpBackend.expectPOST('/api/questions', sampleQuestionPostData).respond(400, {
           message: errorMessage
         });
 
         $scope.vm.save(true);
         $httpBackend.flush();
 
-        expect(Notification.error).toHaveBeenCalledWith({ message: errorMessage, title: '<i class="glyphicon glyphicon-remove"></i> Article save error!' });
+        expect(Notification.error).toHaveBeenCalledWith({ message: errorMessage, title: '<i class="glyphicon glyphicon-remove"></i> Question save error!' });
       });
     });
 
     describe('vm.save() as update', function () {
       beforeEach(function () {
         // Mock question in $scope
-        $scope.vm.question = mockArticle;
+        $scope.vm.question = mockQuestion;
       });
 
       it('should update a valid question', inject(function (QuestionsService) {
@@ -130,7 +130,7 @@
         $httpBackend.flush();
 
         // Test Notification success was called
-        expect(Notification.success).toHaveBeenCalledWith({ message: '<i class="glyphicon glyphicon-ok"></i> Article saved successfully!' });
+        expect(Notification.success).toHaveBeenCalledWith({ message: '<i class="glyphicon glyphicon-ok"></i> Question saved successfully!' });
         // Test URL location to new object
         expect($state.go).toHaveBeenCalledWith('admin.questions.list');
       }));
@@ -144,14 +144,14 @@
         $scope.vm.save(true);
         $httpBackend.flush();
 
-        expect(Notification.error).toHaveBeenCalledWith({ message: errorMessage, title: '<i class="glyphicon glyphicon-remove"></i> Article save error!' });
+        expect(Notification.error).toHaveBeenCalledWith({ message: errorMessage, title: '<i class="glyphicon glyphicon-remove"></i> Question save error!' });
       }));
     });
 
     describe('vm.remove()', function () {
       beforeEach(function () {
         // Setup questions
-        $scope.vm.question = mockArticle;
+        $scope.vm.question = mockQuestion;
       });
 
       it('should delete the question and redirect to questions', function () {
@@ -163,7 +163,7 @@
         $scope.vm.remove();
         $httpBackend.flush();
 
-        expect(Notification.success).toHaveBeenCalledWith({ message: '<i class="glyphicon glyphicon-ok"></i> Article deleted successfully!' });
+        expect(Notification.success).toHaveBeenCalledWith({ message: '<i class="glyphicon glyphicon-ok"></i> Question deleted successfully!' });
         expect($state.go).toHaveBeenCalledWith('admin.questions.list');
       });
 

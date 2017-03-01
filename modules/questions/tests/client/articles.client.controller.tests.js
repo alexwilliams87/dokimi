@@ -9,7 +9,7 @@
       $state,
       Authentication,
       QuestionsService,
-      mockArticle;
+      mockQuestion;
 
     // The $resource service augments the response object with methods for updating and deleting the resource.
     // If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
@@ -47,9 +47,9 @@
       QuestionsService = _QuestionsService_;
 
       // create mock question
-      mockArticle = new QuestionsService({
+      mockQuestion = new QuestionsService({
         _id: '525a8422f6d0f87f0e407a33',
-        title: 'An Article about MEAN',
+        title: 'An Question about MEAN',
         content: 'MEAN rocks!'
       });
 

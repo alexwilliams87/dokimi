@@ -55,13 +55,10 @@ a:hover .header-profile-image {
   margin:0 auto;
 }
 
-.topbar-brand {
-  width:68px;
-  height:68px;
+.layout-row > .flex {
+  min-width:auto;
 }
-.topbar-brand > img {
-  width:68px;
-}
+
 
 /*
  * topbar
@@ -70,11 +67,13 @@ a:hover .header-profile-image {
   background-color: rgb(103, 58, 183);
   height: 68px;
 }
-
-.layout-row > .flex {
-  min-width:auto;
+.topbar-brand {
+  width:68px;
+  height:68px;
 }
-
+.topbar-brand > img {
+  width:68px;
+}
 .topbar .nav {
   margin:0;
   padding:0;
@@ -98,7 +97,6 @@ a:hover .header-profile-image {
 .topbar dropdown[mode="hover"]:hover .md-button {
   background-color: rgba(0, 0, 0, 0.22);
 }
-
 .topbar dropdown-content {
   top:68px;
   left:0;
@@ -112,7 +110,6 @@ a:hover .header-profile-image {
 .topbar dropdown-content a:hover {
   background-color: rgba(0, 0, 0, 0.22);
 }
-
 .topbar .user-nav {
   color: #fff;
 }
@@ -131,9 +128,6 @@ a:hover .header-profile-image {
   margin-right:10px;
   font-style:italic;
   cursor:default;
-}
-.topbar .user-nav-name {
-
 }
 
 
@@ -214,6 +208,7 @@ a:hover .header-profile-image {
   display:block;
 }
 
+
 /*
  * topbar sign buttons
 **/
@@ -232,7 +227,34 @@ a:hover .header-profile-image {
 
 
 /*
- * forms (Questionnaires)
+ * select-btn
+**/
+.select-btn {
+  margin:0;
+  margin-bottom:10px;
+  height:40px;
+  background-color: #ececec;
+  display:flex;
+  text-transform:none;
+  font-weight:bold;
+  text-align:left;
+}
+.select-btn i {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  margin-right:10px;
+  transform: translateY(-50%);
+}
+.select-btn-option {
+  height:40px;
+  color: #000;
+  font-weight:bold;
+}
+
+
+/*
+ * form (Questionnaire)
 **/
 .form-editor {
   background-color: #fff;
@@ -244,9 +266,6 @@ a:hover .header-profile-image {
 .form-content-title {
   margin-bottom:0;
 }
-.form-field-subject md-input-container {
-  margin-top:3px;
-}
 .form-editor-menu {
   border-left: 1px solid #d7d7d7;
 }
@@ -256,54 +275,47 @@ a:hover .header-profile-image {
 .form-editor-menu md-list-item {
   padding:5px;
 }
-
-.form-editor-fields {
+.form-editor-questions {
   border-top: 2px dotted #673ab7;
   padding-top:30px;
 }
-.form-field-body {
+.form-editor-question:not(:first-child) {
+  margin-top:30px;
+}
+
+/*
+ * create-question
+**/
+.create-question-body {
   padding:10px;
   background-color:#f8f8f8;
 }
-.form-field-content{
+.create-question-content {
   padding-right:10px;
 }
-.form-field-props {
+.create-question-props {
   padding-left:10px;
 }
-
-
-.form-field-footer {
-  background-color: #ececec;
-  padding: 20px;
+.create-question-subject md-input-container {
+  margin-top:7px;
 }
-
-.form-prop-btn {
-  margin:0;
-  margin-bottom:10px;
-  background-color: #ececec;
-  display:flex;
-  text-transform:none;
-  font-weight:bold;
-}
-.form-prop-btn i {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-
-.form-field-question md-input-container {
+.create-question-fields md-input-container {
   font-size:14px;
   margin-bottom:0;
   margin-top:0;
 }
-.form-field-question md-input-container md-icon {
+.create-question-fields md-input-container md-icon {
   color: #818181;
 }
+.create-question-footer {
+  display:flex;
+  justify-content:space-between;
+  padding: 20px;
+  background-color: #ececec;
+}
 
-.form-formissing {
+
+/*.form-formissing {
   cursor:default;
 }
 .form-input-formissing {
@@ -314,12 +326,11 @@ a:hover .header-profile-image {
   border:0;
   font-size: 16px;
   color: #0bbecf;
-  max-width: 45px; /* par exemple */
-}
+  max-width: 45px;
+}*/
 
-
-.form-field-footer {
-  display:flex;
-  justify-content:space-between;
-}
 /* template insertion */
+
+md-select-menu {
+  border: 1px solid #cbcbcb;
+}

@@ -27,9 +27,10 @@
     var directive = {
       restrict: 'E',
       scope: {
-        io:     '=',
-        type:   '@',
-        locked: '='
+        io:       '=',
+        type:     '@',
+        locked:   '=',
+        readonly: '='
       },
       templateUrl: '/modules/questions/client/directives/templates/dk-create-select.client.directive.template.html',
       link: link
@@ -38,8 +39,22 @@
     return directive;
 
     function link(scope, element, attrs) {
+      if (!scope.io) {
+        scope.io = [
+          {
+            value:   null,
+            checked: false,
+            readonly: scope.readonly ? true : undefined
+          }
+        ];
+      }
+
       scope.add = function() {
-        if (!scope.locked) scope.io.push({value: '', checked: false});
+        if (!scope.locked) scope.io.push({
+          value: '',
+          checked: false,
+          readonly: scope.readonly ? true : undefined
+        });
       }
 
       scope.toggle = function(currentIndex) {

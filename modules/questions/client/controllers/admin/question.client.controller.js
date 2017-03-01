@@ -16,17 +16,17 @@
     vm.remove = remove;
     vm.save = save;
 
-    // Remove existing Article
+    // Remove existing Question
     function remove() {
       if ($window.confirm('Are you sure you want to delete?')) {
         vm.question.$remove(function() {
           $state.go('admin.questions.list');
-          Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Article deleted successfully!' });
+          Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Question deleted successfully!' });
         });
       }
     }
 
-    // Save Article
+    // Save Question
     function save(isValid) {
       if (!isValid) {
         $scope.$broadcast('show-errors-check-validity', 'vm.form.questionForm');
@@ -39,12 +39,12 @@
         .catch(errorCallback);
 
       function successCallback(res) {
-        $state.go('admin.questions.list'); // should we send the User to the list or the updated Article's view?
-        Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Article saved successfully!' });
+        $state.go('admin.questions.list'); // should we send the User to the list or the updated Question's view?
+        Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Question saved successfully!' });
       }
 
       function errorCallback(res) {
-        Notification.error({ message: res.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Article save error!' });
+        Notification.error({ message: res.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Question save error!' });
       }
     }
   }

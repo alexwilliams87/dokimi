@@ -5,7 +5,7 @@ var should = require('should'),
   path = require('path'),
   mongoose = require('mongoose'),
   User = mongoose.model('User'),
-  Article = mongoose.model('Article'),
+  Question = mongoose.model('Question'),
   express = require(path.resolve('./config/lib/express'));
 
 /**
@@ -18,9 +18,9 @@ var app,
   question;
 
 /**
- * Article routes tests
+ * Question routes tests
  */
-describe('Article Admin CRUD tests', function () {
+describe('Question Admin CRUD tests', function () {
   before(function (done) {
     // Get application
     app = express.init(mongoose);
@@ -51,8 +51,8 @@ describe('Article Admin CRUD tests', function () {
     // Save a user to the test db and create new question
     user.save(function () {
       question = {
-        title: 'Article Title',
-        content: 'Article Content'
+        title: 'Question Title',
+        content: 'Question Content'
       };
 
       done();
@@ -95,7 +95,7 @@ describe('Article Admin CRUD tests', function () {
 
                 // Set assertions
                 (questions[0].user._id).should.equal(userId);
-                (questions[0].title).should.match('Article Title');
+                (questions[0].title).should.match('Question Title');
 
                 // Call the assertion callback
                 done();
@@ -227,7 +227,7 @@ describe('Article Admin CRUD tests', function () {
   it('should be able to get a single question if signed in and verify the custom "isCurrentUserOwner" field is set to "true"', function (done) {
     // Create new question model instance
     question.user = user;
-    var questionObj = new Article(question);
+    var questionObj = new Question(question);
 
     agent.post('/api/auth/signin')
       .send(credentials)
@@ -276,7 +276,7 @@ describe('Article Admin CRUD tests', function () {
 
   afterEach(function (done) {
     User.remove().exec(function () {
-      Article.remove().exec(done);
+      Question.remove().exec(done);
     });
   });
 });

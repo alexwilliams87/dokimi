@@ -9,7 +9,7 @@
       $state,
       Authentication,
       QuestionsService,
-      mockArticle;
+      mockQuestion;
 
     // The $resource service augments the response object with methods for updating and deleting the resource.
     // If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
@@ -47,9 +47,9 @@
       QuestionsService = _QuestionsService_;
 
       // create mock question
-      mockArticle = new QuestionsService({
+      mockQuestion = new QuestionsService({
         _id: '525a8422f6d0f87f0e407a33',
-        title: 'An Article about MEAN',
+        title: 'An Question about MEAN',
         content: 'MEAN rocks!'
       });
 
@@ -68,15 +68,15 @@
     }));
 
     describe('Instantiate', function () {
-      var mockArticleList;
+      var mockQuestionList;
 
       beforeEach(function () {
-        mockArticleList = [mockArticle, mockArticle];
+        mockQuestionList = [mockQuestion, mockQuestion];
       });
 
       it('should send a GET request and return all questions', inject(function (QuestionsService) {
         // Set POST response
-        $httpBackend.expectGET('/api/questions').respond(mockArticleList);
+        $httpBackend.expectGET('/api/questions').respond(mockQuestionList);
 
         // Ignore parent template get on state transition
         $httpBackend.whenGET('/modules/core/client/views/home.client.view.html').respond(200, '');
@@ -85,8 +85,8 @@
 
         // Test form inputs are reset
         expect($scope.vm.questions.length).toEqual(2);
-        expect($scope.vm.questions[0]).toEqual(mockArticle);
-        expect($scope.vm.questions[1]).toEqual(mockArticle);
+        expect($scope.vm.questions[0]).toEqual(mockQuestion);
+        expect($scope.vm.questions[1]).toEqual(mockQuestion);
 
       }));
     });

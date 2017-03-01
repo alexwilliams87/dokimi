@@ -5,9 +5,9 @@
     .module('forms.admin')
     .controller('FormsAdminController', FormsAdminController);
 
-  FormsAdminController.$inject = ['$scope', '$state', '$window', 'formResolve', 'Authentication', 'Notification'];
+  FormsAdminController.$inject = ['$scope', '$state', '$window', 'formResolve', 'Authentication', 'Notification', '$mdDialog', 'DomainsService', 'ThemesService'];
 
-  function FormsAdminController($scope, $state, $window, form, Authentication, Notification) {
+  function FormsAdminController($scope, $state, $window, form, Authentication, Notification, $mdDialog, DomainsService, ThemesService) {
     var vm = this;
 
     vm.form = form;
@@ -16,23 +16,21 @@
     vm.remove = remove;
     vm.save = save;
 
-    vm.resmiss = {
-      content: '',
-      values: []
-    };
+    vm.domains = DomainsService.query();
+    vm.themes  = ThemesService.query();
 
-    vm.select = [
-      {
-        value:   'Option 1',
-        checked: true,
-        readonly: true
-      },
-      {
-        value:   'Option 2',
-        checked: false,
-        readonly: true
-      }
-    ];
+    vm.add = function() {
+      vm.questions.push({});
+    }
+
+    vm.questions = [];
+
+    var originatorEv;
+
+    vm.openMenu = function($mdMenu, ev) {
+      originatorEv = ev;
+      $mdMenu.open(ev);
+    };
 
     // Remove existing Form
     function remove() {

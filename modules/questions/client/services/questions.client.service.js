@@ -8,7 +8,7 @@
   QuestionsService.$inject = ['$resource', '$log'];
 
   function QuestionsService($resource, $log) {
-    var Article = $resource('/api/questions/:questionId', {
+    var Question = $resource('/api/questions/:questionId', {
       questionId: '@_id'
     }, {
       update: {
@@ -16,14 +16,14 @@
       }
     });
 
-    angular.extend(Article.prototype, {
+    angular.extend(Question.prototype, {
       createOrUpdate: function () {
         var question = this;
         return createOrUpdate(question);
       }
     });
 
-    return Article;
+    return Question;
 
     function createOrUpdate(question) {
       if (question._id) {

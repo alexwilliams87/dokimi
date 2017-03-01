@@ -6,24 +6,24 @@
   </div>
 </md-toolbar>
 
-  <div class="list-group">
-    <form name="vm.form.domainForm" class="form-horizontal" ng-submit="vm.save(vm.form.domainForm.$valid)" novalidate>
-      <fieldset layout="column">
-      <md-input-container>
-        <div class="form-group" show-errors>
-          <label class="control-label" for="domain">Domaine</label>
-          <input name="name" type="text" ng-model="vm.domain.name" id="name" class="form-control" placeholder="Domain" required autofocus>
-          <div ng-messages="vm.form.domainForm.name.$error" role="alert">
-            <p class="help-block error-text" ng-message="required">Nom de domaine requis.</p>
-          </div>
+<div class="list-group">
+  <form name="vm.form.domainForm" class="form-horizontal" ng-submit="vm.save(vm.form.domainForm.$valid)" novalidate>
+    <fieldset layout="column">
+    <md-input-container>
+      <div class="form-group" show-errors>
+        <label class="control-label" for="domain">Domaine</label>
+        <input name="name" type="text" ng-model="vm.domain.name" id="name" class="form-control" placeholder="Domain" required autofocus>
+        <div ng-messages="vm.form.domainForm.name.$error" role="alert">
+          <p class="help-block error-text" ng-message="required">Nom de domaine requis.</p>
         </div>
-      </md-input-container>
+      </div>
+    </md-input-container>
 
-      <md-input-container>
-        <div class="form-group">
-          <md-button type="submit" class="md-raised md-primary">{{vm.domain._id ? 'Editer' : 'Créer'}}</md-button>
-        </div>
-      </md-input-container>
-      </fieldset>
-    </form>
-  </div>
+    <md-input-container>
+      <div class="form-group">
+        <md-button type="submit" class="md-raised md-primary">{{vm.domain._id ? 'Editer' : 'Créer'}}</md-button>
+      </div>
+    </md-input-container>
+    </fieldset>
+  </form>
+</div>

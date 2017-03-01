@@ -60,23 +60,23 @@
       describe('View Route', function () {
         var viewstate,
           QuestionsController,
-          mockArticle;
+          mockQuestion;
 
         beforeEach(inject(function ($controller, $state, $templateCache) {
           viewstate = $state.get('questions.view');
           $templateCache.put('/modules/questions/client/views/view-question.client.view.html', '');
 
           // create mock question
-          mockArticle = new QuestionsService({
+          mockQuestion = new QuestionsService({
             _id: '525a8422f6d0f87f0e407a33',
-            title: 'An Article about MEAN',
+            title: 'An Question about MEAN',
             content: 'MEAN rocks!'
           });
 
           // Initialize Controller
           QuestionsController = $controller('QuestionsController as vm', {
             $scope: $scope,
-            questionResolve: mockArticle
+            questionResolve: mockQuestion
           });
         }));
 
@@ -96,7 +96,7 @@
         }));
 
         it('should attach an question to the controller scope', function () {
-          expect($scope.vm.question._id).toBe(mockArticle._id);
+          expect($scope.vm.question._id).toBe(mockQuestion._id);
         });
 
         it('Should not be abstract', function () {

@@ -5,7 +5,7 @@ var should = require('should'),
   path = require('path'),
   mongoose = require('mongoose'),
   User = mongoose.model('User'),
-  Article = mongoose.model('Article'),
+  Question = mongoose.model('Question'),
   express = require(path.resolve('./config/lib/express'));
 
 /**
@@ -18,9 +18,9 @@ var app,
   question;
 
 /**
- * Article routes tests
+ * Question routes tests
  */
-describe('Article CRUD tests', function () {
+describe('Question CRUD tests', function () {
 
   before(function (done) {
     // Get application
@@ -51,8 +51,8 @@ describe('Article CRUD tests', function () {
     // Save a user to the test db and create new question
     user.save(function () {
       question = {
-        title: 'Article Title',
-        content: 'Article Content'
+        title: 'Question Title',
+        content: 'Question Content'
       };
 
       done();
@@ -112,7 +112,7 @@ describe('Article CRUD tests', function () {
 
   it('should be able to get a list of questions if not signed in', function (done) {
     // Create new question model instance
-    var questionObj = new Article(question);
+    var questionObj = new Question(question);
 
     // Save the question
     questionObj.save(function () {
@@ -131,7 +131,7 @@ describe('Article CRUD tests', function () {
 
   it('should be able to get a single question if not signed in', function (done) {
     // Create new question model instance
-    var questionObj = new Article(question);
+    var questionObj = new Question(question);
 
     // Save the question
     questionObj.save(function () {
@@ -151,7 +151,7 @@ describe('Article CRUD tests', function () {
     request(app).get('/api/questions/test')
       .end(function (req, res) {
         // Set assertion
-        res.body.should.be.instanceof(Object).and.have.property('message', 'Article is invalid');
+        res.body.should.be.instanceof(Object).and.have.property('message', 'Question is invalid');
 
         // Call the assertion callback
         done();
@@ -195,7 +195,7 @@ describe('Article CRUD tests', function () {
     question.user = user;
 
     // Create new question model instance
-    var questionObj = new Article(question);
+    var questionObj = new Question(question);
 
     // Save the question
     questionObj.save(function () {
@@ -303,7 +303,7 @@ describe('Article CRUD tests', function () {
 
   it('should be able to get a single question if not signed in and verify the custom "isCurrentUserOwner" field is set to "false"', function (done) {
     // Create new question model instance
-    var questionObj = new Article(question);
+    var questionObj = new Question(question);
 
     // Save the question
     questionObj.save(function () {
@@ -326,7 +326,7 @@ describe('Article CRUD tests', function () {
       password: 'M3@n.jsI$Aw3$0m3'
     };
 
-    // Create user that will create the Article
+    // Create user that will create the Question
     var _questionOwner = new User({
       firstName: 'Full',
       lastName: 'Name',
@@ -344,7 +344,7 @@ describe('Article CRUD tests', function () {
         return done(err);
       }
 
-      // Sign in with the user that will create the Article
+      // Sign in with the user that will create the Question
       agent.post('/api/auth/signin')
         .send(_creds)
         .expect(200)
@@ -408,7 +408,7 @@ describe('Article CRUD tests', function () {
 
   afterEach(function (done) {
     User.remove().exec(function () {
-      Article.remove().exec(done);
+      Question.remove().exec(done);
     });
   });
 });

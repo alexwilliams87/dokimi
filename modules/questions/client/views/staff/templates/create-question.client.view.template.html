@@ -1,0 +1,65 @@
+<div>
+  <div class="create-question-body" layout="row">
+    <div class="create-question-content" flex="70">
+      <div class="create-question-subject">
+        <md-input-container md-no-float class="md-block">
+          <textarea ng-model="question.subject" placeholder="Enoncé de la question"></textarea>
+        </md-input-container>
+      </div>
+
+      <div class="create-question-fields">
+        <dk-create-select io="question.body.response" ng-if="question.body.type === 'radio'" type="radio"></dk-create-select>
+        <dk-create-select io="question.body.response" ng-if="question.body.type === 'checkbox'" type="checkbox"></dk-create-select>
+        <dk-create-boolean io="question.body.response" ng-if="question.body.type === 'boolean'" type="radio" locked="true"></dk-create-boolean>
+        <dk-create-missing io="question.body.response" ng-if="question.body.type === 'missing'"></dk-create-missing>
+        <dk-create-regmissing io="question.body.response" ng-if="question.body.type === 'regmissing'"></dk-create-regmissing>
+        <dk-create-opened io="question.body.response" ng-if="question.body.type === 'opened'"></dk-create-opened>
+        <dk-create-ranking io="question.body.response" ng-if="question.body.type === 'ranking'"></dk-create-ranking>
+      </div>
+    </div>
+
+    <div class="create-question-props" flex="30" layout="column">
+      <md-select ng-model="domain" ng-model-options="{trackBy: '$value._id'}" class="md-no-underline md-button select-btn" placeholder="Domaines">
+        <md-option ng-repeat="domain in vm.domains" ng-value="domain" class="select-btn-option">
+          {{ domain.name }}
+        </md-option>
+      </md-select>
+      <md-select ng-model="question.theme" ng-model-options="{trackBy: '$value._id'}" class="md-no-underline md-button select-btn" placeholder="Themes">
+        <md-option ng-repeat="theme in vm.themes | filter:domain.name" ng-value="theme" class="select-btn-option">
+          {{ theme.name }}
+        </md-option>
+      </md-select>
+
+      <md-select ng-change="question.body.response = null" ng-model="question.body.type" class="md-no-underline md-button select-btn" placeholder="Type de questions">
+        <md-option class="select-btn-option" ng-value="'radio'">Choix multiples</md-option>
+        <md-option class="select-btn-option" ng-value="'checkbox'">Réponses multiples</md-option>
+        <md-option class="select-btn-option" ng-value="'boolean'">Vrai ou faux</md-option>
+        <md-option class="select-btn-option" ng-value="'missing'">Texte manquant</md-option>
+        <md-option class="select-btn-option" ng-value="'regmissing'">Texte manquant (regex)</md-option>
+        <md-option class="select-btn-option" ng-value="'opened'">Question ouverte</md-option>
+        <md-option class="select-btn-option" ng-value="'ranking'">Classement</md-option>
+      </md-select>
+      <p>Pondération : </p>
+      <md-radio-group ng-model="question.point">
+        <md-radio-button ng-value="1">1</md-radio-button>
+        <md-radio-button ng-value="2">2</md-radio-button>
+        <md-radio-button ng-value="3">3</md-radio-button>
+        <md-radio-button ng-value="4">4</md-radio-button>
+        <md-radio-button ng-value="5">5</md-radio-button>
+      </md-radio-group>
+    </div>
+  </div>
+
+  <div class="create-question-footer">
+    <div class="create-question-footer-left">
+      <md-button class="md-icon-button" ng-click="" aria-label="Supprimer la question">
+        <md-icon class="material-icons">delete</md-icon>
+      </md-button>
+    </div>
+    <div class="create-question-footer-right">
+      <md-button class="md-icon-button" ng-click="vm.save(question)" aria-label="Envoyer la question">
+        <md-icon class="material-icons">done</md-icon>
+      </md-button>
+    </div>
+  </div>
+</div>

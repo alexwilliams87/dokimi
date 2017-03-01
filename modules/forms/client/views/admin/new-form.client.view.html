@@ -4,128 +4,24 @@
   </div>
 
   <div class="form-editor" layout="row">
-    <div flex="80" class="form-editor-content">
+    <div class="form-editor-content" flex="80">
       <md-input-container class="form-content-title md-block">
-        <input ng-model="user.address" placeholder="Titre du questionnaire">
+        <input ng-model="form.title" placeholder="Titre du questionnaire">
       </md-input-container>
-      <md-input-container md-no-float class="form-content-description md-block">
-        <input ng-model="user.phone" type="text" placeholder="Descriptif du questionnaire">
+      <md-input-container class="md-block" md-no-float>
+        <input ng-model="form.description" type="text" placeholder="Descriptif du questionnaire">
       </md-input-container>
 
-      <div class="form-editor-fields">
-
-        <div class="form-editor-field" md-whiteframe="5">
-          <div class="form-field-body" layout="row">
-            <div class="form-field-content" flex="70">
-              <div class="form-field-subject">
-                <md-input-container md-no-float class="form-content-description md-block">
-                  <textarea placeholder="Enoncé de la question"></textarea>
-                </md-input-container>
-              </div>
-
-              <div class="form-field-question">
-
-                <!-- template insertion [choix-multiple] -->
-                <md-input-container md-no-float class="form-content-description md-block">
-                  <md-icon class="material-icons">radio_button_unchecked</md-icon>
-                  <input type="text" placeholder="Option 1">
-                  <md-icon class="material-icons">close</md-icon>
-                </md-input-container>
-                <md-input-container md-no-float class="form-content-description md-block">
-                  <md-icon class="material-icons">radio_button_unchecked</md-icon>
-                  <input type="text" placeholder="Option 1">
-                  <md-icon class="material-icons">close</md-icon>
-                </md-input-container>
-
-                <div layout="row" layout-align="center center">
-                  <md-button class="md-fab md-mini" aria-label="Comment">
-                    <md-icon flex class="material-icons">add</md-icon>
-                  </md-button>
-                </div>
-                <!-- template insertion [choix-multiple] -->
-
-                <!-- template insertion [reponses-multiple] -->
-                <md-input-container md-no-float class="form-content-description md-block">
-                  <md-icon class="material-icons">check_box_outline_blank</md-icon>
-                  <input type="text" placeholder="Option 1">
-                </md-input-container>
-                <md-input-container md-no-float class="form-content-description md-block">
-                  <md-icon class="material-icons">check_box</md-icon>
-                  <input type="text" placeholder="Option 1">
-                </md-input-container>
-                <!-- template insertion [reponses-multiple] -->
-
-                <!-- template insertion [vrai ou faux] -->
-                <md-input-container md-no-float class="form-content-description md-block">
-                  <md-icon class="material-icons">radio_button_unchecked</md-icon>
-                  <input type="text" placeholder="Vrai" readonly>
-                </md-input-container>
-                <md-input-container md-no-float class="form-content-description md-block">
-                  <md-icon class="material-icons">radio_button_unchecked</md-icon>
-                  <input type="text" placeholder="Faux" readonly>
-                </md-input-container>
-                <!-- template insertion [vrai ou faux] -->
-
-
-                <!-- template insertion [text manquant] -->
-
-                <p class="form-formissing">
-                  Gniark<md-input-container md-no-float class="form-input-formissing"><input maxlength="4" size="4" type="text" placeholder="..."></md-input-container> Regniark
-                </p>
-
-                <md-input-container md-no-float class="form-content-description md-block">
-                  <textarea placeholder="Réponse à champs manquants"></textarea>
-                </md-input-container>
-                <!-- template insertion [text manquant] -->
-
-                <!-- template insertion [question ouverte] -->
-                <p class="form-formissing">
-                  <md-input-container md-no-float class="form-content-description md-block">
-                    <textarea placeholder="Réponse ouverte"></textarea>
-                  </md-input-container>
-                </p>
-                <!-- template insertion [question ouverte] -->
-
-              </div>
-            </div>
-
-            <div class="form-field-props" flex="30" layout="column">
-              <md-button class="form-prop-btn">Domaines <i class="material-icons" flex>arrow_drop_down</i></md-button>
-              <md-button class="form-prop-btn">Thèmes <i class="material-icons" flex>arrow_drop_down</i></md-button>
-              <md-button class="form-prop-btn">Cases à cochées <i class="material-icons" flex>arrow_drop_down</i></md-button>
-              <p>Pondération : </p>
-              <md-radio-group ng-model="data.group1">
-                <md-radio-button value="1">1</md-radio-button>
-                <md-radio-button value="2">2</md-radio-button>
-                <md-radio-button value="3">3</md-radio-button>
-                <md-radio-button value="4">4</md-radio-button>
-                <md-radio-button value="5">5</md-radio-button>
-              </md-radio-group>
-            </div>
-          </div>
-          <div class="form-field-footer">
-            <div class="form-field-footer-left">
-              <md-button class="md-icon-button" aria-label="More">
-                <md-icon class="material-icons">delete</md-icon>
-              </md-button>
-            </div>
-            <div class="form-field-footer-right">
-              <md-button class="md-icon-button" aria-label="More">
-                <md-icon class="material-icons">done</md-icon>
-              </md-button>
-            </div>
-          </div>
+      <div class="form-editor-questions">
+        <div class="form-editor-question" ng-repeat="question in vm.questions" md-whiteframe="5">
+          <div class="slide-animate" ng-include src="'/modules/questions/client/views/staff/templates/create-question.client.view.template.html'"></div>
         </div>
-
       </div>
     </div>
-    <div flex="20" class="form-editor-menu">
+
+    <div class="form-editor-menu" flex="20">
       <md-list flex>
-        <md-list-item ng-click="navigateTo(setting.extraScreen, $event)" ng-repeat="item in vm.menu">
-          <md-icon md-svg-icon="{{ item.icon }}"></md-icon>
-          <p> {{ item.name }} </p>
-        </md-list-item>
-        <md-list-item ng-click="navigateTo('data usage', $event)">
+        <md-list-item ng-click="vm.add()">
           <md-icon class="material-icons">add</md-icon>
           <p>Ajouter</p>
         </md-list-item>
@@ -140,8 +36,5 @@
       </md-list>
     </div>
   </div>
-
-
-  <dk-create-select  io="vm.select"></dk-create-select>
-  <dk-create-missing io="vm.resmiss"></dk-create-missing>
-  <dk-create-ranking io="vm.resmiss"></dk-create-ranking>
+</div>
+{{ vm.questions }}

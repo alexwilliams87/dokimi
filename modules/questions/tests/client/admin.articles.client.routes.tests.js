@@ -60,19 +60,19 @@
       describe('Create Route', function () {
         var createstate,
           QuestionsAdminController,
-          mockArticle;
+          mockQuestion;
 
         beforeEach(inject(function ($controller, $state, $templateCache) {
           createstate = $state.get('admin.questions.create');
           $templateCache.put('/modules/questions/client/views/admin/form-question.client.view.html', '');
 
           // Create mock question
-          mockArticle = new QuestionsService();
+          mockQuestion = new QuestionsService();
 
           // Initialize Controller
           QuestionsAdminController = $controller('QuestionsAdminController as vm', {
             $scope: $scope,
-            questionResolve: mockArticle
+            questionResolve: mockQuestion
           });
         }));
 
@@ -90,7 +90,7 @@
         }));
 
         it('should attach an question to the controller scope', function () {
-          expect($scope.vm.question._id).toBe(mockArticle._id);
+          expect($scope.vm.question._id).toBe(mockQuestion._id);
           expect($scope.vm.question._id).toBe(undefined);
         });
 
@@ -106,23 +106,23 @@
       describe('Edit Route', function () {
         var editstate,
           QuestionsAdminController,
-          mockArticle;
+          mockQuestion;
 
         beforeEach(inject(function ($controller, $state, $templateCache) {
           editstate = $state.get('admin.questions.edit');
           $templateCache.put('/modules/questions/client/views/admin/form-question.client.view.html', '');
 
           // Create mock question
-          mockArticle = new QuestionsService({
+          mockQuestion = new QuestionsService({
             _id: '525a8422f6d0f87f0e407a33',
-            title: 'An Article about MEAN',
+            title: 'An Question about MEAN',
             content: 'MEAN rocks!'
           });
 
           // Initialize Controller
           QuestionsAdminController = $controller('QuestionsAdminController as vm', {
             $scope: $scope,
-            questionResolve: mockArticle
+            questionResolve: mockQuestion
           });
         }));
 
@@ -142,7 +142,7 @@
         }));
 
         it('should attach an question to the controller scope', function () {
-          expect($scope.vm.question._id).toBe(mockArticle._id);
+          expect($scope.vm.question._id).toBe(mockQuestion._id);
         });
 
         it('Should not be abstract', function () {

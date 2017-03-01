@@ -1,13 +1,13 @@
 /**
- * <dk-create-missing></dk-create-missing>
- * <dk-create-missing io="vm.resmiss"></dk-create-missing>
+ * <dk-create-regmissing></dk-create-regmissing>
+ * <dk-create-regmissing io="vm.resmiss"></dk-create-regmissing>
  *
  * Permets de générer un texte à champs manquants
  *
  * @param {Object=} io l'objet généré qui définit le texte et ses champs
  *     resmiss = {
  *       content: 'Quel est son nom ? %s',
- *       values: ['Julien']
+ *       values: ['/Julien|Sophie/i']
  *     };
  */
 
@@ -15,9 +15,9 @@
   'use strict';
 
   angular.module('questions')
-    .directive('dkCreateMissing', dkCreateMissing);
+    .directive('dkCreateRegmissing', dkCreateRegmissing);
 
-  function dkCreateMissing() {
+  function dkCreateRegmissing() {
     var directive = {
       restrict: 'E',
       scope: {
@@ -29,12 +29,23 @@
 
     return directive;
 
+    RegExp.escape= function(s) {
+      return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    };
+
     function compile(source, build) {
-      build.values = [];
       var i = 0;
 
       var simplified = source.replace(/<\?([\s\S]*?)\?>/g, function(str, p1) {
-        build.values[i] = p1;
+
+        try {
+          var rg = new RegExp(p1, 'i');
+        } catch(e) {
+          console.log(e);
+          return e;
+        }
+
+        build.values[i] = rg;
         i++;
 
         return '%s';
