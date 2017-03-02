@@ -13,14 +13,14 @@ var _ = require('lodash'),
   User = mongoose.model('User'),
   validator = require('validator');
 
-var whitelistedFields = ['firstName', 'lastName', 'email', 'username'];
+var whitelistedFields = ['firstName', 'lastName', 'email', 'username', 'domain'];
 
 /**
  * Update user details
  */
 exports.update = function (req, res) {
   // Init Variables
-  var user = req.user;
+ var user = req.user;
 
   if (user) {
     // Update whitelisted fields only
@@ -150,6 +150,7 @@ exports.me = function (req, res) {
       displayName: validator.escape(req.user.displayName),
       provider: validator.escape(req.user.provider),
       username: validator.escape(req.user.username),
+      domain: validator.escape(req.user.domain),
       created: req.user.created.toString(),
       roles: req.user.roles,
       profileImageURL: req.user.profileImageURL,

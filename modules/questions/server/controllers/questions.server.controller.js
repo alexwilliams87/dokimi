@@ -83,7 +83,14 @@ exports.delete = function (req, res) {
  * List of Questions
  */
 exports.list = function (req, res) {
-  Question.find().sort('-created').populate('user', 'displayName').exec(function (err, questions) {
+  Question.find().sort('-created').populate('user', 'displayName')
+  .populate({
+    path:     'theme',     
+    populate: { path:  'domain'
+      //model: 'Domain' 
+    }
+  })
+  .exec(function (err, questions) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)

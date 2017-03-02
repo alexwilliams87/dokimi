@@ -3,16 +3,56 @@
     <h1>Questions</h1>
   </div>
   <div class="list-group">
-    <a ng-repeat="question in vm.questions" ui-sref="questions.view({ questionId: question._id })" class="list-group-item">
-      <small class="list-group-item-text">
-        Posted on
-        <span ng-bind="question.created | date:'mediumDate'"></span>
-        by
-        <span ng-if="question.user" ng-bind="question.user.displayName"></span>
-        <span ng-if="!question.user">Deleted User</span>
-      </small>
-      <h4 class="list-group-item-heading" ng-bind="question.title"></h4>
-      <p class="list-group-item-text" ng-bind="question.content"></p>
-    </a>
+
+    <div class="ordering" layout="row" layout-align="center">
+      
+      <md-input-container>
+        <input type="text" ng-model="search" placeholder="Recherche">
+      </md-input-container>
+
+      <md-input-container>
+        <label>Domaines</label>
+        <md-select ng-model="domain" placeholder="Domaines">
+          <md-option ng-repeat="domain in vm.domains" ng-value="domain">
+            {{ domain.name }}
+          </md-option>
+        </md-select>
+      </md-input-container>
+
+      <md-input-container>
+        <label>Thèmes</label>
+        <md-select ng-model="themelist" multiple>
+          <md-option ng-value="theme.name" ng-repeat="theme in vm.themes | filter:domain.name">{{ theme.name }}</md-option>
+        </md-select>
+      </md-input-container>
+
+    </div>
+    
+    <md-table-container>
+      <table md-table>
+        <thead md-head md-order="vm.orderBy">
+           <tr md-row>
+             <th md-column>Enoncé de la question</th>
+             <th md-column>Créateur</th>
+             <th md-column>Thème</th>
+             <th md-column>Domaine</th>
+          </tr>
+        </thead>
+        <tbody md-body>
+          <tr md-row ng-repeat="question in vm.questions" ng-show="(question.subject.indexOf(search) !== -1 || search.length === 0 || !search.length) && (themelist.indexOf(question.theme.name) !== -1 || themelist.length === 0 )">
+            <td md-cell>{{ question.subject }}</td>
+            <td md-cell>{{ question.user.displayName }}</td>
+            <td md-cell>{{ question.theme.name }}</td>
+            <td md-cell>{{ question.theme.domain.name }}</td>
+            <td md-cell><a class="dark-icon" data-ui-sref="staff.questions.edit({questionId: question._id})"><i class="material-icons">mode_edit</i></a></td>
+            <td md-cell><a class="dark-icon" ng-click="vm.remove(question, $event)"><i class="material-icons">delete</i></a></td>
+          </tr>
+        </tbody>
+      </table>
+    </md-table-container>
+  </div>
+
+  <div class="alert alert-warning text-center" data-ng-if="questions.$resolved && !questions.length">
+    No questions yet, why don't you <a data-ui-sref="staff.questions.create">create one</a>?
   </div>
 </section>

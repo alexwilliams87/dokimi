@@ -26,8 +26,8 @@
             <label for="email">Email</label>
             <input type="email" id="email" name="email" class="form-control" ng-model="vm.credentials.email" placeholder="adresse@domaine.fr" lowercase required>
             <div ng-messages="vm.userForm.email.$error" role="alert">
-              <p class="help-block error-text" ng-message="required">Email address requise.</p>
-              <p class="help-block error-text" ng-message="email">Email address invalide.</p>
+              <p class="help-block error-text" ng-message="required">Adresse mail requise.</p>
+              <p class="help-block error-text" ng-message="email">Adresse mail invalide.</p>
             </div>
           </md-input-container>
         </div>
@@ -36,7 +36,7 @@
             <label for="username">Nom d'utilisateur</label>
             <input type="text" id="username" name="username" class="form-control" ng-model="vm.credentials.username" ng-pattern="vm.usernameRegex" placeholder="Nom d'utilisateur" lowercase required>
             <div ng-messages="vm.userForm.username.$error" role="alert">
-              <p class="help-block error-text" ng-message="required">Username requis.</p>
+              <p class="help-block error-text" ng-message="required">Nom d'utilisateur requis.</p>
               <p class="help-block error-text" ng-message="pattern">Entrez un nom d'utilisateur valide : plus de 3 caractères, mot non restraint, les caractères "_-." sont présents, pas de points consécutifs, ne doit pas commencer ou finir par un point, lettres de a à z et chiffres de 0 à 9.</p>
             </div>
           </md-input-container>
@@ -53,6 +53,22 @@
             </div>
           </md-input-container>
         </div>
+
+        <div class="form-group">
+          <md-input-container>
+            <label class="control-label" for="domain">Domaine</label>
+            <md-select ng-model="vm.theme.domain" ng-model-options="{trackBy: '$value._id'}" id="domain" class="form-control" required>
+  
+              <md-option ng-repeat="domain in vm.domains | orderBy:'name'" ng-value="domain">{{ domain.name }}</md-option>
+
+            </md-select>
+
+            <div ng-messages="vm.form.themeForm.domain.$error" role="alert">
+              <p class="help-block error-text" ng-message="required">Domaine requis.</p>
+            </div>
+          </md-input-container>
+        </div>
+
         <!-- <div class="form-group" ng-show="!vm.userForm.password.$error.required">
           <label>Password Requirements</label>
           <uib-progressbar value="requirementsProgress" type="{{requirementsColor}}"><span style="color:white; white-space:nowrap;">{{requirementsProgress}}%</span></uib-progressbar>

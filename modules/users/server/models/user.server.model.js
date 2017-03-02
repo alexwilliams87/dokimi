@@ -118,6 +118,10 @@ var UserSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  domain: {
+    type: Schema.ObjectId,
+    ref: 'Domain'
+  },
   /* For reset password */
   resetPasswordToken: {
     type: String
