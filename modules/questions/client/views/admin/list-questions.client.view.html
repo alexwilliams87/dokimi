@@ -7,19 +7,28 @@
       </a>
     </h1>
   </div>
+
   <div class="list-group">
-    <a data-ng-repeat="question in vm.questions" data-ui-sref="admin.questions.edit({questionId: question._id})" class="list-group-item">
-      <small class="list-group-item-text">
-        Posted on
-        <span data-ng-bind="question.created | date:'mediumDate'"></span>
-        by
-        <span ng-if="question.user" ng-bind="question.user.displayName"></span>
-        <span ng-if="!question.user">Deleted User</span>
-      </small>
-      <h4 class="list-group-item-heading" data-ng-bind="question.title"></h4>
-      <p class="list-group-item-text" data-ng-bind="question.content"></p>
-    </a>
+    <md-table-container>
+      <table md-table>
+        <thead md-head md-order="vm.orderBy">
+           <tr md-row>
+             <th md-column>Enoncé de la question</th>
+             <th md-column>Créateur</th>
+          </tr>
+        </thead>
+        <tbody md-body>
+          <tr md-row ng-repeat="question in vm.questions">
+            <td md-cell>{{ question.subject }}</td>
+            <td md-cell>{{ question.user.displayName }}</td>
+            <td md-cell><a class="dark-icon" data-ui-sref="staff.questions.edit({questionId: question._id})"><i class="material-icons">mode_edit</i></a></td>
+            <td md-cell><a class="dark-icon" ng-click="vm.remove(question, $event)"><i class="material-icons">delete</i></a></td>
+          </tr>
+        </tbody>
+      </table>
+    </md-table-container>
   </div>
+
   <div class="alert alert-warning text-center" data-ng-if="questions.$resolved && !questions.length">
     No questions yet, why don't you <a data-ui-sref="admin.questions.create">create one</a>?
   </div>
