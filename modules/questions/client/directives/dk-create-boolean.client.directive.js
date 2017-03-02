@@ -39,13 +39,13 @@
       if (!scope.io) {
         scope.io = [
           {
-            assign:   'true',
+            assign:   true,
             value:   'Vrai',
-            checked:  false,
+            checked:  true,
             readonly: true
           },
           {
-            assign:   'false',
+            assign:   false,
             value:   'Faux',
             checked:  false,
             readonly: true

@@ -34,21 +34,31 @@
       var i = 0;
 
       var simplified = source.replace(/<\?([\s\S]*?)\?>/g, function(str, p1) {
-        build.values[i] = p1;
-        i++;
-
+        build.values[i++] = p1;
         return '%s';
       });
 
       build.content = simplified;
     }
 
+    function uncompile(build, source) {
+      var i = 0;
+
+      return build.content.replace(/%s/g, function(str, p1) {
+        return '<?' + build.values[i++] + '?>';
+      });
+    }
+
     function link(scope, element, attrs) {
       if (!scope.io) {
         scope.io = {
-          content: null,
+          content: '',
           values:  []
         };
+      }
+
+      if (scope.io) {
+        scope.content = uncompile(scope.io);
       }
 
       scope.textarea = element[0].querySelector('.dk-create-missing-content textarea');

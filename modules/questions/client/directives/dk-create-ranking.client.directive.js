@@ -5,18 +5,18 @@
  * Permets de générer un texte à champs manquants
  *
  * @param {Object=} io l'objet généré qui définit le texte et ses champs
- scope.lists = [
-   {
-     name: 'x',
-     allowedTypes: ['x'],
-     items: []
-   },
-   {
-     name: 'y',
-     allowedTypes: ['y'],
-     items: []
-   }
- ];
+ *   [
+ *     {
+ *       name: 'x',
+ *       allowedTypes: ['x'],
+ *       items: []
+ *     },
+ *     {
+ *       name: 'y',
+ *       allowedTypes: ['y'],
+ *       items: []
+ *     }
+ *   ];
  */
 
 (function () {

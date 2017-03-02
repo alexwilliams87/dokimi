@@ -46,8 +46,10 @@ exports.read = function (req, res) {
 exports.update = function (req, res) {
   var question = req.question;
 
-  question.title = req.body.title;
-  question.content = req.body.content;
+  question.subject = req.body.subject;
+  question.points = req.body.points;
+  question.body = req.body.body;
+  question.theme = req.body.theme;
 
   question.save(function (err) {
     if (err) {
@@ -103,7 +105,7 @@ exports.questionByID = function (req, res, next, id) {
     });
   }
 
-  Question.findById(id).populate('user', 'displayName').exec(function (err, question) {
+  Question.findById(id).populate('theme').populate('user', 'displayName').exec(function (err, question) {
     if (err) {
       return next(err);
     } else if (!question) {

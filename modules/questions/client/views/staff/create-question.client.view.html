@@ -1,11 +1,9 @@
 <md-toolbar class="md-table-toolbar" flex>
   <div class="sub-head-container" layout="row" layout-align="start center">
     <div class="md-toolbar-tools">
-      <span>{{vm.question._id ? 'Editer une question existante' : 'Créer une question'}}</span>
+      <span>{{question._id ? 'Editer une question existante' : 'Créer une question'}}</span>
     </div>
   </div>
 </md-toolbar>
 
 <div class="slide-animate" ng-include src="'/modules/questions/client/views/staff/templates/create-question.client.view.template.html'"></div>
-
-{{ question }}

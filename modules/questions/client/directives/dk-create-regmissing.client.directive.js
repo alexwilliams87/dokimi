@@ -24,7 +24,7 @@
         io: '='
       },
       link: link,
-      templateUrl: '/modules/questions/client/directives/templates/dk-create-missing.client.directive.template.html',
+      templateUrl: '/modules/questions/client/directives/templates/dk-create-regmissing.client.directive.template.html',
     };
 
     return directive;
@@ -45,8 +45,7 @@
           return e;
         }
 
-        build.values[i] = rg;
-        i++;
+        build.values[i++] = new String(rg);
 
         return '%s';
       });
@@ -57,7 +56,7 @@
     function link(scope, element, attrs) {
       if (!scope.io) {
         scope.io = {
-          content: null,
+          content: '',
           values:  []
         };
       }
