@@ -9,6 +9,7 @@ module.exports = {
         // bower:css
         'public/lib/angular-material/angular-material.css',
         'public/lib/angular-ui-notification/dist/angular-ui-notification.css',
+        'public/lib/angular-material-data-table/dist/md-data-table.css',
         'public/lib/material-design-icons/iconfont/material-icons.css'
         // endbower
       ],
@@ -24,6 +25,7 @@ module.exports = {
         'public/lib/angular-ui-router/release/angular-ui-router.js',
         'public/lib/angular-material/angular-material.js',
         'public/lib/angular-aria/angular-aria.js',
+        'public/lib/angular-material-data-table/dist/md-data-table.js',
         'public/lib/owasp-password-strength-test/owasp-password-strength-test.js',
         'public/lib/angular-drag-and-drop-lists/angular-drag-and-drop-lists.min.js'
         // endbower

@@ -106,7 +106,7 @@ var UserSchema = new Schema({
   roles: {
     type: [{
       type: String,
-      enum: ['user', 'admin']
+      enum: ['user', 'admin', 'staff']
     }],
     default: ['user'],
     required: 'Please provide at least one role'
@@ -117,6 +117,10 @@ var UserSchema = new Schema({
   created: {
     type: Date,
     default: Date.now
+  },
+    domain: {
+    type: Schema.ObjectId,
+    ref: 'Domain'
   },
   /* For reset password */
   resetPasswordToken: {

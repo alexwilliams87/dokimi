@@ -20,14 +20,26 @@ var FormSchema = new Schema({
     trim: true,
     required: 'Title cannot be blank'
   },
-  content: {
+  description: {
     type: String,
     default: '',
-    trim: true
+    trim: true,
+    required: 'Description cannot be blank'
   },
-  user: {
-    type: Schema.ObjectId,
-    ref: 'User'
+  questions: [
+    {
+      type: Object
+    }
+  ],
+  receivers: [
+    {
+      type: Schema.ObjectId,
+      ref: 'Users'
+    }
+  ],
+  submitted: {
+    type: Boolean,
+    default: false
   }
 });
 

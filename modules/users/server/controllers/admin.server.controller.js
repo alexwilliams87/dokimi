@@ -26,6 +26,7 @@ exports.update = function (req, res) {
   user.lastName = req.body.lastName;
   user.displayName = user.firstName + ' ' + user.lastName;
   user.roles = req.body.roles;
+  user.domain = req.body.domain;
 
   user.save(function (err) {
     if (err) {
@@ -59,7 +60,7 @@ exports.delete = function (req, res) {
  * List of Users
  */
 exports.list = function (req, res) {
-  User.find({}, '-salt -password -providerData').sort('-created').populate('user', 'displayName').exec(function (err, users) {
+  User.find({}, '-salt -password -providerData').sort('-created').populate('user', 'displayName').populate('domain').exec(function (err, users) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)
@@ -80,7 +81,7 @@ exports.userByID = function (req, res, next, id) {
     });
   }
 
-  User.findById(id, '-salt -password -providerData').exec(function (err, user) {
+  User.findById(id, '-salt -password -providerData').populate('domain').exec(function (err, user) {
     if (err) {
       return next(err);
     } else if (!user) {

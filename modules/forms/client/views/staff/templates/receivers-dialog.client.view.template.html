@@ -1,0 +1,68 @@
+<md-dialog aria-label="Liste des destinataires">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Liste des destinataires</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon class="material-icons">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <div layout="row">
+          <md-input-container md-no-float flex>
+            <input type="text" ng-model="displayName" placeholder="Nom d'utilisateur">
+          </md-input-container>
+
+          <md-input-container class="md-block" md-no-float flex-gt-sm>
+            <md-select ng-model="domain" placeholder="Tous les domaines">
+              <md-option ng-repeat="domain in vm.domains">
+                {{ domain.name }}
+              </md-option>
+            </md-select>
+          </md-input-container>
+        </div>
+
+        <md-table-container>
+          <table md-table multiple ng-model="vm.selected">
+            <thead md-head md-order="myOrder">
+              <tr md-row md-select="dessert">
+                <th md-column md-order-by="username">Nom d'utilisateur</th>
+                <th md-column md-order-by="email">Email</th>
+                <th md-column md-order-by="domain">Domaine</th>
+              </tr>
+            </thead>
+            <tbody md-body>
+              <tr md-row ng-repeat="user in users | filter:displayName | orderBy: myOrder" >
+                <td md-cell>{{ user.displayName }}</td>
+                <td md-cell>{{ user.email }}</td>
+                <td md-cell>{{ user.domain.name }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </md-table-container>
+
+
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <md-button ng-click="answer('not useful')">
+       Annuler
+      </md-button>
+      <md-button ng-click="answer('useful')">
+        Sauvegarder
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>
+
+<!-- <span>test</span>
+
+<div ng-repeat="user in users">
+  {{ user.username }}
+  {{ user.email }}
+</div> -->
