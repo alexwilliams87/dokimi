@@ -1,3 +1,11 @@
+<!--
+  - @Input domains
+  - @Input themes
+  - @Input/@Output question
+
+  - @Function save
+  - @Function remove
+-->
 <div>
   <div class="create-question-body" layout="row">
     <div class="create-question-content" flex="70">
@@ -20,12 +28,12 @@
 
     <div class="create-question-props" flex="30" layout="column">
       <md-select ng-model="domain" ng-model-options="{trackBy: '$value._id'}" class="md-no-underline md-button select-btn" placeholder="Domaines">
-        <md-option ng-repeat="domain in vm.domains" ng-value="domain" class="select-btn-option">
+        <md-option ng-repeat="domain in domains" ng-value="domain" class="select-btn-option">
           {{ domain.name }}
         </md-option>
       </md-select>
       <md-select ng-model="question.theme" ng-model-options="{trackBy: '$value._id'}" class="md-no-underline md-button select-btn" placeholder="Themes">
-        <md-option ng-repeat="theme in vm.themes | filter:domain.name" ng-value="theme" class="select-btn-option">
+        <md-option ng-repeat="theme in themes | filter:domain.name" ng-value="theme" class="select-btn-option">
           {{ theme.name }}
         </md-option>
       </md-select>
@@ -52,12 +60,12 @@
 
   <div class="create-question-footer">
     <div class="create-question-footer-left">
-      <md-button class="md-icon-button" ng-click="" aria-label="Supprimer la question">
+      <md-button class="md-icon-button" ng-click="remove()" aria-label="Supprimer la question">
         <md-icon class="material-icons">delete</md-icon>
       </md-button>
     </div>
     <div class="create-question-footer-right">
-      <md-button class="md-icon-button" ng-click="vm.save(question)" aria-label="Envoyer la question">
+      <md-button class="md-icon-button" ng-click="save(question)" aria-label="Envoyer la question">
         <md-icon class="material-icons">done</md-icon>
       </md-button>
     </div>

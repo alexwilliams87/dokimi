@@ -1,0 +1,17 @@
+.receivers-list {
+  background-color: #ff7474;
+  border-radius: 3px;
+  padding: 0 10px;
+  line-height:40px;
+  height:40px;
+  font-size: 13px;
+  display: block;
+}
+
+.receivers-list-dialog {
+  min-width:800px;
+}
+
+.receivers-list md-icon {
+  font-size: 13px;
+}

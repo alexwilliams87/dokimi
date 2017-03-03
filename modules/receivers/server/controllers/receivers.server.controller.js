@@ -77,7 +77,7 @@ exports.delete = function (req, res) {
      } else {
       res.json(receiver);
     }
-    
+
   });
 };
 
@@ -85,7 +85,7 @@ exports.delete = function (req, res) {
  * List of Receivers
  */
 exports.list = function (req, res) {
-  Receiver.find().sort('-created').populate('user').exec(function (err, receivers) {
+  Receiver.find().sort('-created').populate('user').populate('users', 'displayName').exec(function (err, receivers) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)

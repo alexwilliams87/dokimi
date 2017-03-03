@@ -10,23 +10,21 @@
   function QuestionsStaffController($scope, $state, $window, question, Authentication, Notification, $timeout, DomainsService, ThemesService) {
     var vm = this;
 
-    $scope.question = question;
+    vm.question = $scope.question = question;
+    vm.domains = $scope.domains = DomainsService.query();
+    vm.themes = $scope.themes = ThemesService.query();
+    vm.remove = $scope.remove = remove;
+    vm.save = $scope.save = save;
 
     vm.authentication = Authentication;
     vm.form = {};
-    vm.remove = remove;
-    vm.save = save;
-    vm.progress = 0;
-
-    vm.domains = DomainsService.query();
-    vm.themes  = ThemesService.query();
 
     // Remove existing Domain
     function remove() {
-      if ($window.confirm('Are you sure you want to delete?')) {
-        vm.domain.$remove(function() {
-          $state.go('admin.domains.list');
-          Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Domain deleted successfully!' });
+      if ($window.confirm('Etes vous sure de vouloir supprimer cette question ?')) {
+        vm.question.$remove(function() {
+          $state.go('admin.questions.list');
+          Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i>Question supprimée !' });
         });
       }
     }

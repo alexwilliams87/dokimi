@@ -1,8 +1,12 @@
-<div>
-  <div class="page-header">
-    <h1>{{vm.form._id ? 'Edition d\'un questionnaire' : 'Nouveau questionnaire'}}</h1>
+<md-toolbar class="md-table-toolbar" flex>
+  <div class="sub-head-container" layout="row" layout-align="start center">
+    <div class="md-toolbar-tools">
+      <span>{{vm.form._id ? 'Edition d\'un questionnaire existante' : 'Nouveau questionnaire'}}</span>
+    </div>
   </div>
+</md-toolbar>
 
+<div>
   <div class="form-editor" layout="row">
     <div class="form-editor-content" flex="80">
       <md-input-container class="form-content-title md-block">
@@ -29,7 +33,7 @@
           <md-icon class="material-icons">chevron_left</md-icon>
           <p>Importer</p>
         </md-list-item>
-        <md-list-item ng-click="showAdvanced($event)">
+        <md-list-item ng-click="vm.showReceiversDialog($event)">
           <md-icon class="material-icons">group_add</md-icon>
           <p>Destinataires</p>
         </md-list-item>
@@ -45,5 +49,4 @@
     </div>
   </div>
 </div>
-{{ vm.form }}
-{{ users }}
+{{ vm.form | json }}

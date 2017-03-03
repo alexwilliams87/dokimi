@@ -5,50 +5,52 @@
     .module('forms.admin')
     .controller('FormStaffController', FormStaffController);
 
-  FormStaffController.$inject = ['$scope', '$state', '$window', 'formResolve', 'Authentication', 'Notification', '$mdDialog', 'DomainsService', 'ThemesService', 'UsersService'];
+  FormStaffController.$inject = ['$scope', '$state', '$window', 'formResolve', 'Authentication', 'Notification', '$mdDialog', 'DomainsService', 'ThemesService', 'UsersService', 'ReceiversService', 'QuestionsService'];
 
-  function FormStaffController($scope, $state, $window, form, Authentication, Notification, $mdDialog, DomainsService, ThemesService, UsersService) {
+  function FormStaffController($scope, $state, $window, form, Authentication, Notification, $mdDialog, DomainsService, ThemesService, UsersService, ReceiversService, QuestionsService) {
     var vm = this;
 
+    vm.domains = $scope.domains = DomainsService.query();
+    vm.themes = $scope.themes = ThemesService.query();
+    vm.users = $scope.users = UsersService.query();
+    vm.receivers = $scope.receivers = ReceiversService.query();
     vm.form = form;
     vm.authentication = Authentication;
-
     vm.remove = remove;
     vm.save = save;
+    vm.showReceiversDialog = showReceiversDialog;
 
-    vm.domains = DomainsService.query();
-    vm.themes  = ThemesService.query();
-    vm.users   = UsersService.query();
-
+    // Replace by new formService
     vm.form.questions = [];
+    vm.form.receivers = [];
 
-    $scope.users = UsersService.query();
-
-    vm.add = function() {
-      vm.form.questions.push({});
+    $scope.save = function(question) {
+      question.createOrUpdate()
+        .then(function() {
+          return vm.form.createOrUpdate();
+        })
+        .then(function() {
+          vm.form.questions.push(new QuestionsService())
+        });
     }
 
-    $scope.showAdvanced = function(ev) {
+    vm.add = function() {
+      vm.form.questions.push(new QuestionsService());
+    }
+
+    // Open receivers list
+    function showReceiversDialog(ev) {
       $mdDialog.show({
         controller: DialogController,
-        templateUrl: '/modules/forms/client/views/staff/templates/receivers-dialog.client.view.template.html',
+        templateUrl: '/modules/receivers/client/views/staff/templates/receivers-dialog-selected.client.view.template.html',
         parent: angular.element(document.body),
         targetEvent: ev,
         clickOutsideToClose:true,
-        fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+        fullscreen: $scope.customFullscreen
       })
-      .then(function(answer) {
-        $scope.status = 'You said the information was "' + answer + '".';
-      }, function() {
-        $scope.status = 'You cancelled the dialog.';
+      .then(function(res) {
+        vm.form.receivers = res;
       });
-    };
-
-    var originatorEv;
-
-    vm.openMenu = function($mdMenu, ev) {
-      originatorEv = ev;
-      $mdMenu.open(ev);
     };
 
     // Remove existing Form
@@ -84,7 +86,24 @@
     }
 
     function DialogController($scope, $mdDialog) {
+      $scope.domains = vm.domains;
+      $scope.themes = vm.themes;
       $scope.users = vm.users;
+      $scope.receivers = vm.receivers;
+
+      $scope.selected = vm.form.receivers;
+
+      $scope.import = function() {
+        $scope.selected = [];
+
+        $scope.importedUsers.forEach(function(importedUser) {
+          $scope.users.forEach(function(user) {
+            if (user._id === importedUser._id) {
+              $scope.selected.push(user);
+            }
+          });
+        });
+      }
 
       $scope.hide = function() {
         $mdDialog.hide();

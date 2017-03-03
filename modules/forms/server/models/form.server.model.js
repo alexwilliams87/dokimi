@@ -4,7 +4,8 @@
  * Module dependencies
  */
 var mongoose = require('mongoose'),
-  Schema = mongoose.Schema;
+  Schema = mongoose.Schema,
+  FormValidator = require('./validators/form.server.model.validator');
 
 /**
  * Form Schema
@@ -26,11 +27,10 @@ var FormSchema = new Schema({
     trim: true,
     required: 'Description cannot be blank'
   },
-  questions: [
-    {
-      type: Object
-    }
-  ],
+  questions: {
+    type: Array,
+    validate: [FormValidator.questions, 'Uh oh, {PATH} does not equal "something".']
+  },
   receivers: [
     {
       type: Schema.ObjectId,
