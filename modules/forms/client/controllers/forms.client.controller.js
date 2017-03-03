@@ -5,12 +5,12 @@
     .module('forms')
     .controller('FormsController', FormsController);
 
-  FormsController.$inject = ['$scope', 'formResolve', 'Authentication'];
+  FormsController.$inject = ['$scope', 'Authentication'];
 
-  function FormsController($scope, form, Authentication) {
+  function FormsController($scope, Authentication) {
     var vm = this;
 
-    vm.form = form;
+    // vm.form = form;
     vm.authentication = Authentication;
   }
 }());

@@ -1,15 +1,46 @@
 <section>
-  <div class="page-header">
-    <h1 ng-bind="vm.form.title"></h1>
+
+<div>
+  <div class="create-question-body" layout="row">
+    <div class="create-question-content" flex="70">
+      <div class="create-question-subject" layout="column">
+        <div class="answer-subject-headline" layout="row" layout-align="start center">Enoncé de la question</div>
+        <div class="answer-subject-content">Ceci est l'énoncé de la question. Êtes-vous satisfait(e) ?</div>
+        <div  class="answer-choice">
+          <md-input-container>
+              <md-radio-group ng-model="radio">
+              <md-radio-button value="option1">Option 1</md-radio-button>
+              <md-radio-button value="option2">Option 2</md-radio-button>
+              <md-radio-button value="option3">Option 3</md-radio-button>
+            </md-radio-group>
+          </md-input-container>
+        </div>
+      </div>
+    </div>
+    <div layout="column">
+      <div class="answer-question-infos-block" layout="column">
+        <div class="answer-question-focus">Domaine</div>
+        <div>Informatique</div>
+      </div>
+      <div class="answer-question-infos-block" layout="column">
+        <div class="answer-question-focus">Thème</div>
+        <div>Développeur Javascript</div>
+      </div>
+      <div class="answer-question-infos-block" layout="column">
+        <div class="answer-question-focus">Type de la question :</div>
+        <div>Vrai ou faux</div>
+      </div>
+      <div class="answer-question-infos-block" layout="column">
+        <div><strong>Pondération :</strong> 3 points</div>
+      </div>
+    </div>
   </div>
-  <small>
-    <em class="text-muted">
-      Posted on
-      <span ng-bind="vm.form.created | date:'mediumDate'"></span>
-      by
-      <span ng-if="vm.form.user" ng-bind="vm.form.user.displayName"></span>
-      <span ng-if="!vm.form.user">Deleted User</span>
-    </em>
-  </small>
-  <p class="lead" ng-bind="vm.form.content"></p>
+
+  <div class="create-question-footer-right" flex="70" layout="row" layout-align="end">
+    <md-button class="md-icon-button" ng-click="vm.save(question)" aria-label="Envoyer la question">
+      <md-icon class="material-icons">done</md-icon>
+    </md-button>
+  </div>
+</div>
+
 </section>
