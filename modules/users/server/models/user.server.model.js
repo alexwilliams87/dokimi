@@ -118,7 +118,11 @@ var UserSchema = new Schema({
     type: Date,
     default: Date.now
   },
+<<<<<<< HEAD
     domain: {
+=======
+  domain: {
+>>>>>>> f9ee106d30bdae2683d6b684e614dd160e117342
     type: Schema.ObjectId,
     ref: 'Domain'
   },

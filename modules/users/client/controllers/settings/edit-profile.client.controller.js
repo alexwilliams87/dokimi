@@ -13,6 +13,7 @@
     vm.user = Authentication.user;
 
     vm.updateUserProfile = updateUserProfile;
+    vm.domains = DomainsService.query();
 
     // Update a user profile
     function updateUserProfile(isValid) {

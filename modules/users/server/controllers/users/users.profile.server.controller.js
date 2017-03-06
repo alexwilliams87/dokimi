@@ -20,7 +20,7 @@ var whitelistedFields = ['firstName', 'lastName', 'email', 'username', 'domain']
  */
 exports.update = function (req, res) {
   // Init Variables
-  var user = req.user;
+ var user = req.user;
 
   if (user) {
     // Update whitelisted fields only
@@ -151,6 +151,7 @@ exports.me = function (req, res) {
       provider: validator.escape(req.user.provider),
       domain: req.user.domain,
       username: validator.escape(req.user.username),
+      domain: validator.escape(req.user.domain),
       created: req.user.created.toString(),
       roles: req.user.roles,
       profileImageURL: req.user.profileImageURL,

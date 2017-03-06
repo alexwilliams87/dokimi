@@ -5,12 +5,14 @@
     .module('questions.admin')
     .controller('QuestionsAdminListController', QuestionsAdminListController);
 
-  QuestionsAdminListController.$inject = ['QuestionsService', '$window', 'Notification', '$mdDialog'];
+  QuestionsAdminListController.$inject = ['QuestionsService', '$window', 'Notification', '$mdDialog', 'ThemesService', 'DomainsService'];
 
-  function QuestionsAdminListController(QuestionsService, $window, Notification, $mdDialog) {
+  function QuestionsAdminListController(QuestionsService, $window, Notification, $mdDialog, ThemesService, DomainsService) {
     var vm = this;
     vm.remove 	= remove;
     vm.questions = QuestionsService.query();
+    vm.themes = ThemesService.query();
+    vm.domains = DomainsService.query();
 
 
     function remove(question, ev) {
