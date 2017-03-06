@@ -1,0 +1,49 @@
+<!--
+  - @Input domains
+  - @Input themes
+  - @Input/@Output question
+
+  - @Function save
+  - @Function remove
+-->
+<section>
+  <div>
+    <div class="question" layout="row">
+      <div flex="70">
+        <div class="question-subject" layout="column">
+          <div class="question-subject-headline" layout="row" layout-align="start center">Enoncé de la question</div>
+          <div class="question-subject-content">{{ question.subject }}</div>
+          <div class="question-body">
+            <dk-select  options="question.body.data" results="question.body.results" ng-if="question.body.type === 'radio'" type="radio"></dk-select>
+            <dk-select  options="question.body.data" results="question.body.results" ng-if="question.body.type === 'checkbox'" type="checkbox"></dk-select>
+            <dk-boolean options="question.body.data" results="question.body.results" ng-if="question.body.type === 'boolean'"></dk-boolean>
+            <dk-missing string="question.body.data"  results="question.body.results" ng-if="question.body.type === 'missing'"></dk-missing>
+            <dk-regmissing string="question.body.data" results="question.body.results" ng-if="question.body.type === 'regmissing'"></dk-regmissing>
+            <dk-opened string="question.body.data" ng-if="question.body.type === 'opened'"></dk-opened>
+            <dk-ranking lists="question.body.data" results="question.body.results" ng-if="question.body.type === 'ranking'"></dk-ranking>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-infos" layout="column" flex>
+        <div class="question-infos-block" layout="column">
+          <div class="question-info-title">Domaine</div>
+          <div class="question-info-value">{{ question.theme.domain }}</div>
+        </div>
+        <div class="question-infos-block" layout="column">
+          <div class="question-info-title">Thème</div>
+          <div class="question-info-value">{{ question.theme.name }}</div>
+        </div>
+        <div class="question-infos-block" layout="column">
+          <div class="question-info-title">Type de la question :</div>
+          <div class="question-info-value">{{ question.body.type }}</div>
+        </div>
+        <div class="question-infos-block" layout="column">
+          <div class="question-info-title">Pondération</div>
+          <div class="question-info-value">{{ question.points }} points</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

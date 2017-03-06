@@ -1,0 +1,76 @@
+<!--
+  - @Input domains
+  - @Input receivers
+  - @Input users
+  - @Output selected
+
+  - @Function cancel
+  - @Function answer
+  - @Function import
+-->
+<md-dialog class="receivers-list-dialog" aria-label="Liste des destinataires">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Importer des questions</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon class="material-icons">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <div layout="row">
+          <md-input-container flex>
+            <input type="text" ng-model="searchSubject" placeholder="Recherche">
+          </md-input-container>
+
+          <md-input-container flex>
+            <label>Domaines</label>
+            <md-select ng-model="searchDomain" placeholder="Domaines">
+              <md-option ng-repeat="domain in domains" ng-value="domain.name">
+                {{ domain.name }}
+              </md-option>
+            </md-select>
+          </md-input-container>
+
+          <md-input-container flex>
+            <label>Thèmes</label>
+            <md-select ng-model="searchThemes" multiple>
+              <md-option ng-value="theme.name" ng-repeat="theme in themes | filter:domain">{{ theme.name }}</md-option>
+            </md-select>
+          </md-input-container>
+        </div>
+
+        <md-table-container>
+          <table md-table ng-model="selected" md-row-select="true" multiple="true" md-progress="promise">
+            <thead md-head>
+               <tr md-row>
+                 <th md-column>Enoncé de la question</th>
+                 <th md-column>Créateur</th>
+                 <th md-column>Thème</th>
+                 <th md-column>Domaine</th>
+              </tr>
+            </thead>
+            <tbody md-body>
+              <tr md-row md-select="question" ng-repeat="question in questions" ng-show="(question.subject.indexOf(searchSubject) !== -1 || !searchSubject) && (searchDomain === question.theme.domain.name || !searchDomain) && (searchThemes.indexOf(question.theme.name) !== -1 || searchThemes.length === 0)">
+                <td md-cell>{{ question.subject }}</td>
+                <td md-cell>{{ question.user.displayName }}</td>
+                <td md-cell>{{ question.theme.name }}</td>
+                <td md-cell>{{ question.theme.domain.name }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </md-table-container>
+
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <md-button ng-click="cancel()">Annuler</md-button>
+      <md-button ng-click="answer(selected)">Importer</md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

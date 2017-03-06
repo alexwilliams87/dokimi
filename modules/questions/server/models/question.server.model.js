@@ -16,7 +16,10 @@ var QuestionBodySchema =  new Schema({
     type: String,
     enum : ['radio', 'checkbox', 'boolean', 'missing', 'regmissing', 'opened', 'ranking']
   },
-  response: {
+  data: {
+    type: Object
+  },
+  results: {
     type: Object
   }
 });

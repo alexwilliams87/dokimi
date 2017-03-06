@@ -1,35 +1,26 @@
-<!-- Liste des options -->
-<div ng-repeat="option in io">
-  <!-- option -->
+<div ng-repeat="option in options">
   <md-input-container md-no-float class="md-block">
 
     <!-- interrupteur de selection de la (des) bonne(s) réponse(s) -->
     <md-icon ng-click="toggle($index)" class="material-icons toggle-icon">
       <span ng-if="type === 'radio'">
-        {{ option.checked ? 'radio_button_checked' : 'radio_button_unchecked' }}
+        {{ results[$index].checked ? 'radio_button_checked' : 'radio_button_unchecked' }}
       </span>
       <span ng-if="type !== 'radio'">
-        {{ option.checked ? 'check_box' : 'check_box_outline_blank' }}
+        {{ results[$index].checked ? 'check_box' : 'check_box_outline_blank' }}
       </span>
     </md-icon>
     <!-- interrupteur de selection de la (des) bonne(s) réponse(s) -->
 
     <input type="text" ng-model="option.value" placeholder="Option {{ $index + 1 }}" ng-readonly="{{ option.readonly }}">
-
-    <!-- bouton de suppresion de l'option -->
     <md-icon ng-if="!locked" ng-click="delete($index)" class="material-icons" aria-label="Suppresion d'une option">close</md-icon>
-    <!-- bouton de suppresion de l'option -->
 
   </md-input-container>
-  <!-- option -->
 </div>
-<!-- Liste des options -->
 
 
 <div layout="row" layout-align="center center">
-  <!-- Bouton d'ajout d'une option -->
   <md-button ng-if="!locked" ng-click="add()" class="md-fab md-mini" aria-label="Ajout d'une option">
     <md-icon flex class="material-icons">add</md-icon>
   </md-button>
-  <!-- Bouton d'ajout d'une option -->
 </div>

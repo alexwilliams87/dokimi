@@ -1,18 +1,23 @@
 /**
  * <dk-create-select>
- * <dk-create-select type="radio" select="vm.select"></dk-create-select>
+ * <dk-create-select type="radio" question="" answer=""></dk-create-select>
  *
  * Permets de générer un select (radio ou checkbox)
  *
  * @param {String} type par defauts la selection est multiple (checkbox)
  *     `radio` => pour une selection à un seul élément (radio)
  * @param {Boolean} locked l'ajout et la suppresion d'options est vérouillée
- * @param {Array<Object>=} io l'objet qui définit le select
- *     select = [
+ * @param {Array<Object>=} options le contenu de la question
+ *     [
  *       {
  *         value: 'Option 1',
- *         checked:  true || false,
  *         readonly: true || false !optional
+ *       }
+ *     ];
+ * @param {Array<Object>=} results le contenu de la reponse
+ *     [
+ *       {
+ *         checked: true | false
  *       }
  *     ];
  */
@@ -27,7 +32,8 @@
     var directive = {
       restrict: 'E',
       scope: {
-        io:       '=',
+        options:  '=',
+        results:  '=',
         type:     '@',
         locked:   '=',
         readonly: '='
@@ -39,39 +45,35 @@
     return directive;
 
     function link(scope, element, attrs) {
-      if (!scope.io) {
-        scope.io = [
-          {
-            value:   null,
-            checked: false,
-            readonly: scope.readonly ? true : undefined
-          }
-        ];
-      }
+      if (!scope.options) scope.options = [];
+      if (!scope.results) scope.results = [];
 
       scope.add = function() {
-        if (!scope.locked) scope.io.push({
-          value: '',
-          checked: false,
-          readonly: scope.readonly ? true : undefined
-        });
+        if (!scope.locked) {
+          scope.options.push({value: '', readonly: scope.readonly ? true : undefined});
+          scope.results.push({checked: false});
+        }
       }
 
       scope.toggle = function(currentIndex) {
         if (scope.type === 'radio') {
-          scope.io.forEach(function(option, index) {
+          scope.options.forEach(function(option, index) {
             if (currentIndex != index) {
-              scope.io[index].checked = false;
+              scope.results[index].checked = false;
             }
           });
         }
 
-        scope.io[currentIndex].checked = !scope.io[currentIndex].checked;
+        scope.results[currentIndex].checked = !scope.results[currentIndex].checked;
       }
 
       scope.delete = function(index) {
-        if (!scope.locked) scope.io.splice(index, 1);
+        if (!scope.locked) {
+          scope.options.splice(index, 1);
+          scope.results.splice(index, 1);
+        }
       }
+
     }
   }
 }());

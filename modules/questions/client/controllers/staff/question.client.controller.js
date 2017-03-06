@@ -13,11 +13,10 @@
     vm.question = $scope.question = question;
     vm.domains = $scope.domains = DomainsService.query();
     vm.themes = $scope.themes = ThemesService.query();
-    vm.remove = $scope.remove = remove;
-    vm.save = $scope.save = save;
 
     vm.authentication = Authentication;
-    vm.form = {};
+    vm.remove = $scope.removeQuestion = remove;
+    vm.save = $scope.saveQuestion = save;
 
     // Remove existing Domain
     function remove() {
@@ -34,6 +33,7 @@
       if (!isValid) {
         return false;
       }
+
       $scope.question.createOrUpdate()
         .then(successCallback)
         .catch(errorCallback);

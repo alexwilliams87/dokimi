@@ -4,11 +4,8 @@
  *
  * Permets de générer un texte à champs manquants
  *
- * @param {Object=} io l'objet généré qui définit le texte et ses champs
- *     resmiss = {
- *       content: 'Quel est son nom ? %s',
- *       values: ['/Julien|Sophie/i']
- *     };
+ * @param {Object=} string l'objet généré qui définit le texte et ses champs
+ * @param {String=} results l'objet généré qui définit le texte et ses champs
  */
 
 (function () {
@@ -21,7 +18,8 @@
     var directive = {
       restrict: 'E',
       scope: {
-        io: '='
+        string:  '=',
+        results: '='
       },
       link: link,
       templateUrl: '/modules/questions/client/directives/templates/dk-create-regmissing.client.directive.template.html',
@@ -33,11 +31,12 @@
       return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
     };
 
-    function compile(source, build) {
-      var i = 0;
+    function split(source) {
+      var str = '',
+          values = [],
+          i = 0;
 
-      var simplified = source.replace(/<\?([\s\S]*?)\?>/g, function(str, p1) {
-
+      str = source.replace(/<\?([\s\S]*?)\?>/g, function(str, p1) {
         try {
           var rg = new RegExp(p1, 'i');
         } catch(e) {
@@ -45,36 +44,39 @@
           return e;
         }
 
-        build.values[i++] = new String(rg);
+        values[i++] = new String(rg);
 
         return '%s';
       });
 
-      build.content = simplified;
+      return {
+        string: str,
+        values: values
+      };
     }
 
     function link(scope, element, attrs) {
-      if (!scope.io) {
-        scope.io = {
-          content: '',
-          values:  []
-        };
-      }
+      if (!scope.string) scope.string = '';
+      if (!scope.results) scope.results = [];
 
       scope.textarea = element[0].querySelector('.dk-create-missing-content textarea');
 
-      scope.$watchCollection('content', function(content) {
-        if (content) compile(content, scope.io);
+      scope.$watchCollection('textContent', function(text) {
+        if (text) {
+          var splited = split(text);
+          scope.string = splited.string;
+          scope.results = splited.values;
+        }
       });
 
-      scope.add = function(open, close) {
+      scope.insert = function(open, close) {
         var tag = open + close;
 
         scope.textarea.focus();
         var cursorPosition = scope.textarea.selectionStart;
-        scope.content = scope.textarea.value;
+        scope.textContent = scope.textarea.value;
 
-        scope.textarea.value = scope.content = scope.content.slice(0, cursorPosition) + tag + scope.content.slice(cursorPosition);
+        scope.textarea.value = scope.content = scope.textContent.slice(0, cursorPosition) + tag + scope.textContent.slice(cursorPosition);
         scope.textarea.setSelectionRange(cursorPosition + open.length, cursorPosition + open.length);
       }
     }

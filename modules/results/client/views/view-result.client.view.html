@@ -1,0 +1,48 @@
+<section>
+
+  <div>
+    <div class="create-question-body" layout="row">
+      <div flex="70">
+        <div class="create-question-subject" layout="column">
+          <div class="answer-subject-headline" layout="row" layout-align="start center">Enoncé de la question</div>
+          <div class="answer-subject-content">Ceci est l'énoncé de la question. Êtes-vous satisfait(e) ?</div>
+          <div  class="answer-choice">
+            <md-input-container>
+                <md-radio-group ng-model="radio">
+                <md-radio-button value="option1">Option 1</md-radio-button>
+                <md-radio-button value="option2">Option 2</md-radio-button>
+                <md-radio-button value="option3">Option 3</md-radio-button>
+              </md-radio-group>
+            </md-input-container>
+          </div>
+        </div>
+      </div>
+
+      <div class="answer-question-infos" layout="column" flex>
+        <div class="answer-question-infos-block" layout="column">
+          <div class="answer-question-info-title">Domaine</div>
+          <div class="answer-question-info-value">Inresultatique</div>
+        </div>
+        <div class="answer-question-infos-block" layout="column">
+          <div class="answer-question-info-title">Thème</div>
+          <div class="answer-question-info-value">Développeur Javascript</div>
+        </div>
+        <div class="answer-question-infos-block" layout="column">
+          <div class="answer-question-info-title">Type de la question :</div>
+          <div class="answer-question-info-value">Vrai ou faux</div>
+        </div>
+        <div class="answer-question-infos-block" layout="column">
+          <div class="answer-question-info-title">Pondération</div>
+          <div class="answer-question-info-value">3 points</div>
+        </div>
+      </div>
+
+      <div layout="column" layout-align="center" flex="nogrow">
+        <md-button class="md-fab" ng-click="vm.save(question)" aria-label="Envoyer la question">
+          <md-icon class="material-icons">chevron_right</md-icon>
+        </md-button>
+      </div>
+    </div>
+  </div>
+
+</section>

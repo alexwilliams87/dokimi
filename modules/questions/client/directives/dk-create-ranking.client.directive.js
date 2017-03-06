@@ -4,19 +4,8 @@
  *
  * Permets de générer un texte à champs manquants
  *
- * @param {Object=} io l'objet généré qui définit le texte et ses champs
- *   [
- *     {
- *       name: 'x',
- *       allowedTypes: ['x'],
- *       items: []
- *     },
- *     {
- *       name: 'y',
- *       allowedTypes: ['y'],
- *       items: []
- *     }
- *   ];
+ * @param {Object=} lists l'objet généré qui définit le texte et ses champs
+ * @param {Object=} results l'objet généré qui définit le texte et ses champs
  */
 
 (function () {
@@ -31,7 +20,8 @@
     var directive = {
       restrict: 'E',
       scope: {
-        io: '='
+        lists:   '=',
+        results: '='
       },
       link: link,
       templateUrl: '/modules/questions/client/directives/templates/dk-create-ranking.client.directive.template.html',
@@ -40,20 +30,13 @@
     return directive;
 
     function link(scope, element, attrs) {
-      if (!scope.io) {
-        scope.io = [
-          {
-            name: 'x',
-            allowedTypes: ['x'],
-            items: []
-          },
-          {
-            name: 'y',
-            allowedTypes: ['y'],
-            items: []
-          }
+      if (!scope.results) scope.results = [];
+      if (!scope.lists) {
+        scope.lists = [
+          { name: 'x', allowedTypes: ['x'], items: [] },
+          { name: 'y', allowedTypes: ['y'], items: [] }
         ];
-      };
+      }
 
       scope.filesItems = {};
 

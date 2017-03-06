@@ -34,7 +34,7 @@
 
           <md-input-container md-no-float flex>
             <md-select ng-model="searchDomain" placeholder="Tous les domaines">
-              <md-option ng-value="domain" ng-repeat="domain in domains">
+              <md-option ng-value="domain.name" ng-repeat="domain in domains">
                 {{ domain.name }}
               </md-option>
             </md-select>
@@ -59,7 +59,7 @@
               </tr>
             </thead>
             <tbody md-body>
-              <tr md-row md-select="user" ng-repeat="user in users | filter:searchDisplayName | orderBy: myOrder" md-auto-select="true" ng-show="(user.domain.name === searchDomain.name) || !searchDomain">
+              <tr md-row md-select="user" ng-repeat="user in users | filter:searchDisplayName | orderBy: myOrder" md-auto-select="true" ng-show="(user.domain.name === searchDomain) || !searchDomain">
                 <td md-cell>{{ user.displayName }}</td>
                 <td md-cell>{{ user.email }}</td>
                 <td md-cell>{{ user.domain.name }}</td>

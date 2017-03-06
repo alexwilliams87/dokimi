@@ -1,20 +1,11 @@
 /**
- * <dk-create-select>
- * <dk-create-select type="radio" select="vm.select"></dk-create-select>
+ * <dk-create-boolean>
+ * <dk-create-boolean type="radio" select="vm.select"></dk-create-boolean>
  *
  * Permets de générer un select (radio ou checkbox)
  *
- * @param {String} type par defauts la selection est multiple (checkbox)
- *     `radio` => pour une selection à un seul élément (radio)
- * @param {Boolean} locked l'ajout et la suppresion d'options est vérouillée
- * @param {Array<Object>=} io l'objet qui définit le select
- *     select = [
- *       {
- *         value: 'Option 1',
- *         checked:  true || false,
- *         readonly: true || false !optional
- *       }
- *     ];
+ * @param {Array<Object>=} options
+ * @param {Array<Object>=} results
  */
 
 (function () {
@@ -27,7 +18,8 @@
     var directive = {
       restrict: 'E',
       scope: {
-        io: '='
+        options: '=',
+        results: '='
       },
       templateUrl: '/modules/questions/client/directives/templates/dk-create-boolean.client.directive.template.html',
       link: link
@@ -36,20 +28,18 @@
     return directive;
 
     function link(scope, element, attrs) {
-      if (!scope.io) {
-        scope.io = [
-          {
-            assign:   true,
-            value:   'Vrai',
-            checked:  true,
-            readonly: true
-          },
-          {
-            assign:   false,
-            value:   'Faux',
-            checked:  false,
-            readonly: true
-          },
+
+      if (!scope.options) {
+        scope.options = [
+          { assign: true,  value: 'Vrai', readonly: true },
+          { assign: false, value: 'Faux', readonly: true }
+        ];
+      }
+
+      if (!scope.results) {
+        scope.results = [
+          { checked: true },
+          { checked: false }
         ];
       }
     }

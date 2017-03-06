@@ -15,3 +15,11 @@
 .receivers-list md-icon {
   font-size: 13px;
 }
+
+.form-editor-toolbar {
+  display:flex;
+  margin-top:20px;
+  margin-bottom:60px;
+  align-items:center;
+  justify-content:center;
+}

@@ -3,10 +3,30 @@
 /**
  * Module dependencies
  */
-var path = require('path'),
+var _ = require('lodash'),
+  path = require('path'),
   mongoose = require('mongoose'),
   Form = mongoose.model('Form'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
+
+/**
+ * Show the current form
+ */
+exports.run = function (req, res) {
+  // convert mongoose document to JSON
+  var form = req.form ? req.form.toJSON() : {};
+
+  if (form.submitted && _.find(form.receivers, req.user._id)) {
+    form.questions.forEach(function(question) {
+      delete question.body.results;
+    });
+
+    res.json(form);
+  }
+  else {
+    res.json('not access');
+  }
+};
 
 /**
  * Create an form
@@ -47,7 +67,10 @@ exports.update = function (req, res) {
   var form = req.form;
 
   form.title = req.body.title;
-  form.content = req.body.content;
+  form.description = req.body.description;
+  form.questions = req.body.questions;
+  form.receivers = req.body.receivers;
+  form.submitted = req.body.submitted;
 
   form.save(function (err) {
     if (err) {

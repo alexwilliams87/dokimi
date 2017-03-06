@@ -1,14 +1,11 @@
 /**
  * <dk-create-missing></dk-create-missing>
- * <dk-create-missing io="vm.resmiss"></dk-create-missing>
+ * <dk-create-missing string="" results=""></dk-create-missing>
  *
  * Permets de générer un texte à champs manquants
  *
- * @param {Object=} io l'objet généré qui définit le texte et ses champs
- *     resmiss = {
- *       content: 'Quel est son nom ? %s',
- *       values: ['Julien']
- *     };
+ * @param {String=} string  l'objet généré qui définit le texte et ses champs
+ * @param {Array=} results l'objet généré qui définit le texte et ses champs
  */
 
 (function () {
@@ -21,7 +18,8 @@
     var directive = {
       restrict: 'E',
       scope: {
-        io: '='
+        string:  '=',
+        results: '='
       },
       link: link,
       templateUrl: '/modules/questions/client/directives/templates/dk-create-missing.client.directive.template.html',
@@ -29,52 +27,54 @@
 
     return directive;
 
-    function compile(source, build) {
-      build.values = [];
-      var i = 0;
+    function split(source) {
+      var str = '',
+          values = [],
+          i = 0;
 
-      var simplified = source.replace(/<\?([\s\S]*?)\?>/g, function(str, p1) {
-        build.values[i++] = p1;
+      str = source.replace(/<\?([\s\S]*?)\?>/g, function(str, p1) {
+        values[i++] = p1;
         return '%s';
       });
 
-      build.content = simplified;
+      return {
+        string: str,
+        values: values
+      };
     }
 
-    function uncompile(build, source) {
+    function unsplit(str, values) {
       var i = 0;
 
-      return build.content.replace(/%s/g, function(str, p1) {
-        return '<?' + build.values[i++] + '?>';
+      return str.replace(/%s/g, function(str, p1) {
+        return '<?' + values[i++] + '?>';
       });
     }
 
     function link(scope, element, attrs) {
-      if (!scope.io) {
-        scope.io = {
-          content: '',
-          values:  []
-        };
-      }
+      if (scope.string && scope.results) scope.textContent = unsplit(scope.string, scope.results);
 
-      if (scope.io) {
-        scope.content = uncompile(scope.io);
-      }
+      if (!scope.string) scope.string = '';
+      if (!scope.results) scope.results = [];
 
       scope.textarea = element[0].querySelector('.dk-create-missing-content textarea');
 
-      scope.$watchCollection('content', function(content) {
-        if (content) compile(content, scope.io);
+      scope.$watchCollection('textContent', function(text) {
+        if (text) {
+          var splited = split(text);
+          scope.string = splited.string;
+          scope.results = splited.values;
+        }
       });
 
-      scope.add = function(open, close) {
+      scope.insert = function(open, close) {
         var tag = open + close;
 
         scope.textarea.focus();
         var cursorPosition = scope.textarea.selectionStart;
-        scope.content = scope.textarea.value;
+        scope.textContent = scope.textarea.value;
 
-        scope.textarea.value = scope.content = scope.content.slice(0, cursorPosition) + tag + scope.content.slice(cursorPosition);
+        scope.textarea.value = scope.textContent = scope.textContent.slice(0, cursorPosition) + tag + scope.textContent.slice(cursorPosition);
         scope.textarea.setSelectionRange(cursorPosition + open.length, cursorPosition + open.length);
       }
     }

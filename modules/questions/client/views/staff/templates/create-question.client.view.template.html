@@ -6,8 +6,8 @@
   - @Function save
   - @Function remove
 -->
-<div>
-  <div class="create-question-body" layout="row">
+<section>
+  <div class="create-question" layout="row">
     <div class="create-question-content" flex="70">
       <div class="create-question-subject">
         <md-input-container md-no-float class="md-block">
@@ -15,14 +15,14 @@
         </md-input-container>
       </div>
 
-      <div class="create-question-fields">
-        <dk-create-select io="question.body.response" ng-if="question.body.type === 'radio'" type="radio"></dk-create-select>
-        <dk-create-select io="question.body.response" ng-if="question.body.type === 'checkbox'" type="checkbox"></dk-create-select>
-        <dk-create-boolean io="question.body.response" ng-if="question.body.type === 'boolean'" type="radio" locked="true"></dk-create-boolean>
-        <dk-create-missing io="question.body.response" ng-if="question.body.type === 'missing'"></dk-create-missing>
-        <dk-create-regmissing io="question.body.response" ng-if="question.body.type === 'regmissing'"></dk-create-regmissing>
-        <dk-create-opened io="question.body.response" ng-if="question.body.type === 'opened'"></dk-create-opened>
-        <dk-create-ranking io="question.body.response" ng-if="question.body.type === 'ranking'"></dk-create-ranking>
+      <div class="create-question-body">
+        <dk-create-select  options="question.body.data" results="question.body.results" ng-if="question.body.type === 'radio'" type="radio"></dk-create-select>
+        <dk-create-select  options="question.body.data" results="question.body.results" ng-if="question.body.type === 'checkbox'" type="checkbox"></dk-create-select>
+        <dk-create-boolean options="question.body.data" results="question.body.results" ng-if="question.body.type === 'boolean'"></dk-create-boolean>
+        <dk-create-missing string="question.body.data"  results="question.body.results" ng-if="question.body.type === 'missing'"></dk-create-missing>
+        <dk-create-regmissing string="question.body.data" results="question.body.results" ng-if="question.body.type === 'regmissing'"></dk-create-regmissing>
+        <dk-create-opened string="question.body.data" ng-if="question.body.type === 'opened'"></dk-create-opened>
+        <dk-create-ranking lists="question.body.data" results="question.body.results" ng-if="question.body.type === 'ranking'"></dk-create-ranking>
       </div>
     </div>
 
@@ -32,13 +32,14 @@
           {{ domain.name }}
         </md-option>
       </md-select>
+
       <md-select ng-model="question.theme" ng-model-options="{trackBy: '$value._id'}" class="md-no-underline md-button select-btn" placeholder="Themes">
         <md-option ng-repeat="theme in themes | filter:domain.name" ng-value="theme" class="select-btn-option">
           {{ theme.name }}
         </md-option>
       </md-select>
 
-      <md-select ng-change="question.body.response = null" ng-model="question.body.type" class="md-no-underline md-button select-btn" placeholder="Type de questions">
+      <md-select ng-model="question.body.type" ng-change="question.body.data = null; question.body.results = null" class="md-no-underline md-button select-btn" placeholder="Type de questions">
         <md-option class="select-btn-option" ng-value="'radio'">Choix multiples</md-option>
         <md-option class="select-btn-option" ng-value="'checkbox'">Réponses multiples</md-option>
         <md-option class="select-btn-option" ng-value="'boolean'">Vrai ou faux</md-option>
@@ -60,14 +61,14 @@
 
   <div class="create-question-footer">
     <div class="create-question-footer-left">
-      <md-button class="md-icon-button" ng-click="remove()" aria-label="Supprimer la question">
+      <md-button class="md-icon-button" ng-if="removeQuestion" ng-click="removeQuestion(question)" aria-label="Supprimer la question">
         <md-icon class="material-icons">delete</md-icon>
       </md-button>
     </div>
     <div class="create-question-footer-right">
-      <md-button class="md-icon-button" ng-click="save(question)" aria-label="Envoyer la question">
+      <md-button class="md-icon-button" ng-if="saveQuestion" ng-click="saveQuestion(question)" aria-label="Envoyer la question">
         <md-icon class="material-icons">done</md-icon>
       </md-button>
     </div>
   </div>
-</div>
+</section>

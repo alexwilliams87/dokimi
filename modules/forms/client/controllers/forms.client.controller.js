@@ -11,6 +11,7 @@
     var vm = this;
 
     vm.form = form;
+
     vm.authentication = Authentication;
   }
 }());

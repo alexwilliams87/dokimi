@@ -1,8 +1,8 @@
 var _ = require('lodash');
 
-exports.body = function(data) {
+exports.body = function(body) {
   try {
-    QuestionBodyValidator(data);
+    QuestionBodyValidator(body);
   }
   catch(error) {
     console.log(error);
@@ -13,34 +13,25 @@ exports.body = function(data) {
 };
 
 
-function QuestionBodyValidator(data) {
-  if (_.isEmpty(data.response)) throw new Error('Response is empty');
+function QuestionBodyValidator(body) {
+  if (_.isEmpty(body.data)) throw new Error('Question data is empty');
+  if (!_.isArray(body.results)) throw new Error('Question results not an array');
 
-  switch(data.type) {
+  switch(body.type) {
 
     case 'checkbox':
+    case 'boolean':
     case 'radio':
       var checked = null;
-      if (!_.isArray(data.response)) throw new Error('Response not an array');
+      if (!_.isArray(body.data)) throw new Error('Question data not an array');
 
-      data.response.forEach(function(item) {
-        if (_.isEmpty(item.value) || !_.isBoolean(item.checked)) throw new Error('Item value or checked not valid');
-        if (item.checked === true) checked = true;
+      body.data.forEach(function(item) {
+        if (_.isEmpty(item.value)) throw new Error('Question item value not valid');
       });
 
-      if (!checked) {
-        throw new Error('Nothing checked');
-      }
-      break;
-
-
-    case 'boolean':
-      var checked = null;
-      if (!_.isArray(data.response)) throw new Error('Response not an array');
-
-      data.response.forEach(function(item) {
-        if (_.isEmpty(item.value) || !_.isBoolean(item.checked) || !_.isBoolean(item.assign)) throw new Error('Item value, checked or assign not valid');
-        if (item.checked === true) checked = true;
+      body.results.forEach(function(result) {
+        if (!_.isBoolean(result.checked)) throw new Error('Question item checked status is not valid');
+        if (result.checked === true) checked = true;
       });
 
       if (!checked) {
@@ -51,39 +42,35 @@ function QuestionBodyValidator(data) {
 
     case 'regmissing':
     case 'missing':
-      if (!_.isObject(data.response)) throw new Error('Response not an object');
-      if (!_.isArray(data.response.values)) throw new Error('Response values not an array');
-      if (_.isEmpty(data.response.content)) throw new Error('Response content is empty');
-      if (_.isEmpty(data.response.values)) throw new Error('Response values is empty');
+      if (!_.isString(body.data)) throw new Error('Question data not a string');
 
-      data.response.values.forEach(function(item) {
-        if (_.isEmpty(item)) throw new Error('Item in response values is empty');
+      body.results.forEach(function(result) {
+        if (_.isEmpty(result)) throw new Error('Question item value in result is empty');
       });
 
-      var match = data.response.content.match(/%s/g);
+      var match = body.data.match(/%s/g);
 
-      if (match && match.length !== data.response.values.length) {
-        throw new Error('Response malformated');
+      if (match && match.length !== body.results.length) {
+        throw new Error('Question malformated');
       }
       break;
 
 
     case 'ranking':
-      if (!_.isArray(data.response)) throw new Error('Response not an array');
+      if (!_.isArray(body.data)) throw new Error('Question data not an array');
 
-      data.response.forEach(function(list) {
-        if (!_.isObject(list)) throw new Error('Response list not an object');
-        if (!_.isArray(list.items)) throw new Error('Response list items not an array');
-        if (_.isEmpty(list.items)) throw new Error('Response list items empty');
+      body.data.forEach(function(list) {
+        if (!_.isObject(list)) throw new Error('Question list not an object');
+        if (!_.isArray(list.items) || _.isEmpty(list.items)) throw new Error('Question list items not an array or empty');
 
         list.items.forEach(function(item) {
-          if (_.isEmpty(item.value)) throw new Error('Item value is empty');
-          if (item.media !== 'text' && item.media !== 'image') throw new Error('Item type not available');
+          if (_.isEmpty(item.value)) throw new Error('Question item value is empty');
+          if (item.media !== 'text' && item.media !== 'image') throw new Error('Question item type not available');
         });
       });
 
-      if (data.response[0].items.length !== data.response[1].items.length) {
-        throw new Error('Response malformated');
+      if (body.data[0].items.length !== body.data[1].items.length) {
+        throw new Error('Question malformated');
       }
       break;
   }

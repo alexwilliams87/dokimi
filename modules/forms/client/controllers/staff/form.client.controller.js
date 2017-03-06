@@ -14,61 +14,51 @@
     vm.themes = $scope.themes = ThemesService.query();
     vm.users = $scope.users = UsersService.query();
     vm.receivers = $scope.receivers = ReceiversService.query();
+    vm.questions = $scope.questions = QuestionsService.query();
+
     vm.form = form;
     vm.authentication = Authentication;
     vm.remove = remove;
     vm.save = save;
+    vm.addQuestion = addQuestion;
+    vm.removeQuestion = $scope.removeQuestion = removeQuestion;
     vm.showReceiversDialog = showReceiversDialog;
+    vm.showQuestionsDialog = showQuestionsDialog;
 
     // Replace by new formService
-    vm.form.questions = [];
-    vm.form.receivers = [];
-
-    $scope.save = function(question) {
-      question.createOrUpdate()
-        .then(function() {
-          return vm.form.createOrUpdate();
-        })
-        .then(function() {
-          vm.form.questions.push(new QuestionsService())
-        });
+    if (!vm.form._id) {
+      vm.form.questions = [];
+      vm.form.receivers = [];
     }
 
-    vm.add = function() {
+    // Add a question
+    function addQuestion() {
       vm.form.questions.push(new QuestionsService());
     }
 
-    // Open receivers list
-    function showReceiversDialog(ev) {
-      $mdDialog.show({
-        controller: DialogController,
-        templateUrl: '/modules/receivers/client/views/staff/templates/receivers-dialog-selected.client.view.template.html',
-        parent: angular.element(document.body),
-        targetEvent: ev,
-        clickOutsideToClose:true,
-        fullscreen: $scope.customFullscreen
-      })
-      .then(function(res) {
-        vm.form.receivers = res;
-      });
-    };
+    // Remove a question
+    function removeQuestion(question) {
+      vm.form.questions.splice(vm.form.questions.indexOf(question), 1);
+    }
 
     // Remove existing Form
     function remove() {
       if ($window.confirm('Are you sure you want to delete?')) {
         vm.form.$remove(function() {
-          $state.go('admin.forms.list');
+          $state.go('staff.forms.list');
           Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Form deleted successfully!' });
         });
       }
     }
 
     // Save Form
-    function save(isValid) {
-      if (!isValid) {
-        $scope.$broadcast('show-errors-check-validity', 'vm.form.formForm');
-        return false;
-      }
+    function save() {
+      vm.form.questions.forEach(function(question) {
+        // if question new
+        if (question instanceof QuestionsService) {
+          question.createOrUpdate();
+        }
+      });
 
       // Create a new form, or update the current instance
       vm.form.createOrUpdate()
@@ -76,7 +66,7 @@
         .catch(errorCallback);
 
       function successCallback(res) {
-        $state.go('admin.forms.list'); // should we send the User to the list or the updated Form's view?
+        $state.go('staff.forms.list'); // should we send the User to the list or the updated Form's view?
         Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Form saved successfully!' });
       }
 
@@ -85,12 +75,58 @@
       }
     }
 
-    function DialogController($scope, $mdDialog) {
+    // Open questions importer
+    function showQuestionsDialog(ev) {
+      $mdDialog.show({
+        controller: DialogQuestionsController,
+        templateUrl: '/modules/questions/client/views/staff/templates/questions-dialog-importer.client.view.template.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose:true,
+        fullscreen: $scope.customFullscreen
+      })
+      .then(function(questions) {
+        var questionsCopy = [];
+        angular.merge(questionsCopy, questions);
+        vm.form.questions = vm.form.questions.concat(questionsCopy);
+      });
+    }
+
+    function DialogQuestionsController($scope, $mdDialog) {
+      $scope.domains = vm.domains;
+      $scope.themes = vm.themes;
+      $scope.questions = vm.questions;
+      $scope.hide = $mdDialog.hide;
+      $scope.cancel = $mdDialog.cancel;
+      $scope.selected = [];
+
+      $scope.answer = function(selected) {
+        $mdDialog.hide(selected);
+      };
+    }
+
+    // Open receivers importer
+    function showReceiversDialog(ev) {
+      $mdDialog.show({
+        controller: DialogReceiversController,
+        templateUrl: '/modules/receivers/client/views/staff/templates/receivers-dialog-importer.client.view.template.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose:true,
+        fullscreen: $scope.customFullscreen
+      })
+      .then(function(receivers) {
+        vm.form.receivers = receivers;
+      });
+    }
+
+    function DialogReceiversController($scope, $mdDialog) {
       $scope.domains = vm.domains;
       $scope.themes = vm.themes;
       $scope.users = vm.users;
       $scope.receivers = vm.receivers;
-
+      $scope.hide = $mdDialog.hide;
+      $scope.cancel = $mdDialog.cancel;
       $scope.selected = vm.form.receivers;
 
       $scope.import = function() {
@@ -105,16 +141,8 @@
         });
       }
 
-      $scope.hide = function() {
-        $mdDialog.hide();
-      };
-
-      $scope.cancel = function() {
-        $mdDialog.cancel();
-      };
-
-      $scope.answer = function(answer) {
-        $mdDialog.hide(answer);
+      $scope.answer = function(selected) {
+        $mdDialog.hide(selected);
       };
     }
   }

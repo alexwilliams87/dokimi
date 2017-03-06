@@ -1,5 +1,5 @@
 <div layout="row">
-  <div ng-repeat="list in io" flex>
+  <div ng-repeat="list in lists" flex>
     <ul dnd-list="list.items" dnd-allowed-types="list.allowedTypes">
 
       <li ng-repeat="item in list.items" layout="row" layout-align="center center" dnd-draggable="item" dnd-type="item.type" dnd-disable-if="item.type == 'unknown'" dnd-moved="list.items.splice($index, 1)" class="background-{{item.type}}">

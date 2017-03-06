@@ -34,12 +34,16 @@ var FormSchema = new Schema({
   receivers: [
     {
       type: Schema.ObjectId,
-      ref: 'Users'
+      ref: 'User'
     }
   ],
   submitted: {
     type: Boolean,
     default: false
+  },
+  user: {
+    type: Schema.ObjectId,
+    ref: 'User'
   }
 });
 

@@ -49,6 +49,18 @@
         resolve: {
           questionResolve: getQuestion
         }
+      })
+      .state('staff.questions.view', {
+        url: '/:questionId',
+        templateUrl: '/modules/questions/client/views/staff/view-question.client.view.html',
+        controller: 'QuestionsStaffController',
+        controllerAs: 'vm',
+        resolve: {
+          questionResolve: getQuestion
+        },
+        data: {
+          pageTitle: 'Question {{ questionResolve.title }}'
+        }
       });
   }
 

@@ -10,7 +10,7 @@
   function QuestionsController($scope, question, Authentication) {
     var vm = this;
 
-    vm.question = question;
+    vm.question = $scope.question = question;
     vm.authentication = Authentication;
 
   }
