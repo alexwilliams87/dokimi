@@ -87,7 +87,7 @@ exports.delete = function (req, res) {
  * List of Themes
  */
 exports.list = function (req, res) {
-  Theme.find().sort('-created').populate('user').populate('domain', 'name').exec(function (err, themes) {
+  Theme.find().sort('-created').populate('user', 'displayName').populate('domain', 'name').exec(function (err, themes) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)
@@ -109,7 +109,7 @@ exports.themeByID = function (req, res, next, id) {
     });
   }
 
-  Theme.findById(id).populate('user').populate('domain').exec(function (err, theme) {
+  Theme.findById(id).populate('user', 'displayName').populate('domain').exec(function (err, theme) {
     if (err) {
       return next(err);
     } else if (!theme) {

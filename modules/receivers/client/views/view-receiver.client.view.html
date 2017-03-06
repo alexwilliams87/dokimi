@@ -2,7 +2,7 @@
   <div class="sub-head-container" layout="row"  layout-align="start center">
     <div class="md-toolbar-tools">
       <span>
-        Nom de la liste :&nbsp;
+        Receiver's location :&nbsp;
       </span>
       <span ng-bind="vm.receiver.name"></span>
     </div>
@@ -10,19 +10,19 @@
 </md-toolbar>
 
 <div class="list-group">
-  <p><span class="lead" ng-bind="vm.receiver.users.length"></span><span> destinataires dans cette liste</span></p>
+  <span class="lead" ng-bind="vm.receiver.cars.length"></span><span> cars in this receiver</span>
   <md-table-container>
     <table md-table>
-      <thead md-head>
+      <thead md-head md-order="vm.orderBy">
         <tr md-row>
-          <th md-column>Destinataires</th>
-          <th md-column>E-Mail</th>
+          <th md-column md-order-by="mark.name">Mark</th>
+          <th md-column md-order-by="model">Model</th>
         </tr>
       </thead>
       <tbody md-body>
-        <tr md-row ng-repeat="users in vm.receiver.users | orderBy:vm.orderBy">
-          <td md-cell>{{ users.displayName }}</td>
-          <td md-cell>{{ users.email }}</td>
+        <tr md-row ng-repeat="cars in vm.receiver.cars | orderBy:vm.orderBy">
+          <td md-cell>{{ cars.mark.name }}</td>
+          <td md-cell>{{ cars.model }}</td>
         </tr>
       </tbody>
     </table>

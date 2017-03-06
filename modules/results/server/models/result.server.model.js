@@ -14,12 +14,12 @@ var ResultSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  guid: {
+    type: String
+  },
   form: {
     type: Schema.ObjectId,
     ref: 'Form'
-  },
-  guid: {
-    type Number
   },
   answers: [
     {

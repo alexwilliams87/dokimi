@@ -24,13 +24,13 @@
         }
       })
       .state('forms.view', {
-        url: '/test',
+        url: '/:formId',
         templateUrl: '/modules/forms/client/views/view-form.client.view.html',
         controller: 'FormsController',
         controllerAs: 'vm',
-        // resolve: {
-        //   formResolve: getForm
-        // },
+        resolve: {
+          formResolve: getForm
+        },
         data: {
           pageTitle: 'Form {{ formResolve.title }}'
         }
