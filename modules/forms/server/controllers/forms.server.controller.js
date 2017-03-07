@@ -7,25 +7,37 @@ var _ = require('lodash'),
   path = require('path'),
   mongoose = require('mongoose'),
   Form = mongoose.model('Form'),
+  Exam = mongoose.model('Exam'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 /**
- * Show the current form
+ * Submit the current form
  */
-exports.run = function (req, res) {
+exports.submit = function (req, res) {
   // convert mongoose document to JSON
   var form = req.form ? req.form.toJSON() : {};
 
-  if (form.submitted && _.find(form.receivers, req.user._id)) {
-    form.questions.forEach(function(question) {
-      delete question.body.results;
-    });
+  form.submitted = true;
 
-    res.json(form);
-  }
-  else {
-    res.json('not access');
-  }
+  form.receivers.forEach(function(receiver) {
+    var exam = new Exam();
+    
+  });
+  var exam = new Exam();
+
+
+
+
+  // if (form.submitted && _.find(form.receivers, req.user._id)) {
+  //   form.questions.forEach(function(question) {
+  //     delete question.body.results;
+  //   });
+  //
+  //   res.json(form);
+  // }
+  // else {
+  //   res.json('not access');
+  // }
 };
 
 /**
@@ -71,6 +83,7 @@ exports.update = function (req, res) {
   form.questions = req.body.questions;
   form.receivers = req.body.receivers;
   form.submitted = req.body.submitted;
+// if form.submitted == true alors pas d'update
 
   form.save(function (err) {
     if (err) {
@@ -126,7 +139,7 @@ exports.formByID = function (req, res, next, id) {
     });
   }
 
-  Form.findById(id).populate('user', 'displayName').exec(function (err, form) {
+  Form.findById(id).populate('user', 'displayName').populate('receivers', 'displayName').exec(function (err, form) {
     if (err) {
       return next(err);
     } else if (!form) {

@@ -1,0 +1,21 @@
+<div ng-repeat="option in options">
+  <md-input-container md-no-float class="md-block">
+    <md-icon ng-click="toggle($index)" class="material-icons toggle-icon">
+      <span ng-if="type === 'radio'">
+        {{ results[$index].checked ? 'radio_button_checked' : 'radio_button_unchecked' }}
+      </span>
+      <span ng-if="type !== 'radio'">
+        {{ results[$index].checked ? 'check_box' : 'check_box_outline_blank' }}
+      </span>
+    </md-icon>
+
+    <input type="text" ng-model="option.value" placeholder="Option {{ $index + 1 }}" ng-readonly="{{ option.readonly }}">
+    <md-icon ng-if="!locked" ng-click="delete($index)" class="material-icons" aria-label="Suppresion d'une option">close</md-icon>
+  </md-input-container>
+</div>
+
+<div layout="row" layout-align="center center">
+  <md-button ng-if="!locked" ng-click="add()" class="md-fab md-mini" aria-label="Ajout d'une option">
+    <md-icon flex class="material-icons">add</md-icon>
+  </md-button>
+</div>

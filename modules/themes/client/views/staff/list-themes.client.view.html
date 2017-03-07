@@ -1,0 +1,34 @@
+﻿<section>
+  <md-toolbar class="md-table-toolbar" flex>
+    <div class="sub-head-container" layout="row" layout-align="start center">
+      <div class="md-toolbar-tools">
+        <span>Liste des thèmes</span>
+        <span flex></span>
+        <a data-ui-sref="staff.themes.create"><md-icon class="material-icons">add_box</md-icon></a>
+      </div>
+    </div>
+  </md-toolbar>
+
+  <div class="list-group">
+    <md-table-container>
+    <table md-table>
+      <thead md-head md-order="vm.orderBy">
+         <tr md-row>
+           <th md-column md-order-by="name">Noms</th>
+           <th md-column md-order-by="domain.name">Domaines</th>
+        </tr>
+      </thead>
+      <tbody md-body>
+        <tr md-row ng-repeat="theme in vm.themes | orderBy:vm.orderBy">
+          <td md-cell>{{ theme.name }}</td>
+          <td md-cell>{{ theme.domain.name }}</td>
+          <td md-cell><a class="dark-icon" data-ui-sref="staff.themes.edit({themeId: theme._id})"><i class="material-icons">mode_edit</i></a></td>
+        </tr>
+      </tbody>
+    </table>
+    </md-table-container>
+  </div>
+  <div class="alert alert-warning text-center" data-ng-if="themes.$resolved && !themes.length">
+    No themes yet, why don't you <a data-ui-sref="staff.themes.create">create one</a>?
+  </div>
+</section>

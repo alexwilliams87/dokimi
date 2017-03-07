@@ -18,17 +18,17 @@
     vm.remove = $scope.removeQuestion = remove;
     vm.save = $scope.saveQuestion = save;
 
-    // Remove existing Domain
+    // Remove existing Question
     function remove() {
-      if ($window.confirm('Etes vous sure de vouloir supprimer cette question ?')) {
+      if ($window.confirm('Êtes-vous certain de vouloir supprimer cette question ?')) {
         vm.question.$remove(function() {
-          $state.go('admin.questions.list');
-          Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i>Question supprimée !' });
+          $state.go('staff.questions.list');
+          Notification.success({ message: '<i class="material-icons">check_circle</i> Question supprimée avec succès' });
         });
       }
     }
 
-    // Save Domain
+    // Save Question
     function save(isValid) {
       if (!isValid) {
         return false;
@@ -40,12 +40,12 @@
     }
 
     function successCallback(res) {
-      $state.go('staff.questions.list'); // should we send the User to the list or the updated Domain's view?
-      Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Question saved successfully!' });
+      $state.go('staff.questions.list');
+      Notification.success({ message: '<i class="material-icons">check_circle</i> Question sauvegardée avec succès' });
     }
 
     function errorCallback(res) {
-      Notification.error({ message: res.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Question save error!' });
+      Notification.error({ message: res.data.message, title: '<i class="material-icons">report_problem</i> Erreur lors de la sauvegarde' });
     }
   }
 }());

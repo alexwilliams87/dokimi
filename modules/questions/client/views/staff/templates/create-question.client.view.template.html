@@ -6,7 +6,7 @@
   - @Function save
   - @Function remove
 -->
-<section>
+<section ng-init="domain = question.theme.domain">
   <div class="create-question" layout="row">
     <div class="create-question-content" flex="70">
       <div class="create-question-subject">
@@ -21,7 +21,6 @@
         <dk-create-boolean options="question.body.data" results="question.body.results" ng-if="question.body.type === 'boolean'"></dk-create-boolean>
         <dk-create-missing string="question.body.data"  results="question.body.results" ng-if="question.body.type === 'missing'"></dk-create-missing>
         <dk-create-regmissing string="question.body.data" results="question.body.results" ng-if="question.body.type === 'regmissing'"></dk-create-regmissing>
-        <dk-create-opened string="question.body.data" ng-if="question.body.type === 'opened'"></dk-create-opened>
         <dk-create-ranking lists="question.body.data" results="question.body.results" ng-if="question.body.type === 'ranking'"></dk-create-ranking>
       </div>
     </div>

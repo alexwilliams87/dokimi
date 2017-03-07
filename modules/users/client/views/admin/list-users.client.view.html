@@ -1,20 +1,40 @@
 <section>
-  <div class="page-header">
-    <div class="row">
-      <div class="col-md-4">
-        <h1>Users</h1>
-      </div>
-      <div class="col-md-4" style="margin-top: 2em">
-        <input class="form-control col-md-4" type="text" ng-model="vm.search" placeholder="Search" ng-change="vm.figureOutItemsToDisplay()" />
+  <md-toolbar class="md-table-toolbar" flex>
+    <div class="sub-head-container" layout="row" layout-align="start center">
+      <div class="md-toolbar-tools">
+        <span>Utilisateurs</span>
       </div>
     </div>
+  </md-toolbar>
+
+  <div class="list-users-search">
+    <md-input-container>
+      <input type="text" ng-model="vm.search" placeholder="Search" ng-change="vm.figureOutItemsToDisplay()" />
+    </md-input-container>
   </div>
+
   <div class="list-group">
-    <a ng-repeat="user in vm.pagedItems" ui-sref="admin.user({userId: user._id})" class="list-group-item">
-      <h4 class="list-group-item-heading" ng-bind="user.username"></h4>
-      <p class="list-group-item-text pull-right small" ng-bind="user.roles"></p>
-      <p class="list-group-item-text" ng-bind="user.email"></p>
-    </a>
+    <md-table-container>
+      <table md-table>
+        <thead md-head>
+           <tr md-row>
+            <th md-column>Nom d'utilisateur</th>
+            <th md-column>E-mail</th>
+            <th md-column>Rôles</th>
+            <th md-column>Domaines</th>
+          </tr>
+        </thead>
+        <tbody md-body>
+          <tr md-row ng-repeat="user in vm.pagedItems">
+            <td md-cell>{{ user.username }}</td>
+            <td md-cell>{{ user.email }}</td>
+            <td md-cell>{{ user.roles.join(',') }}</td>
+            <td md-cell>{{ user.domain.name }}</td>
+            <td md-cell><a class="dark-icon" data-ui-sref="admin.user-edit({userId: user._id})"><i class="material-icons">mode_edit</i></a></td>
+          </tr>
+        </tbody>
+      </table>
+    </md-table-container>
   </div>
 
   <uib-pagination boundary-links="true" max-size="8" items-per-page="vm.itemsPerPage" total-items="vm.filterLength" ng-model="vm.currentPage" ng-change="vm.pageChanged()"></uib-pagination>

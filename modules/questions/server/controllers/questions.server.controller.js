@@ -85,9 +85,9 @@ exports.delete = function (req, res) {
  exports.list = function (req, res) {
    Question.find().sort('-created').populate('user', 'displayName')
    .populate({
-     path:     'theme',
-     populate: { path:  'domain'
-       //model: 'Domain'
+     path: 'theme',
+     populate: {
+       path: 'domain'
      }
    })
    .exec(function (err, questions) {
@@ -112,7 +112,15 @@ exports.questionByID = function (req, res, next, id) {
     });
   }
 
-  Question.findById(id).populate('theme').populate('user', 'displayName').exec(function (err, question) {
+  // Voir si populate theme est nécéssaire ??
+  Question.findById(id).populate('theme').populate('user', 'displayName')
+  .populate({
+    path: 'theme',
+    populate: {
+      path: 'domain'
+    }
+  })
+  .exec(function (err, question) {
     if (err) {
       return next(err);
     } else if (!question) {

@@ -18,8 +18,8 @@ module.exports = function (app) {
     .put(forms.update)
     .delete(forms.delete);
 
-  app.route('/api/forms/run/:formId')
-    .get(forms.run);
+  // app.route('/api/forms/run/:formId')
+  //   .get(forms.run);
 
   // Finish by binding the form middleware
   app.param('formId', forms.formByID);

@@ -1,0 +1,14 @@
+<div ng-repeat="option in options">
+  <md-input-container md-no-float class="md-block">
+    <md-icon ng-click="toggle($index)" class="material-icons toggle-icon">
+      <span ng-if="type === 'radio'">
+        {{ results[$index].checked ? 'radio_button_checked' : 'radio_button_unchecked' }}
+      </span>
+      <span ng-if="type !== 'radio'">
+        {{ results[$index].checked ? 'check_box' : 'check_box_outline_blank' }}
+      </span>
+    </md-icon>
+
+    <input type="text" ng-model="option.value" readonly>
+  </md-input-container>
+</div>

@@ -5,12 +5,13 @@
     .module('users')
     .controller('AuthenticationController', AuthenticationController);
 
-  AuthenticationController.$inject = ['$scope', '$state', 'UsersService', '$location', '$window', 'Authentication', 'PasswordValidator', 'Notification'];
+  AuthenticationController.$inject = ['$scope', '$state', 'UsersService', '$location', '$window', 'Authentication', 'PasswordValidator', 'Notification', 'DomainsService'];
 
-  function AuthenticationController($scope, $state, UsersService, $location, $window, Authentication, PasswordValidator, Notification) {
+  function AuthenticationController($scope, $state, UsersService, $location, $window, Authentication, PasswordValidator, Notification, DomainsService) {
     var vm = this;
 
     vm.authentication = Authentication;
+    vm.domains = DomainsService.query();
     vm.getPopoverMsg = PasswordValidator.getPopoverMsg;
     vm.signup = signup;
     vm.signin = signin;

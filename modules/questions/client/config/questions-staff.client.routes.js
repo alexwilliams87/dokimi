@@ -17,7 +17,7 @@
       .state('staff.questions.list', {
         url: '',
         templateUrl: '/modules/questions/client/views/staff/list-questions.client.view.html',
-        controller: 'QuestionsListController',
+        controller: 'QuestionsStaffListController',
         controllerAs: 'vm',
         data: {
           roles: ['staff'],

@@ -1,0 +1,9 @@
+<h1>Questionnaire {{ vm.form.title }}</h1>
+
+<div ng-include src="'/modules/questions/client/views/staff/templates/view-question.client.view.template.html'"></div>
+
+<div class="toolbar-exam">
+  <md-button ng-click="vm.send()" class="md-fab" aria-label="Validation d'une réponse">
+    <md-icon flex class="material-icons">done</md-icon>
+  </md-button>
+</div>

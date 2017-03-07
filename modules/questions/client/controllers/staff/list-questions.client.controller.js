@@ -3,30 +3,29 @@
 
   angular
     .module('questions')
-    .controller('QuestionsListController', QuestionsListController);
+    .controller('QuestionsStaffListController', QuestionsStaffListController);
 
-  QuestionsListController.$inject = ['$window', 'Notification', '$mdDialog', 'ThemesService', 'DomainsService', 'QuestionsService'];
+  QuestionsStaffListController.$inject = ['$window', 'Notification', '$mdDialog', 'ThemesService', 'DomainsService', 'QuestionsService'];
 
-  function QuestionsListController($window, Notification, $mdDialog, ThemesService, DomainsService, QuestionsService) {
+  function QuestionsStaffListController($window, Notification, $mdDialog, ThemesService, DomainsService, QuestionsService) {
     var vm = this;
-    vm.remove 	= remove;
+    vm.remove = remove;
     vm.questions = QuestionsService.query();
     vm.themes = ThemesService.query();
     vm.domains = DomainsService.query();
 
-    function remove(question, ev) {
+    function remove(question) {
       var confirm = $mdDialog.confirm()
-        .title('Supprimer une question')
-        .textContent('Etes-vous sur de vouloir supprimer cette question ?')
-        .ariaLabel('Suppresion d\'une question')
-        .targetEvent(ev)
-        .ok('Oui, j\'en suis certains')
-        .cancel('Non');
+        .title('Voulez-vous supprimer cette question ?')
+        .textContent('Vous êtes sur le point de supprimer une question. Voulez-vous continuer ?')
+        .ariaLabel('Suppression d\'une question')
+        .ok('Oui')
+        .cancel('Annuler');
 
       $mdDialog.show(confirm).then(function() {
         vm.questions.splice(vm.questions.indexOf(question), 1);
         question.$remove(function() {
-          Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Question deleted successfully!' });
+          Notification.success({ message: '<i class="material-icons">check_circle</i> Question supprimée avec succès' });
         });
       });
     }

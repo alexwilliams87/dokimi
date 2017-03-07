@@ -25,7 +25,6 @@
     vm.showReceiversDialog = showReceiversDialog;
     vm.showQuestionsDialog = showQuestionsDialog;
 
-    // Replace by new formService
     if (!vm.form._id) {
       vm.form.questions = [];
       vm.form.receivers = [];
@@ -127,7 +126,16 @@
       $scope.receivers = vm.receivers;
       $scope.hide = $mdDialog.hide;
       $scope.cancel = $mdDialog.cancel;
-      $scope.selected = vm.form.receivers;
+      $scope.selected = [];
+
+      for (var receiver in vm.form.receivers) {
+        for (var user in $scope.users) {
+          if (vm.form.receivers[receiver]._id === $scope.users[user]._id) {
+            $scope.selected.push($scope.users[user]);
+            break;
+          }
+        }
+      }
 
       $scope.import = function() {
         $scope.selected = [];

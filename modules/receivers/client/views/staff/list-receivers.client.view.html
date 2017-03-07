@@ -1,0 +1,35 @@
+﻿<section>
+  <md-toolbar class="md-table-toolbar" flex>
+    <div class="sub-head-container" layout="row" layout-align="start center">
+      <div class="md-toolbar-tools">
+        <span>Liste des destinataires</span>
+        <span flex></span>
+        <a data-ui-sref="staff.receivers.create"><md-icon class="material-icons">add_box</md-icon></a>
+      </div>
+    </div>
+  </md-toolbar>
+
+  <div class="list-group">
+    <md-table-container>
+      <table md-table>
+        <thead md-head md-order="vm.orderBy">
+           <tr md-row>
+             <th md-column md-order-by="name">Nom des listes</th>
+             <th md-column>Nombre de destinataires</th>
+          </tr>
+        </thead>
+        <tbody md-body>
+          <tr md-row ng-repeat="receiver in vm.receivers | orderBy:vm.orderBy">
+            <td md-cell>{{ receiver.name }}</td>
+            <td md-cell>{{ receiver.users.length }} destinataires dans cette liste</td>
+            <td md-cell><a class="dark-icon" data-ui-sref="staff.receivers.edit({receiverId: receiver._id})"><i class="material-icons">mode_edit</i></a></td>
+            <td md-cell><a class="dark-icon" ng-click="vm.remove(receiver)"><i class="material-icons">delete</i></a></td>
+          </tr>
+        </tbody>
+      </table>
+    </md-table-container>
+  </div>
+  <div class="alert alert-warning text-center" data-ng-if="receivers.$resolved && !receivers.length">
+    No receivers yet, why don't you <a data-ui-sref="staff.receivers.create">create one</a>?
+  </div>
+</section>

@@ -14,34 +14,41 @@
           <div class="question-subject-headline" layout="row" layout-align="start center">Enoncé de la question</div>
           <div class="question-subject-content">{{ question.subject }}</div>
           <div class="question-body">
-            <dk-select  options="question.body.data" results="question.body.results" ng-if="question.body.type === 'radio'" type="radio"></dk-select>
-            <dk-select  options="question.body.data" results="question.body.results" ng-if="question.body.type === 'checkbox'" type="checkbox"></dk-select>
-            <dk-boolean options="question.body.data" results="question.body.results" ng-if="question.body.type === 'boolean'"></dk-boolean>
-            <dk-missing string="question.body.data"  results="question.body.results" ng-if="question.body.type === 'missing'"></dk-missing>
-            <dk-regmissing string="question.body.data" results="question.body.results" ng-if="question.body.type === 'regmissing'"></dk-regmissing>
+            <dk-select options="question.body.data" results="question.body.results" ng-if="question.body.type === 'radio'" type="radio"></dk-select>
+            <dk-select options="question.body.data" results="question.body.results" ng-if="question.body.type === 'checkbox'" type="checkbox"></dk-select>
+            <dk-select options="question.body.data" results="question.body.results" ng-if="question.body.type === 'boolean'" type="radio"></dk-select>
+            <dk-missing string="question.body.data" results="question.body.results" ng-if="question.body.type === 'missing'"></dk-missing>
+            <dk-missing string="question.body.data" results="question.body.results" ng-if="question.body.type === 'regmissing'"></dk-missing>
             <dk-opened string="question.body.data" ng-if="question.body.type === 'opened'"></dk-opened>
+            <!--
             <dk-ranking lists="question.body.data" results="question.body.results" ng-if="question.body.type === 'ranking'"></dk-ranking>
+            -->
           </div>
         </div>
       </div>
 
       <div class="question-infos" layout="column" flex>
-        <div class="question-infos-block" layout="column">
-          <div class="question-info-title">Domaine</div>
-          <div class="question-info-value">{{ question.theme.domain }}</div>
-        </div>
-        <div class="question-infos-block" layout="column">
-          <div class="question-info-title">Thème</div>
-          <div class="question-info-value">{{ question.theme.name }}</div>
-        </div>
-        <div class="question-infos-block" layout="column">
-          <div class="question-info-title">Type de la question :</div>
-          <div class="question-info-value">{{ question.body.type }}</div>
-        </div>
-        <div class="question-infos-block" layout="column">
-          <div class="question-info-title">Pondération</div>
-          <div class="question-info-value">{{ question.points }} points</div>
-        </div>
+        <dl class="question-infos-block">
+          <dt>Domaine</dt>
+          <dd>{{ question.theme.domain.name }}</dd>
+        </dl>
+        <dl class="question-infos-block">
+          <dt>Thème</dt>
+          <dd>{{ question.theme.name }}</dd>
+        </dl>
+        <dl class="question-infos-block">
+          <dt>Type de la question :</dt>
+          <dd ng-if="question.body.type === 'radio'">Choix multiples</dd>
+          <dd ng-if="question.body.type === 'checkbox'">Réponses multiples</dd>
+          <dd ng-if="question.body.type === 'boolean'">Vrai ou faux</dd>
+          <dd ng-if="question.body.type === 'missing' || question.body.type === 'regmissing'">Texte manquant</dd>
+          <dd ng-if="question.body.type === 'opened'">Question ouverte</dd>
+          <dd ng-if="question.body.type === 'ranking'">Classement</dd>
+        </dl>
+        <dl class="question-infos-block">
+          <dt class="question-info-title">Pondération</dt>
+          <dd class="question-info-value">{{ question.points }} points</dd>
+        </dl>
       </div>
 
     </div>
