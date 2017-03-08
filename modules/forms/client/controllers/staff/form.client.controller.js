@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('forms.admin')
+    .module('forms.staff')
     .controller('FormStaffController', FormStaffController);
 
   FormStaffController.$inject = ['$scope', '$state', '$window', 'formResolve', 'Authentication', 'Notification', '$mdDialog', 'DomainsService', 'ThemesService', 'UsersService', 'ReceiversService', 'QuestionsService'];
@@ -25,10 +25,8 @@
     vm.showReceiversDialog = showReceiversDialog;
     vm.showQuestionsDialog = showQuestionsDialog;
 
-    if (!vm.form._id) {
-      vm.form.questions = [];
-      vm.form.receivers = [];
-    }
+    vm.form.questions = vm.form.questions || [];
+    vm.form.receivers = vm.form.receivers || [];
 
     // Add a question
     function addQuestion() {

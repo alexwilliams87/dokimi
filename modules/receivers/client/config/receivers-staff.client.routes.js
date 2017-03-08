@@ -20,7 +20,7 @@
         controller: 'ReceiversStaffListController',
         controllerAs: 'vm',
         data: {
-          roles: ['admin', 'staff']
+          roles: ['staff']
         }
       })
       .state('staff.receivers.create', {
@@ -29,7 +29,7 @@
         controller: 'ReceiversStaffController',
         controllerAs: 'vm',
         data: {
-          roles: ['admin', 'staff']
+          roles: ['staff']
         },
         resolve: {
           receiverResolve: newReceiver
@@ -41,7 +41,7 @@
         controller: 'ReceiversStaffController',
         controllerAs: 'vm',
         data: {
-          roles: ['admin', 'staff']
+          roles: ['staff']
         },
         resolve: {
           receiverResolve: getReceiver

@@ -13,31 +13,16 @@ acl = new acl(new acl.memoryBackend());
  */
 exports.invokeRolesPolicies = function () {
   acl.allow([{
-    roles: ['admin'],
+    roles: ['admin', 'staff'],
     allows: [{
       resources: '/api/forms',
       permissions: '*'
     }, {
       resources: '/api/forms/:formId',
       permissions: '*'
-    }]
-  }, {
-    roles: ['user'],
-    allows: [{
-      resources: '/api/forms',
-      permissions: ['get']
     }, {
-      resources: '/api/forms/:formId',
-      permissions: ['get']
-    }]
-  }, {
-    roles: ['guest'],
-    allows: [{
-      resources: '/api/forms',
-      permissions: ['get']
-    }, {
-      resources: '/api/forms/:formId',
-      permissions: ['get']
+      resources: '/api/forms/submit/:formId',
+      permissions: '*'
     }]
   }]);
 };
@@ -69,4 +54,16 @@ exports.isAllowed = function (req, res, next) {
       }
     }
   });
+};
+
+exports.isJustOwner = function (req, res, next) {
+  // If an form is being processed and the current user created it then allow any manipulation
+  if (req.form && req.user && req.form.user && req.form.user.id === req.user.id) {
+    return next();
+  }
+  else {
+    return res.status(403).json({
+      message: 'User is not authorized'
+    });
+  }
 };

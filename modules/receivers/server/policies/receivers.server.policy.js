@@ -13,12 +13,9 @@ acl = new acl(new acl.memoryBackend());
  */
 exports.invokeRolesPolicies = function () {
   acl.allow([{
-    roles: ['admin'],
+    roles: ['admin', 'staff'],
     allows: [{
       resources: '/api/receivers',
-      permissions: '*'
-    }, {
-      resources: '/api/receiverUploadImage',
       permissions: '*'
     }, {
       resources: '/api/receivers/:receiverId',

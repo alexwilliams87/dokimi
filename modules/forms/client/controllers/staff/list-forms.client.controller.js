@@ -2,13 +2,15 @@
   'use strict';
 
   angular
-    .module('questions')
+    .module('forms.staff')
     .controller('FormsStaffListController', FormsStaffListController);
 
-  FormsStaffListController.$inject = ['$window', 'Notification', '$mdDialog', 'FormsService'];
+  FormsStaffListController.$inject = ['$http', '$window', 'Authentication', 'Notification', '$mdDialog', 'FormsService'];
 
-  function FormsStaffListController($window, Notification, $mdDialog, FormsService) {
+  function FormsStaffListController($http, $window, Authentication, Notification, $mdDialog, FormsService) {
     var vm = this;
+
+    vm.authentication = Authentication;
     vm.remove = remove;
     vm.submit = submit;
     vm.forms = FormsService.query();
@@ -24,13 +26,16 @@
       $mdDialog.show(confirm).then(function() {
         vm.forms.splice(vm.forms.indexOf(form), 1);
         form.$remove(function() {
-          Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Question deleted successfully!' });
+          Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Questionnaire supprimé avec succès !' });
         });
       });
     }
 
     function submit(form) {
-      console.log('pass');
+      $http.get('/api/forms/' + form._id + '/submit').then(function(success) {
+        form.submitted = true;
+        Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Questionnaire envoyé avec succès !' });
+      });
     }
 
   }

@@ -26,6 +26,11 @@ var ExamSchema = new Schema({
   ],
   points: {
     type: Number,
+    default: 0
+  },
+  corrected: {
+    type: Boolean,
+    default: false
   },
   user: {
     type: Schema.ObjectId,

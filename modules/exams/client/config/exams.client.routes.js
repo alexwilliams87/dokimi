@@ -14,22 +14,13 @@
         url: '/exams',
         template: '<ui-view/>'
       })
-      .state('exams.list', {
-        url: '',
-        templateUrl: '/modules/exams/client/views/staff/list-exams.client.view.html',
-        controller: 'ExamsListController',
-        controllerAs: 'vm',
-        data: {
-          pageTitle: 'Exams List'
-        }
-      })
-      .state('exams.view', {
-        url: '/:examId',
+      .state('exams.candidate', {
+        url: '/candidate/:examId',
         templateUrl: '/modules/exams/client/views/view-exam.client.view.html',
         controller: 'ExamsController',
         controllerAs: 'vm',
         resolve: {
-          examResolve: getExam
+          examResolve: getExamCandidate
         },
         data: {
           pageTitle: 'Exam {{ examResolve.title }}'
@@ -37,10 +28,10 @@
       });
   }
 
-  getExam.$inject = ['$stateParams', 'ExamsService'];
+  getExamCandidate.$inject = ['$stateParams', 'ExamsCandidateService'];
 
-  function getExam($stateParams, ExamsService) {
-    return ExamsService.get({
+  function getExamCandidate($stateParams, ExamsCandidateService) {
+    return ExamsCandidateService.get({
       examId: $stateParams.examId
     }).$promise;
   }

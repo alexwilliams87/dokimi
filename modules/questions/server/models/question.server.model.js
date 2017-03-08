@@ -44,7 +44,8 @@ var QuestionSchema = new Schema({
   },
   points: {
     type: Number,
-    max: 5
+    max: 5,
+    default: 1
   },
   additional : {
     type: Object

@@ -7,27 +7,48 @@ var _ = require('lodash'),
   path = require('path'),
   mongoose = require('mongoose'),
   Exam = mongoose.model('Exam'),
-  Answer = mongoose.model('Answer'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
+/**
+ * Clean the current exam for candidate
+ */
+exports.sanitize = function(req, res, next) {
+  req.exam.form.questions.forEach(function(question) {
+    delete question.body.results;
+  });
 
-// ANSWER CONTROLLER METHOD ==>
+  next();
+};
 
-exports.createAnswer = function(req, res) {
-  var answer = new Answer(req.body);
-  answer.user = req.user;
+/**
+ * Show the current exam for candidate
+ */
+exports.run = function(req, res) {
+  var exam = req.exam ? req.exam.toJSON() : {};
 
-  answer.save(function (err) {
+  if (exam.form.submitted && _.find(exam.form.receivers, req.user._id)) {
+    res.json(exam);
+  }
+};
+
+/**
+ * Progress the current exam for candidate
+ */
+exports.progress = function (req, res) {
+  var exam = req.exam;
+
+  exam.answers.push(req.body.answers[req.body.answers.length - 1]);
+
+  exam.save(function (err) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(answer);
+      res.json(exam);
     }
   });
 };
-
 
 
 
@@ -57,10 +78,6 @@ exports.read = function (req, res) {
   var exam = req.exam ? req.exam.toJSON() : {};
 
   if (exam.form.submitted && _.find(exam.form.receivers, req.user._id)) {
-    exam.form.questions.forEach(function(question) {
-      delete question.body.results;
-    });
-
     res.json(exam);
   }
 };
@@ -71,6 +88,8 @@ exports.read = function (req, res) {
 exports.update = function (req, res) {
   var exam = req.exam;
 
+  // exam.ansers.push(req.body.answer[req.body.answer.length - 1]);
+  // push answer
   exam.answers = req.body.answers;
 
   exam.save(function (err) {
@@ -135,6 +154,7 @@ exports.examByID = function (req, res, next, id) {
         message: 'No exam with that identifier has been found'
       });
     }
+
     req.exam = exam;
     next();
   });

@@ -48,7 +48,7 @@
         <md-option class="select-btn-option" ng-value="'ranking'">Classement</md-option>
       </md-select>
       <p>Pondération : </p>
-      <md-radio-group ng-model="question.points">
+      <md-radio-group ng-model="question.points" ng-init="question.points = (!question.points) ? 1 : question.points">
         <md-radio-button ng-value="1">1</md-radio-button>
         <md-radio-button ng-value="2">2</md-radio-button>
         <md-radio-button ng-value="3">3</md-radio-button>

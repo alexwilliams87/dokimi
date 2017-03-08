@@ -33,12 +33,17 @@
     return directive;
 
     function link(scope, element, attrs) {
-      if (!scope.options) scope.options = [];
-      if (!scope.results) scope.results = [];
+      if (!scope.options) {
+        scope.options = [];
+      }
 
-      scope.options.forEach(function(option) {
-        scope.results.push({ checked: false });
-      });
+      if (!scope.results) {
+        scope.results = [];
+
+        scope.options.forEach(function(option) {
+          scope.results.push({ checked: false });
+        });
+      }
 
       scope.toggle = function(currentIndex) {
         if (scope.type === 'radio') {

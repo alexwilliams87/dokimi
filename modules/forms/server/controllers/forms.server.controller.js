@@ -11,33 +11,33 @@ var _ = require('lodash'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 /**
- * Submit the current form
+ * Submit the current form FAIRE L'ENVOI DES MAILS
  */
-exports.submit = function (req, res) {
-  // convert mongoose document to JSON
-  var form = req.form ? req.form.toJSON() : {};
+exports.submit = function (req, res) { // revoir syntaxe
+  var form = req.form;
 
-  form.submitted = true;
+  if (!form.submitted && (form.user._id.toString() === req.user._id.toString())) {
+    form.submitted = true;
 
-  form.receivers.forEach(function(receiver) {
-    var exam = new Exam();
-    
-  });
-  var exam = new Exam();
+    form.receivers.forEach(function(receiver) {
+      var exam = new Exam();
 
+      exam.form = form;
+      exam.user = receiver;
 
+      exam.save();
+    });
 
-
-  // if (form.submitted && _.find(form.receivers, req.user._id)) {
-  //   form.questions.forEach(function(question) {
-  //     delete question.body.results;
-  //   });
-  //
-  //   res.json(form);
-  // }
-  // else {
-  //   res.json('not access');
-  // }
+    form.save(function (err) {
+      if (err) {
+        return res.status(422).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else {
+        res.json(form);
+      }
+    });
+  }
 };
 
 /**
@@ -78,12 +78,17 @@ exports.read = function (req, res) {
 exports.update = function (req, res) {
   var form = req.form;
 
+  if (form.submitted) {
+    return res.status(422).send({
+      message: 'This form is locked because submitted !'
+    });
+  }
+
   form.title = req.body.title;
   form.description = req.body.description;
   form.questions = req.body.questions;
   form.receivers = req.body.receivers;
   form.submitted = req.body.submitted;
-// if form.submitted == true alors pas d'update
 
   form.save(function (err) {
     if (err) {
@@ -101,6 +106,18 @@ exports.update = function (req, res) {
  */
 exports.delete = function (req, res) {
   var form = req.form;
+
+  if (form.submitted) {
+    return res.status(422).send({
+      message: 'Form is locked when submitted !'
+    });
+  }
+
+  if (form.user._id.toString() !== req.user._id.toString()) {
+    return res.status(422).send({
+      message: 'This form is not yours !'
+    });
+  }
 
   form.remove(function (err) {
     if (err) {

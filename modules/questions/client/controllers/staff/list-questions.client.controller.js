@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('questions')
+    .module('questions.staff')
     .controller('QuestionsStaffListController', QuestionsStaffListController);
 
   QuestionsStaffListController.$inject = ['$window', 'Notification', '$mdDialog', 'ThemesService', 'DomainsService', 'QuestionsService'];

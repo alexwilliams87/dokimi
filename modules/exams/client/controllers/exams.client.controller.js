@@ -11,25 +11,25 @@
     var vm = this;
 
     vm.exam = exam;
-    vm.question = $scope.question = vm.exam.form.questions[vm.exam.answers.length];
+    $scope.question = vm.exam.form.questions[vm.exam.answers.length];
 
     vm.authentication = Authentication;
 
-    vm.send = function() {
+    vm.validate = function() {
       $http({
         method: 'POST',
         url: '/api/answers',
         data: {
           offsetQuestion: vm.exam.answers.length,
           form: vm.form,
-          results: vm.question.body.results
+          results: $scope.question.body.results
         }
       }).then(function successCallback(response) {
         vm.exam.answers.push(response.data._id);
 
-        vm.exam.createOrUpdate().then(function(success) {
+        vm.exam.$save().then(function(success) {
           if (vm.exam.form.questions[vm.exam.answers.length]) {
-            vm.question = $scope.question = vm.exam.form.questions[vm.exam.answers.length];
+            $scope.question = $scope.question = vm.exam.form.questions[vm.exam.answers.length];
           }
         });
       });

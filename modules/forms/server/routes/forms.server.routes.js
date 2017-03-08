@@ -13,13 +13,13 @@ module.exports = function (app) {
     .post(forms.create);
 
   // Single form routes
-  app.route('/api/forms/:formId').all(formsPolicy.isAllowed)
+  app.route('/api/forms/:formId').all(formsPolicy.isJustOwner)
     .get(forms.read)
     .put(forms.update)
     .delete(forms.delete);
 
-  // app.route('/api/forms/run/:formId')
-  //   .get(forms.run);
+  app.route('/api/forms/:formId/submit').all(formsPolicy.isJustOwner)
+    .get(forms.submit);
 
   // Finish by binding the form middleware
   app.param('formId', forms.formByID);
