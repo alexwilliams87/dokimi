@@ -1,7 +1,14 @@
 <section class="home">
   <div class="home-examid-candidate" ng-repeat="exam in vm.exams">
     <h1>
-      <a ui-sref="exams.candidate({examCandidateId: exam._id})">{{ exam._id }}</a> - {{ exam.state }} - {{ exam.points }}
+      <a ui-sref="exams.candidate({examCandidateId: exam._id})">
+        {{ exam._id }}
+      </a>
+      <span> - </span>
+      <span ng-if='exam.state === "unchecked"'>Non corrigé</span>
+      <span ng-if='exam.state === "progress"'>En cours de correction</span>
+      <span ng-if='exam.state === "checked"'>Corrigé</span>
+      <span> - Résultat : {{ exam.points }} points</span>
     </h1>
   </div>
 </section>

@@ -35,6 +35,8 @@
         var question = vm.exam.form.questions[vm.i];
         var answer = vm.exam.answers[vm.i];
 
+        answer.results = answer.results || [];
+
         switch(question.body.type) {
           case 'radio':
           case 'checkbox':
