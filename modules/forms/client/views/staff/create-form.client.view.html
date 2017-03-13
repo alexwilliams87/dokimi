@@ -20,9 +20,16 @@
         <div class="slide-animate" ng-include src="'/modules/questions/client/views/staff/templates/create-question.client.view.template.html'"></div>
       </div>
       <div class="form-editor-toolbar">
-        <md-button ng-click="vm.autoSave(vm.addQuestion)" class="md-fab" aria-label="Ajout d'une question">
-          <md-icon flex class="material-icons">add</md-icon>
-        </md-button>
+        <div ng-if="vm.form.questions.length === 0">
+          <md-button ng-click="vm.addQuestion()" class="md-fab" aria-label="Ajout d'une question">
+            <md-icon flex class="material-icons">add</md-icon>
+          </md-button>
+        </div>
+        <div ng-if="vm.form.questions.length > 0">
+          <md-button ng-click="vm.autoSave(vm.addQuestion)" class="md-fab" aria-label="Ajout d'une question">
+            <md-icon flex class="material-icons">add</md-icon>
+          </md-button>
+        </div>
       </div>
     </div>
   </div>
