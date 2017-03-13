@@ -2,7 +2,7 @@
  * <dk-boolean>
  * <dk-boolean type="radio" select="vm.select"></dk-boolean>
  *
- * Permets de générer un select (radio ou checkbox)
+ * Permets de générer un select boolean (simplement un clone de select)
  *
  * @param {Array<Object>=} options
  * @param {Array<Object>=} results
@@ -29,20 +29,16 @@
 
     function link(scope, element, attrs) {
 
-      if (!scope.options) {
-        scope.options = [
-          { assign: true,  value: 'Vrai', readonly: true },
-          { assign: false, value: 'Faux', readonly: true }
-        ];
-      }
+      scope.options = scope.options || [
+        { assign: true,  value: 'Vrai', readonly: true },
+        { assign: false, value: 'Faux', readonly: true }
+      ];
 
-      if (!scope.results) {
-        scope.results = [
-          { checked: true },
-          { checked: false }
-        ];
-      }
+      scope.results = scope.results || [
+        { checked: true },
+        { checked: false }
+      ];
+
     }
-
   }
 }());

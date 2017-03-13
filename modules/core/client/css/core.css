@@ -321,6 +321,9 @@ a:hover .header-profile-image {
 .form-editor-question:not(:first-child) {
   margin-top:30px;
 }
+.md-button.not-saved {
+  background-color:red;
+}
 
 /*
  * create-question
@@ -396,7 +399,12 @@ a:hover .header-profile-image {
   margin-left:0;
 }
 
-
+/*
+ * answer
+**/
+.answer {
+  padding: 10px;
+}
 
 
 
@@ -462,4 +470,16 @@ md-select-menu {
   display: flex;
   background-color: #c7c7c7;
   justify-content: center;
+}
+
+
+.list-forms .submitted {
+  color:red;
+}
+.list-forms .submitted i {
+  transform: rotate(180deg);
+}
+
+.home-examid-candidate {
+  text-align: center;
 }

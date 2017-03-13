@@ -7,14 +7,14 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     QuestionValidator = require('./validators/question.server.model.validator');
 
-
 /**
  * Question Body Schema
  */
-var QuestionBodySchema =  new Schema({
+var QuestionBodySchema = new Schema({
   type: {
     type: String,
-    enum : ['radio', 'checkbox', 'boolean', 'missing', 'regmissing', 'opened', 'ranking']
+    enum : ['radio', 'checkbox', 'boolean', 'missing', 'regmissing', 'opened', 'ranking'],
+    required: 'Type cannot be blank'
   },
   data: {
     type: Object
@@ -23,6 +23,8 @@ var QuestionBodySchema =  new Schema({
     type: Object
   }
 });
+
+exports.QuestionBodySchema = QuestionBodySchema;
 
 /**
  * Question Schema
@@ -34,13 +36,13 @@ var QuestionSchema = new Schema({
   },
   subject: {
     type: String,
-    default: '',
     trim: true,
     required: 'Subject cannot be blank'
   },
   theme: {
     type: Schema.ObjectId,
-    ref: 'Theme'
+    ref: 'Theme',
+    required: 'Theme cannot be blank'
   },
   points: {
     type: Number,
@@ -52,12 +54,14 @@ var QuestionSchema = new Schema({
   },
   body: {
     type: QuestionBodySchema,
-    validate: [QuestionValidator.body, 'Uh oh, {PATH} does not equal "something".']
+    validate: [QuestionValidator.body, 'Uh oh, {PATH} does not equal "something".'],
+    required: 'Body cannot be blank'
   },
   user: {
     type: Schema.ObjectId,
     ref: 'User'
   }
 });
+
 
 mongoose.model('Question', QuestionSchema);

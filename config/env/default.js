@@ -53,6 +53,14 @@ module.exports = {
           fileSize: 1 * 1024 * 1024 // Max file size in bytes (1 MB)
         }
       }
+    },
+    questions: {
+      image: {
+        dest: './modules/questions/client/img/uploads/',
+        limits: {
+          fileSize: 1 * 1024 * 1024 // Max file size in bytes (1 MB)
+        }
+      }
     }
   },
   shared: {

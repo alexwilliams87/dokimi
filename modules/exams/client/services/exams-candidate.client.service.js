@@ -5,11 +5,11 @@
     .module('exams.services')
     .factory('ExamsCandidateService', ExamsCandidateService);
 
-  ExamsCandidateService.$inject = ['$resource', '$log'];
+  ExamsCandidateService.$inject = ['$resource'];
 
-  function ExamsCandidateService($resource, $log) {
-    var Exam = $resource('/api/exams/candidate/:examId', {
-      examId: '@_id'
+  function ExamsCandidateService($resource) {
+    var Exam = $resource('/api/exams/candidate/:examCandidateId', {
+      examCandidateId: '@_id'
     });
 
     return Exam;

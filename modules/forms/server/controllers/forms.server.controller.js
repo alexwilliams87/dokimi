@@ -6,38 +6,107 @@
 var _ = require('lodash'),
   path = require('path'),
   mongoose = require('mongoose'),
+  nodemailer = require('nodemailer'),
   Form = mongoose.model('Form'),
   Exam = mongoose.model('Exam'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
+var sendMailExamLink = function(receivers) {
+  var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'rootofgeno@gmail.com',
+        pass: ''
+      }
+  });
+
+  // setup email data with unicode symbols
+  var mailOptions = {
+      from: '"Fred Foo" <rootofgeno@gmail.com>', // sender address
+      to: 'nemesis87aw@hotmail.fr', // list of receivers
+      subject: 'Hello', // Subject line
+      text: 'Hello world ?', // plain text body
+      html: '<b>Hello world ?</b>' // html body
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log('error trigger');
+      return console.log(error);
+    }
+
+    console.log('Message %s sent: %s', info.messageId, info.response);
+  });
+};
+
 /**
- * Submit the current form FAIRE L'ENVOI DES MAILS
+ * Submit the current form
  */
-exports.submit = function (req, res) { // revoir syntaxe
+exports.submit = function (req, res) {
   var form = req.form;
 
-  if (!form.submitted && (form.user._id.toString() === req.user._id.toString())) {
-    form.submitted = true;
-
-    form.receivers.forEach(function(receiver) {
-      var exam = new Exam();
-
-      exam.form = form;
-      exam.user = receiver;
-
-      exam.save();
-    });
-
-    form.save(function (err) {
-      if (err) {
-        return res.status(422).send({
-          message: errorHandler.getErrorMessage(err)
-        });
-      } else {
-        res.json(form);
-      }
+  if (form.submitted) {
+    return res.status(422).send({
+      message: 'Form already submitted'
     });
   }
+
+  form.submitted = true;
+
+  form.receivers.forEach(function(receiver) {
+    var exam = new Exam();
+
+    exam.form = form;
+    exam.user = receiver;
+    exam.owner = req.user.id;
+
+    exam.save();
+  });
+
+  form.save(function (err) {
+    if (err) {
+      return res.status(422).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      // sendMailExamLink(emailReceivers);
+      res.json(form);
+    }
+  });
+};
+
+/**
+ * Unsubmit the current form
+ */
+exports.unsubmit = function (req, res) {
+  var form = req.form;
+
+  if (!form.submitted) {
+    return res.status(422).send({
+      message: 'Form not submitted'
+    });
+  }
+
+  Exam.find({ form: form }).where('state').ne('checked').exec(function (err, exams) {
+    if (!_.isEmpty(exams)) {
+      return res.status(422).send({
+        message: 'Veuillez corriger tous les examens liés à ce questionnaire !'
+      });
+    }
+    else {
+      form.submitted = false;
+      form.save(function (err) {
+        if (err) {
+          return res.status(422).send({
+            message: errorHandler.getErrorMessage(err)
+          });
+        } else {
+          res.json(form);
+        }
+      });
+    }
+  });
+
 };
 
 /**

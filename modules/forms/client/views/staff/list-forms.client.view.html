@@ -16,7 +16,7 @@
   </div>
 
   <md-table-container>
-    <table md-table>
+    <table class="list-forms" md-table>
       <thead md-head>
          <tr md-row>
            <th md-column>Titre du questionnaire</th>
@@ -27,9 +27,12 @@
         <tr md-row ng-repeat="form in vm.forms" ng-show="(form.title.indexOf(searchTitle) !== -1 || !searchTitle)">
           <td md-cell>{{ form.title }}</td>
           <td md-cell>{{ form.user.displayName }}</td>
-          <td md-cell><a ng-if="form.user.displayName === vm.authentication.user.displayName" ui-sref="staff.forms.edit({formId: form._id})"><i class="material-icons">mode_edit</i></a></td>
-          <td md-cell><a ng-click="vm.remove(form)"><i class="material-icons">delete</i></a></td>
-          <td md-cell><a ng-if="!form.submitted" ng-click="vm.submit(form)"><i class="material-icons">send</i></a></td>
+          <td md-cell><a ng-if="form.user.displayName === vm.authentication.user.displayName && !form.submitted" ui-sref="staff.forms.edit({formId: form._id})"><i class="material-icons">mode_edit</i></a></td>
+          <td md-cell>
+            <a ng-click="vm.submit(form)" ng-if="form.user.displayName === vm.authentication.user.displayName && !form.submitted"><i class="material-icons">send</i></a>
+            <a ng-click="vm.unsubmit(form)" ng-if="form.user.displayName === vm.authentication.user.displayName && form.submitted" class="submitted"><i class="material-icons">unsend</i></a>
+          </td>
+          <td md-cell><a ng-if="form.user.displayName === vm.authentication.user.displayName && !form.submitted" ng-click="vm.remove(form)"><i class="material-icons">delete</i></a></td>
         </tr>
       </tbody>
     </table>

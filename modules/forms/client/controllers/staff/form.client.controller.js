@@ -28,6 +28,9 @@
     vm.form.questions = vm.form.questions || [];
     vm.form.receivers = vm.form.receivers || [];
 
+    vm.autoSave = autoSave;
+    vm.saved = true;
+
     // Add a question
     function addQuestion() {
       vm.form.questions.push(new QuestionsService());
@@ -48,28 +51,50 @@
       }
     }
 
-    // Save Form
-    function save() {
+    // Save Form Event (Call every Question Directives to known if they are ready)
+    $scope.$on('readyToSave', function() {
+      if (++$scope.nbReady !== vm.form.questions.length) return;
+
       vm.form.questions.forEach(function(question) {
-        // if question new
-        if (question instanceof QuestionsService) {
+        if (question instanceof QuestionsService) { // if question is new
           question.createOrUpdate();
         }
       });
 
-      // Create a new form, or update the current instance
       vm.form.createOrUpdate()
-        .then(successCallback)
+        .then(function() {
+          if (autoSave.enabled) {
+            vm.saved = autoSave.enabled = false;
+            autoSave.callback();
+          }
+          else {
+            vm.saved = true;
+            successCallback();
+          }
+        })
         .catch(errorCallback);
+    });
 
-      function successCallback(res) {
-        $state.go('staff.forms.list'); // should we send the User to the list or the updated Form's view?
-        Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Form saved successfully!' });
-      }
+    // Save Form
+    function save() {
+      $scope.nbReady = 0;
+      $scope.$broadcast('eventSaveData');
+    }
 
-      function errorCallback(res) {
-        Notification.error({ message: res.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Form save error!' });
-      }
+    // AutoSave Form
+    function autoSave(callback) {
+      autoSave.enabled = true;
+      autoSave.callback = callback;
+      save();
+    }
+
+    function successCallback(res) {
+      $state.go('staff.forms.list');
+      Notification.success({ message: '<i class="material-icons">check_circle</i> Questionnaire sauvegardée avec succès' });
+    }
+
+    function errorCallback(res) {
+      Notification.error({ message: res.data.message, title: '<i class="material-icons">report_problem</i> Erreur lors de la sauvegarde' });
     }
 
     // Open questions importer

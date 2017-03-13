@@ -21,6 +21,9 @@ module.exports = function (app) {
   app.route('/api/forms/:formId/submit').all(formsPolicy.isJustOwner)
     .get(forms.submit);
 
+  app.route('/api/forms/:formId/unsubmit').all(formsPolicy.isJustOwner)
+    .get(forms.unsubmit);
+
   // Finish by binding the form middleware
   app.param('formId', forms.formByID);
 };

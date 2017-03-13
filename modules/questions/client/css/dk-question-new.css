@@ -7,73 +7,40 @@ dk-create-select md-input-container.md-icon-right > .toggle-icon {
   left: 2px;
 }
 
-dk-create-ranking .label {
-  display: inline-block;
-  min-width: 1.45em;
-  padding-left: 0.355em;
-  padding-right: 0.355em;
-  font-size: 0.75em;
-  line-height: 2em;
-  text-align: center;
-  vertical-align: baseline;
-  background-color: #ddd;
-  border-radius: 5px;
-}
-
-
-
 
 dk-create-ranking ul[dnd-list],
-dk-create-ranking ul[dnd-list] > li {
+dk-create-ranking ul[dnd-list] > li,
+dk-ranking ul[dnd-list],
+dk-ranking ul[dnd-list] > li {
   position: relative;
 }
 
-/**
- * The dnd-list should always have a min-height,
- * otherwise you can't drop to it once it's empty
- */
-dk-create-ranking ul[dnd-list] {
+dk-create-ranking ul[dnd-list],
+dk-ranking ul[dnd-list] {
   min-height: 42px;
   padding-left: 0px;
 }
 
-/**
- * The dndDraggingSource class will be applied to
- * the source element of a drag operation. It makes
- * sense to hide it to give the user the feeling
- * that he's actually moving it.
- */
-dk-create-ranking ul[dnd-list] .dndDraggingSource {
+dk-create-ranking ul[dnd-list] .dndDraggingSource,
+dk-ranking ul[dnd-list] .dndDraggingSource {
   display: none;
 }
 
-/**
- * An element with .dndPlaceholder class will be
- * added to the dnd-list while the user is dragging
- * over it.
- */
-dk-create-ranking ul[dnd-list] .dndPlaceholder {
+dk-create-ranking ul[dnd-list] .dndPlaceholder,
+dk-ranking ul[dnd-list] .dndPlaceholder {
   display: block;
   background-color: #ddd;
   padding: 10px 15px;
   min-height: 42px;
 }
 
-/**
- * The dnd-lists's child elements currently MUST have
- * position: relative. Otherwise we can not determine
- * whether the mouse pointer is in the upper or lower
- * half of the element we are dragging over. In other
- * browsers we can use event.offsetY for this.
- */
-dk-create-ranking ul[dnd-list] li {
+dk-create-ranking ul[dnd-list] li,
+dk-ranking ul[dnd-list] li {
   background-color: #fff;
   border: 1px solid #ddd;
   display: block;
   margin:5px;
   height:100px;
-
-  /* Disable text selection if item is not draggable */
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -82,24 +49,27 @@ dk-create-ranking ul[dnd-list] li {
   user-select: none;
 }
 
-
 /**
- * Gender-specifc background
+ * Section-specifc background
  */
-dk-create-ranking ul[dnd-list] li.background-x {
+dk-create-ranking ul[dnd-list] li.background-x,
+dk-ranking ul[dnd-list] li.background-x  {
   background-color: #CAE0FC;
 }
 
-dk-create-ranking ul[dnd-list] li.background-y {
+dk-create-ranking ul[dnd-list] li.background-y,
+dk-ranking ul[dnd-list] li.background-y  {
   background-color: #FFE2F5;
 }
 
-dk-create-ranking ul[dnd-list] input.background-x {
+dk-create-ranking ul[dnd-list] input.background-x,
+dk-ranking ul[dnd-list] input.background-x {
   background-color: #D8E9FF;
   color: #2F4D99;
 }
 
-dk-create-ranking ul[dnd-list] input.background-y {
+dk-create-ranking ul[dnd-list] input.background-y,
+dk-ranking ul[dnd-list] input.background-y {
   background-color: #FFF0FA;
   color: #D84FA7;
 }
@@ -107,35 +77,40 @@ dk-create-ranking ul[dnd-list] input.background-y {
 /**
  * Handle positioning
  */
-dk-create-ranking .handle {
+dk-create-ranking .handle,
+dk-ranking .handle {
   cursor: move;
 }
 
-dk-create-ranking .media-toggle {
+dk-create-ranking .media-toggle,
+dk-ranking .media-toggle {
   cursor: pointer;
   display:inline-block;
 }
 
-dk-create-ranking .inner {
+dk-create-ranking .inner,
+dk-ranking .inner {
   height:100px;
   padding:10px;
+}
+
+dk-create-ranking .image,
+dk-ranking .image {
+  max-height: 80px;
+  margin-left:20px;
+}
+
+dk-create-ranking md-input-container,
+dk-ranking md-input-container {
+  margin:0;
+  padding:0;
+  margin-left:20px;
+  margin-top:20px;
 }
 
 dk-create-ranking .toolbar {
   text-align:right;
   align-self:flex-end;
-}
-
-dk-create-ranking .image {
-  max-height: 80px;
-  margin-left:20px;
-}
-
-dk-create-ranking md-input-container {
-  margin:0;
-  padding:0;
-  margin-left:20px;
-  margin-top:20px;
 }
 
 dk-create-ranking .close {

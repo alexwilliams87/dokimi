@@ -28,11 +28,16 @@ var ExamSchema = new Schema({
     type: Number,
     default: 0
   },
-  corrected: {
-    type: Boolean,
-    default: false
+  state: {
+    type: String,
+    enum:['unchecked', 'progress', 'checked'],
+    default: 'unchecked'
   },
   user: {
+    type: Schema.ObjectId,
+    ref: 'User'
+  },
+  owner: {
     type: Schema.ObjectId,
     ref: 'User'
   }

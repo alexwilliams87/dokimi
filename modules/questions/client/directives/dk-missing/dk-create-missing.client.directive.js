@@ -54,8 +54,8 @@
     function link(scope, element, attrs) {
       if (scope.string && scope.results) scope.textContent = unsplit(scope.string, scope.results);
 
-      if (!scope.string) scope.string = '';
-      if (!scope.results) scope.results = [];
+      scope.string = scope.string || '';
+      scope.results = scope.results || [];
 
       scope.textarea = element[0].querySelector('.dk-create-missing-content textarea');
 
@@ -77,6 +77,11 @@
         scope.textarea.value = scope.textContent = scope.textContent.slice(0, cursorPosition) + tag + scope.textContent.slice(cursorPosition);
         scope.textarea.setSelectionRange(cursorPosition + open.length, cursorPosition + open.length);
       }
+
+      scope.$on('eventSaveData', function(event, data) {
+        scope.$emit('readyToSave');
+      });
+
     }
   }
 }());

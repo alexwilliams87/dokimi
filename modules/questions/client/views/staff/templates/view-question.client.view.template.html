@@ -2,9 +2,6 @@
   - @Input domains
   - @Input themes
   - @Input/@Output question
-
-  - @Function save
-  - @Function remove
 -->
 <section>
   <div>
@@ -19,10 +16,8 @@
             <dk-select options="question.body.data" results="question.body.results" ng-if="question.body.type === 'boolean'" type="radio"></dk-select>
             <dk-missing string="question.body.data" results="question.body.results" ng-if="question.body.type === 'missing'"></dk-missing>
             <dk-missing string="question.body.data" results="question.body.results" ng-if="question.body.type === 'regmissing'"></dk-missing>
-            <dk-opened string="question.body.data" ng-if="question.body.type === 'opened'"></dk-opened>
-            <!--
+            <dk-opened results="question.body.results" ng-if="question.body.type === 'opened'"></dk-opened>
             <dk-ranking lists="question.body.data" results="question.body.results" ng-if="question.body.type === 'ranking'"></dk-ranking>
-            -->
           </div>
         </div>
       </div>

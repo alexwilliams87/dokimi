@@ -18,6 +18,9 @@ module.exports = function (app) {
     .put(questions.update)
     .delete(questions.delete);
 
+  app.route('/api/questions/upload/image')
+    .post(questions.uploadImage);
+
   // Finish by binding the question middleware
   app.param('questionId', questions.questionByID);
 };

@@ -4,9 +4,9 @@
   <div class="topbar" hide show-gt-sm>
     <div class="container">
       <div layout="row">
-        <div class="topbar-brand" flex="10">
+        <a href="/" class="topbar-brand" flex="10">
           <img src="/modules/core/client/img/brand/logo.svg" alt="brand">
-        </div>
+        </a>
         <nav flex="70" layout-align="start">
           <ul class="nav" ng-if="vm.menu.shouldRender(vm.authentication.user);">
             <li ng-repeat="item in vm.menu.items | orderBy: 'position'" ng-if="item.shouldRender(vm.authentication.user);">

@@ -9,48 +9,6 @@ var _ = require('lodash'),
   Exam = mongoose.model('Exam'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
-/**
- * Clean the current exam for candidate
- */
-exports.sanitize = function(req, res, next) {
-  req.exam.form.questions.forEach(function(question) {
-    delete question.body.results;
-  });
-
-  next();
-};
-
-/**
- * Show the current exam for candidate
- */
-exports.run = function(req, res) {
-  var exam = req.exam ? req.exam.toJSON() : {};
-
-  if (exam.form.submitted && _.find(exam.form.receivers, req.user._id)) {
-    res.json(exam);
-  }
-};
-
-/**
- * Progress the current exam for candidate
- */
-exports.progress = function (req, res) {
-  var exam = req.exam;
-
-  exam.answers.push(req.body.answers[req.body.answers.length - 1]);
-
-  exam.save(function (err) {
-    if (err) {
-      return res.status(422).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
-      res.json(exam);
-    }
-  });
-};
-
-
 
 /**
  * Create an exam
@@ -77,9 +35,7 @@ exports.read = function (req, res) {
   // convert mongoose document to JSON
   var exam = req.exam ? req.exam.toJSON() : {};
 
-  if (exam.form.submitted && _.find(exam.form.receivers, req.user._id)) {
-    res.json(exam);
-  }
+  res.json(exam);
 };
 
 /**
@@ -91,6 +47,8 @@ exports.update = function (req, res) {
   // exam.ansers.push(req.body.answer[req.body.answer.length - 1]);
   // push answer
   exam.answers = req.body.answers;
+  exam.points = req.body.points;
+  exam.state = req.body.state;
 
   exam.save(function (err) {
     if (err) {
@@ -136,6 +94,23 @@ exports.list = function (req, res) {
 };
 
 /**
+ * List of exams by connected owner
+ */
+exports.listByConnectedOwner = function (req, res) {
+  Exam.find().populate('user', 'displayName').populate('form')
+    .where('owner').equals(req.user.id)
+    .exec(function (err, exams) {
+    if (err) {
+      return res.status(422).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(exams);
+    }
+  });
+};
+
+/**
  * Exam middleware
  */
 exports.examByID = function (req, res, next, id) {
@@ -146,7 +121,12 @@ exports.examByID = function (req, res, next, id) {
     });
   }
 
-  Exam.findById(id).populate('user', 'displayName').populate('form').exec(function (err, exam) {
+  Exam.findById(id)
+    .populate('user',  'displayName')
+    .populate('owner', 'displayName')
+    .populate('form')
+    .populate('answers')
+    .exec(function (err, exam) {
     if (err) {
       return next(err);
     } else if (!exam) {

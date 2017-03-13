@@ -15,7 +15,7 @@
 
     function link(scope, element, attrs, ngModel) {
       function read() {
-        ngModel.$setViewValue(element.html());
+        ngModel.$setViewValue(element.text().trim());
       }
 
       ngModel.$render = function() {

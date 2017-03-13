@@ -8,8 +8,9 @@
   ExamsService.$inject = ['$resource', '$log'];
 
   function ExamsService($resource, $log) {
-    var Exam = $resource('/api/exams/:examId', {
-      examId: '@_id'
+    var Exam = $resource('/api/exams/:examId/:search', {
+      examId: '@_id',
+      search: '@search'
     }, {
       update: {
         method: 'PUT'

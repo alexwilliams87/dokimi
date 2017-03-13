@@ -1,0 +1,56 @@
+<h1>Correction d'un examen</h1><span> Points : {{ vm.exam.points }}</span>
+
+<div ng-if="vm.question.body.type === 'opened'">
+  <div layout="row">
+
+    <div class="answer-expected" flex>
+      <div class="question">
+        <div class="question-subject" layout="column">
+          <div class="question-subject-headline" layout="row" layout-align="start center">Enoncé de la question</div>
+          <div class="question-subject-content">{{ vm.question.subject }}</div>
+          <div class="question-body">
+            <dk-select options="vm.question.body.data" results="vm.question.body.results" ng-if="vm.question.body.type === 'radio'" type="radio"></dk-select>
+            <dk-select options="vm.question.body.data" results="vm.question.body.results" ng-if="vm.question.body.type === 'checkbox'" type="checkbox"></dk-select>
+            <dk-select options="vm.question.body.data" results="vm.question.body.results" ng-if="vm.question.body.type === 'boolean'" type="radio"></dk-select>
+            <dk-missing string="vm.question.body.data" results="vm.question.body.results" ng-if="vm.question.body.type === 'missing'"></dk-missing>
+            <dk-missing string="vm.question.body.data" results="vm.question.body.results" ng-if="vm.question.body.type === 'regmissing'"></dk-missing>
+            <dk-opened results="vm.question.body.results" ng-if="vm.question.body.type === 'opened'"></dk-opened>
+            <dk-ranking lists="vm.question.body.data" results="vm.question.body.results" ng-if="vm.question.body.type === 'ranking'"></dk-ranking>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="answer-given" flex>
+      <div class="answer">
+        <div class="question-subject" layout="column">
+          <div class="question-subject-headline" layout="row" layout-align="start center">Réponse du candidat</div>
+          <div class="question-body">
+            {{ vm.exam.answers[vm.i].results[0] }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="exam-toolbar">
+    <md-button ng-click="vm.validate()" class="md-fab" aria-label="Validation d'une réponse">
+      <md-icon flex class="material-icons">done</md-icon>
+    </md-button>
+    <md-button ng-click="vm.unvalidate()" class="md-fab" aria-label="Non validation d'une réponse">
+      <md-icon flex class="material-icons">close</md-icon>
+    </md-button>
+  </div>
+</div>
+
+<div class="exam-start" ng-if="vm.exam.state === 'unchecked'">
+  <div class="exam-end-logo" flex>
+    <md-button ng-click="vm.progress()">COMMENCER LA CORRECTION</md-button>
+  </div>
+</div>
+
+<div class="exam-end" ng-if="vm.exam.state === 'checked'">
+  <div class="exam-end-logo" flex="10">
+    <h1>TERMINER</h1>
+  </div>
+</div>

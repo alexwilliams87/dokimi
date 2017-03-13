@@ -5,7 +5,10 @@
  */
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema,
-  FormValidator = require('./validators/form.server.model.validator');
+  path = require('path'),
+  QuestionModel = require(path.resolve('./modules/questions/server/models/question.server.model')),
+  QuestionValidator = require(path.resolve('./modules/questions/server/models/validators/question.server.model.validator'));
+
 
 /**
  * Form Schema
@@ -27,10 +30,28 @@ var FormSchema = new Schema({
     trim: true,
     required: 'Description cannot be blank'
   },
-  questions: {
-    type: Array,
-    validate: [FormValidator.questions, 'Uh oh, {PATH} does not equal "something".']
-  },
+  questions: [
+    {
+      subject: {
+        type: String,
+        trim: true,
+        required: 'Subject cannot be blank'
+      },
+      theme: {
+        type: Object,
+        required: 'Theme cannot be blank'
+      },
+      points: {
+        type: Number,
+        max: 5,
+        default: 1
+      },
+      body: {
+        type: QuestionModel.QuestionBodySchema,
+        validate: [QuestionValidator.body, 'Uh oh, {PATH} does not equal "something".']
+      }
+    }
+  ],
   receivers: [
     {
       type: Schema.ObjectId,

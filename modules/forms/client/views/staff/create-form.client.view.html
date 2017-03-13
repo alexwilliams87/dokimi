@@ -20,7 +20,7 @@
         <div class="slide-animate" ng-include src="'/modules/questions/client/views/staff/templates/create-question.client.view.template.html'"></div>
       </div>
       <div class="form-editor-toolbar">
-        <md-button ng-click="vm.addQuestion()" class="md-fab" aria-label="Ajout d'une question">
+        <md-button ng-click="vm.autoSave(vm.addQuestion)" class="md-fab" aria-label="Ajout d'une question">
           <md-icon flex class="material-icons">add</md-icon>
         </md-button>
       </div>
@@ -37,7 +37,7 @@
     <md-icon class="material-icons">group_add</md-icon>
     <span hide show-gt-sm>Destinataires</span>
   </md-button>
-  <md-button ng-click="vm.save()">
+  <md-button ng-click="vm.save()" ng-class="{'not-saved': !vm.saved}">
     <md-icon class="material-icons">save</md-icon>
     <span hide show-gt-sm>Sauvegarder</span>
   </md-button>

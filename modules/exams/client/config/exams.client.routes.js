@@ -15,7 +15,7 @@
         template: '<ui-view/>'
       })
       .state('exams.candidate', {
-        url: '/candidate/:examId',
+        url: '/candidate/:examCandidateId',
         templateUrl: '/modules/exams/client/views/view-exam.client.view.html',
         controller: 'ExamsController',
         controllerAs: 'vm',
@@ -32,7 +32,7 @@
 
   function getExamCandidate($stateParams, ExamsCandidateService) {
     return ExamsCandidateService.get({
-      examId: $stateParams.examId
+      examCandidateId: $stateParams.examCandidateId
     }).$promise;
   }
 }());

@@ -13,21 +13,25 @@ acl = new acl(new acl.memoryBackend());
  */
 exports.invokeRolesPolicies = function () {
   acl.allow([{
-    roles: ['admin'],
+    roles: ['admin', 'staff'],
     allows: [{
       resources: '/api/exams',
       permissions: '*'
     }, {
       resources: '/api/exams/:examId',
       permissions: '*'
+    }, {
+      resources: '/api/exams/ownByMe',
+      permissions: 'get'
     }]
   }, {
     roles: ['user'],
     allows: [{
-      resources: '/api/exams',
-      permissions: ['get']
-    }, {
-      resources: '/api/exams/:examId',
+      resources: '/api/exams/candidate/:examCandidateId',
+      permissions: ['get', 'post']
+    },
+    {
+      resources: '/api/exams/candidate',
       permissions: ['get']
     }]
   }, {
@@ -69,4 +73,23 @@ exports.isAllowed = function (req, res, next) {
       }
     }
   });
+};
+
+/**
+ * Just for admin & owner
+ */
+exports.isJustOwner = function (req, res, next) {
+  if (req.user.roles.indexOf('admin') !== -1) {
+    return next();
+  }
+
+  // If an form is being processed and the current user created it then allow any manipulation
+  if (req.exam && req.user && req.exam.owner && req.exam.owner.id === req.user.id) {
+    return next();
+  }
+  else {
+    return res.status(403).json({
+      message: 'User is not authorized'
+    });
+  }
 };

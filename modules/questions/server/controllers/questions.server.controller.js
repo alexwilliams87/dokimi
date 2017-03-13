@@ -5,8 +5,39 @@
  */
 var path = require('path'),
   mongoose = require('mongoose'),
+  multer = require('multer'),
+  config = require(path.resolve('./config/config')),
   Question = mongoose.model('Question'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
+
+  /**
+   * Upload image for question
+   */
+exports.uploadImage = function(req, res) {
+  var multerConfig = config.uploads.questions.image;
+  multerConfig.fileFilter = require(path.resolve('./config/lib/multer')).imageFileFilter;
+  var upload = multer(multerConfig).single('newImage');
+
+  uploadImage().then(function(path) {
+    res.json(path);
+  }).catch(function(err) {
+    res.status(422).send(err);
+  });
+
+  function uploadImage() {
+    return new Promise(function(resolve, reject) {
+      upload(req, res, function(uploadError) {
+        if (uploadError) {
+          reject(errorHandler.getErrorMessage(uploadError));
+        } else {
+          var path = config.uploads.questions.image.dest + req.file.filename;
+          path = path.slice(1);
+          resolve(path);
+        }
+      });
+    });
+  }
+};
 
 /**
  * Create an question

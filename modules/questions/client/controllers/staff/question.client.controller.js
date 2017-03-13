@@ -28,15 +28,20 @@
       }
     }
 
+    // Save Event From Question Directives
+    $scope.$on('readyToSave', function(event, data) {
+      $scope.question.createOrUpdate()
+        .then(successCallback)
+        .catch(errorCallback);
+    });
+
     // Save Question
     function save(isValid) {
       if (!isValid) {
         return false;
       }
 
-      $scope.question.createOrUpdate()
-        .then(successCallback)
-        .catch(errorCallback);
+      $scope.$broadcast('eventSaveData');
     }
 
     function successCallback(res) {

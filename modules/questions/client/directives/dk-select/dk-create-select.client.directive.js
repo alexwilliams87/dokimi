@@ -35,8 +35,8 @@
     return directive;
 
     function link(scope, element, attrs) {
-      if (!scope.options) scope.options = [];
-      if (!scope.results) scope.results = [];
+      scope.options = scope.options || [];
+      scope.results = scope.results || [];
 
       scope.add = function() {
         if (!scope.locked) {
@@ -63,6 +63,10 @@
           scope.results.splice(index, 1);
         }
       }
+
+      scope.$on('eventSaveData', function(event, data) {
+        scope.$emit('readyToSave');
+      });
 
     }
   }

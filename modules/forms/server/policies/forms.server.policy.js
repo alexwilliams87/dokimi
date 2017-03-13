@@ -21,7 +21,10 @@ exports.invokeRolesPolicies = function () {
       resources: '/api/forms/:formId',
       permissions: '*'
     }, {
-      resources: '/api/forms/submit/:formId',
+      resources: '/api/forms/:formId/submit',
+      permissions: '*'
+    }, {
+      resources: '/api/forms/:formId/unsubmit',
       permissions: '*'
     }]
   }]);
@@ -56,7 +59,14 @@ exports.isAllowed = function (req, res, next) {
   });
 };
 
+/**
+ * Just for admin & owner
+ */
 exports.isJustOwner = function (req, res, next) {
+  if (req.user.roles.indexOf('admin') !== -1) {
+    return next();
+  }
+
   // If an form is being processed and the current user created it then allow any manipulation
   if (req.form && req.user && req.form.user && req.form.user.id === req.user.id) {
     return next();
