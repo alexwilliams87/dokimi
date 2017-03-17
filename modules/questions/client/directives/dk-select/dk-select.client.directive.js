@@ -37,9 +37,9 @@
         scope.options = [];
       }
 
-      if (!scope.results) {
-        scope.results = [];
+      scope.results = scope.results || [];
 
+      if (scope.results.length === 0) {
         scope.options.forEach(function(option) {
           scope.results.push({ checked: false });
         });

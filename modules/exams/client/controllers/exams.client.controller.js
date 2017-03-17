@@ -14,8 +14,10 @@
     $scope.question = vm.exam.form.questions[vm.exam.answers.length];
     vm.authentication = Authentication;
     vm.validate = validate;
+    vm.loaded = true;
 
     function validate() {
+      vm.loaded = false;
       var answer = {
         offsetQuestion: vm.exam.answers.length,
         form: vm.form,
@@ -27,6 +29,7 @@
       vm.exam.$save().then(function(success) {
         if (vm.exam.form.questions[vm.exam.answers.length]) {
           $scope.question = $scope.question = vm.exam.form.questions[vm.exam.answers.length];
+          vm.loaded = true;
         }
       });
     }

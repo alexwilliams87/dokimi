@@ -12,9 +12,9 @@
       <thead md-head>
         <tr md-row>
           <th md-column>Questionnaire</th>
-          <th md-column>Candidat</th>
-          <th md-column>Date d'envoi</th>
-          <th md-column>Points</th>
+          <th md-column hide-sm hide-xs>Candidat</th>
+          <th md-column hide-sm hide-xs>Date d'envoi</th>
+          <th md-column hide-sm hide-xs>Points</th>
           <th md-column>Statut</th>
         </tr>
       </thead>
@@ -22,9 +22,9 @@
       <tbody md-body>
         <tr md-row ng-repeat="exam in vm.exams">
           <td md-cell>{{ exam.form.title }}</td>
-          <td md-cell>{{ exam.user.displayName }}</td>
-          <td md-cell>{{ vm.dateConvert(exam.created) }}</td>
-          <td md-cell>{{ exam.points }}</td>
+          <td md-cell hide-sm hide-xs>{{ exam.user.displayName }}</td>
+          <td md-cell hide-sm hide-xs>{{ vm.dateConvert(exam.created) }}</td>
+          <td md-cell hide-sm hide-xs>{{ exam.points }}</td>
           <td md-cell>
             <span ng-if='exam.state === "unchecked"'>Non corrigé</span>
             <span ng-if='exam.state === "progress"'>En cours de correction</span>

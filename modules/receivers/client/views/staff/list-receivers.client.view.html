@@ -15,13 +15,13 @@
         <thead md-head md-order="vm.orderBy">
            <tr md-row>
              <th md-column md-order-by="name">Nom des listes</th>
-             <th md-column>Nombre de destinataires</th>
+             <th md-column hide-sm hide-xs>Nombre de destinataires</th>
           </tr>
         </thead>
         <tbody md-body>
           <tr md-row ng-repeat="receiver in vm.receivers | orderBy:vm.orderBy">
             <td md-cell>{{ receiver.name }}</td>
-            <td md-cell>{{ receiver.users.length }} destinataires dans cette liste</td>
+            <td md-cell hide-sm hide-xs>{{ receiver.users.length }} destinataires dans cette liste</td>
             <td md-cell><a class="dark-icon" data-ui-sref="staff.receivers.edit({receiverId: receiver._id})"><i class="material-icons">mode_edit</i></a></td>
             <td md-cell><a class="dark-icon" ng-click="vm.remove(receiver)"><i class="material-icons">delete</i></a></td>
           </tr>

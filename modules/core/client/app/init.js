@@ -18,6 +18,15 @@
       requireBase: false
     }).hashPrefix('!');
 
+    // --> Fix issue caching data for IE <---
+    $httpProvider.defaults.cache = false;
+    if (!$httpProvider.defaults.headers.get) {
+      $httpProvider.defaults.headers.get = {};
+    }
+    // disable IE ajax request caching
+    $httpProvider.defaults.headers.get['If-Modified-Since'] = '0';
+    // -->  Fix issue caching data for IE <---
+
     $httpProvider.interceptors.push('authInterceptor');
 
     // Disable debug data for production environment

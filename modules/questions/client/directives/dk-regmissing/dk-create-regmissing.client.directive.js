@@ -22,7 +22,7 @@
         results: '='
       },
       link: link,
-      templateUrl: '/modules/questions/client/directives/templates/dk-regmissing.client.directive.template.html',
+      templateUrl: '/modules/questions/client/directives/templates/dk-regmissing/dk-regmissing.client.directive.template.html',
     };
 
     return directive;

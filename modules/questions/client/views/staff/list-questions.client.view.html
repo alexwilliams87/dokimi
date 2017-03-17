@@ -36,24 +36,23 @@
       <thead md-head>
          <tr md-row>
            <th md-column>Enoncé de la question</th>
-           <th md-column>Créateur</th>
-           <th md-column>Thème</th>
-           <th md-column>Domaine</th>
+           <th md-column hide-sm hide-xs>Créateur</th>
+           <th md-column hide-sm hide-xs>Thème</th>
+           <th md-column hide-sm hide-xs>Domaine</th>
         </tr>
       </thead>
       <tbody md-body>
         <tr md-row ng-repeat="question in vm.questions" ng-show="(question.subject.indexOf(searchSubject) !== -1 || !searchSubject) && (searchDomain === question.theme.domain.name || !searchDomain) && (searchThemes.indexOf(question.theme.name) !== -1 || searchThemes.length === 0)">
           <td md-cell><a ui-sref="staff.questions.view({questionId: question._id})">{{ question.subject }}</a></td>
-          <td md-cell>{{ question.user.displayName }}</td>
-          <td md-cell>{{ question.theme.name }}</td>
-          <td md-cell>{{ question.theme.domain.name }}</td>
+          <td md-cell hide-sm hide-xs>{{ question.user.displayName }}</td>
+          <td md-cell hide-sm hide-xs>{{ question.theme.name }}</td>
+          <td md-cell hide-sm hide-xs>{{ question.theme.domain.name }}</td>
           <td md-cell><a class="dark-icon" ui-sref="staff.questions.edit({questionId: question._id})"><i class="material-icons">mode_edit</i></a></td>
           <td md-cell><a class="dark-icon" ng-click="vm.remove(question, $event)"><i class="material-icons">delete</i></a></td>
         </tr>
       </tbody>
     </table>
   </md-table-container>
-
 
   <div class="alert alert-warning text-center" data-ng-if="questions.$resolved && !questions.length">
     No questions yet, why don't you <a data-ui-sref="staff.questions.create">create one</a>?

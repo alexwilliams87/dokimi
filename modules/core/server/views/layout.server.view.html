@@ -35,13 +35,17 @@
   {{#each cssFiles}}<link rel="stylesheet" href="/{{this}}">{{/each}}
 </head>
 
-<body class="ng-cloak">
-  <header ng-include="'/modules/core/client/views/header.client.view.html'" class="navbar navbar-fixed-top navbar-inverse"></header>
-  <section class="content">
-    <section class="container">
-      {{{block "content"}}}
+<body class="ng-cloak" layout="column">
+  <md-content layout="column" md-scroll-y flex>
+    <header ng-include="'/modules/core/client/views/header.client.view.html'" class="navbar navbar-fixed-top navbar-inverse"></header>
+    <section class="main" flex>
+      <div class="container">
+        <div class="content-main">
+          {{{block "content"}}}
+        </div>
+      </div>
     </section>
-  </section>
+  </md-content>
 
   <noscript>
     <style>
@@ -65,7 +69,7 @@
 
   <!--Application JavaScript Files-->
     {{#each jsFiles}}<script type="text/javascript" src="/{{this}}"></script>{{/each}}
-  
+
   <!--owasp config sync-->
   <script type="text/javascript">
     var sharedConfig = {{{ sharedConfig }}};
