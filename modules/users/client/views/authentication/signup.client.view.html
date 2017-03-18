@@ -55,7 +55,7 @@
         <div class="form-group">
           <md-input-container>
             <label class="control-label" for="domain">Domaine</label>
-            <md-select name="domain" ng-model="vm.credentials.domain" ng-model-options="{trackBy: '$value._id'}" id="domain" class="form-control" required>
+            <md-select name="domain" ng-model="vm.credentials.domain" ng-model-options="{trackBy: '$value._id'}" id="domain" class="form-control">
               <md-option ng-repeat="domain in vm.domains | orderBy:'name'" ng-value="domain">{{ domain.name }}</md-option>
             </md-select>
 
